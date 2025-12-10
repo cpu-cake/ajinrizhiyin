@@ -1,0 +1,1 @@
+ALTER TABLE `coin_readings` ADD `type` varchar(50) DEFAULT 'daily_fortune' NOT NULL;

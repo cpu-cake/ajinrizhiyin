@@ -1,0 +1,482 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --primary: var(--color-blue-700);
+  --primary-foreground: var(--color-blue-50);
+  --sidebar-primary: var(--color-blue-600);
+  --sidebar-primary-foreground: var(--color-blue-50);
+  --chart-1: var(--color-blue-300);
+  --chart-2: var(--color-blue-500);
+  --chart-3: var(--color-blue-600);
+  --chart-4: var(--color-blue-700);
+  --chart-5: var(--color-blue-800);
+  --radius: 0.65rem;
+  /* 兼容旧安卓的降级颜色，优先使用标准色值 */
+  --background: #ffffff;
+  --foreground: #1f2937;
+  --card: #ffffff;
+  --card-foreground: #1f2937;
+  --popover: #ffffff;
+  --popover-foreground: #1f2937;
+  --secondary: #f6f5ff;
+  --secondary-foreground: #2f2f3a;
+  --muted: #f4f4f5;
+  --muted-foreground: #666666;
+  --accent: #fdf2f8;
+  --accent-foreground: #374151;
+  --destructive: #d14343;
+  --destructive-foreground: #ffffff;
+  --border: #e5e7eb;
+  --input: #e5e7eb;
+  --ring: #6366f1;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #1f2937;
+  --sidebar-accent: #f4f4f5;
+  --sidebar-accent-foreground: #1f2937;
+  --sidebar-border: #e5e7eb;
+  --sidebar-ring: #6366f1;
+  /* 高级色彩值放在降级之后，支持的浏览器会覆盖 */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.235 0.015 65);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.235 0.015 65);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.235 0.015 65);
+  --secondary: oklch(0.98 0.001 286.375);
+  --secondary-foreground: oklch(0.4 0.015 65);
+  --muted: oklch(0.967 0.001 286.375);
+  --muted-foreground: oklch(0.552 0.016 285.938);
+  --accent: oklch(0.967 0.001 286.375);
+  --accent-foreground: oklch(0.141 0.005 285.823);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.92 0.004 286.32);
+  --input: oklch(0.92 0.004 286.32);
+  --ring: oklch(0.623 0.214 259.815);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.235 0.015 65);
+  --sidebar-accent: oklch(0.967 0.001 286.375);
+  --sidebar-accent-foreground: oklch(0.141 0.005 285.823);
+  --sidebar-border: oklch(0.92 0.004 286.32);
+  --sidebar-ring: oklch(0.623 0.214 259.815);
+}
+
+.dark {
+  --primary: var(--color-blue-700);
+  --primary-foreground: var(--color-blue-50);
+  --sidebar-primary: var(--color-blue-500);
+  --sidebar-primary-foreground: var(--color-blue-50);
+  --background: #0b1221;
+  --foreground: #e5e7eb;
+  --card: #111827;
+  --card-foreground: #e5e7eb;
+  --popover: #111827;
+  --popover-foreground: #e5e7eb;
+  --secondary: #1f2937;
+  --secondary-foreground: #cbd5e1;
+  --muted: #1f2937;
+  --muted-foreground: #cbd5e1;
+  --accent: #1f2937;
+  --accent-foreground: #ffffff;
+  --destructive: #b91c1c;
+  --destructive-foreground: #ffffff;
+  --border: #1f2937;
+  --input: #1f2937;
+  --ring: #4338ca;
+  --sidebar: #111827;
+  --sidebar-foreground: #e5e7eb;
+  --sidebar-accent: #1f2937;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #1f2937;
+  --sidebar-ring: #4338ca;
+  /* 高级色彩值放在降级之后，支持的浏览器会覆盖 */
+  --background: oklch(0.141 0.005 285.823);
+  --foreground: oklch(0.85 0.005 65);
+  --card: oklch(0.21 0.006 285.885);
+  --card-foreground: oklch(0.85 0.005 65);
+  --popover: oklch(0.21 0.006 285.885);
+  --popover-foreground: oklch(0.85 0.005 65);
+  --secondary: oklch(0.24 0.006 286.033);
+  --secondary-foreground: oklch(0.7 0.005 65);
+  --muted: oklch(0.274 0.006 286.033);
+  --muted-foreground: oklch(0.705 0.015 286.067);
+  --accent: oklch(0.274 0.006 286.033);
+  --accent-foreground:  oklch(0.92 0.005 65);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.488 0.243 264.376);
+  --chart-1: var(--color-blue-300);
+  --chart-2: var(--color-blue-500);
+  --chart-3: var(--color-blue-600);
+  --chart-4: var(--color-blue-700);
+  --chart-5: var(--color-blue-800);
+  --sidebar: oklch(0.21 0.006 285.885);
+  --sidebar-foreground: oklch(0.85 0.005 65);
+  --sidebar-accent: oklch(0.274 0.006 286.033);
+  --sidebar-accent-foreground:  oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.488 0.243 264.376);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  [type="button"]:not(:disabled),
+  [type="submit"]:not(:disabled),
+  [type="reset"]:not(:disabled),
+  a[href],
+  select:not(:disabled),
+  input[type="checkbox"]:not(:disabled),
+  input[type="radio"]:not(:disabled) {
+    @apply cursor-pointer;
+  }
+}
+
+/* Material Icons 样式 */
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+}
+
+/* 顶部导航按钮容器样式 */
+#top-navigation {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+/* 按钮基础样式 */
+.nav-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1em;
+  transition: background 0.3s, transform 0.1s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* "开始助眠" 按钮专属配色 */
+#sleep-button {
+  background-color: #9bbccb;
+  color: white;
+}
+
+#sleep-button:hover {
+  background-color: #7d96a5;
+  transform: translateY(-1px);
+}
+
+/* "说晚安" 按钮专属配色 */
+#goodnight-button {
+  background-color: #ffaaaa;
+  color: white;
+}
+
+#goodnight-button:hover {
+  background-color: #f08c8c;
+  transform: translateY(-1px);
+}
+
+/* 按钮图标样式 */
+.nav-button .material-icons {
+  margin-right: 5px;
+  font-size: 1.2em;
+}
+
+/* 移动端优化 */
+@media (max-width: 600px) {
+  #top-navigation {
+    justify-content: space-around;
+  }
+}
+
+/* 解答小困惑功能样式 */
+#question-section {
+  max-width: 900px;
+  margin: 1.5em auto 0;
+  padding: 0 1em;
+}
+
+#question-title-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  
+  /* 核心修改：使用主题色作为背景，文字改为白色 */
+  background-color: #ff9999; /* 使用主题柔和粉色 */
+  color: white; /* 所有文本使用白色 */
+
+  border-radius: 18px;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(255, 100, 100, 0.3); /* 阴影更重，更具立体感 */
+  transition: all 0.2s ease-out;
+  
+  /* 防止被其他元素遮挡 */
+  position: relative;
+  z-index: 100;
+  user-select: none;
+}
+
+#question-title-bar:hover {
+  background-color: #f08c8c; /* 悬停时颜色略深 */
+  box-shadow: 0 8px 18px rgba(255, 100, 100, 0.4);
+}
+
+#question-label {
+  font-weight: 700;
+  color: white; /* 确保标题标签是白色 */
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+}
+
+#question-label .material-icons {
+  margin-right: 8px; /* 图标间距略增 */
+  font-size: 1.5em; /* 图标放大 */
+}
+
+#carousel-text-container {
+  flex-grow: 1;
+  height: 1.5em;
+  overflow: hidden;
+  font-size: 0.95em;
+  color: #ffdeeb; /* 使用浅粉色，与白色形成微弱对比 */
+  text-align: right;
+}
+
+#carousel-text {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+#dropdown-arrow {
+  font-size: 1.8em; /* 箭头图标放大 */
+  color: white; /* 确保箭头是白色 */
+  transition: transform 0.3s ease-in-out;
+}
+
+#question-title-bar.active #dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+#dropdown-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
+  padding: 0 10px;
+}
+
+#dropdown-content.open {
+  max-height: 300px;
+  padding: 10px 10px 0 10px;
+}
+
+.question-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.9em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  white-space: nowrap;
+  flex-shrink: 0;
+  width: fit-content;
+}
+
+.question-tag:nth-child(4n + 1) {
+  background-color: #ffeaea;
+  color: #d66;
+  border: 1px solid #ffcccc;
+}
+
+.question-tag:nth-child(4n + 2) {
+  background-color: #eaf3ff;
+  color: #72a5ff;
+  border: 1px solid #cce0ff;
+}
+
+.question-tag:nth-child(4n + 3) {
+  background-color: #e8fff0;
+  color: #4db6ac;
+  border: 1px solid #c0f5d4;
+}
+
+.question-tag:nth-child(4n + 4) {
+  background-color: #fffbe9;
+  color: #ffc107;
+  border: 1px solid #ffe6aa;
+}
+
+.question-tag:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+@layer components {
+  /**
+   * Card click animation effects
+   * Provides scale, rotate and brightness feedback
+   */
+  @keyframes cardClickPulse {
+    0% {
+      transform: scale(1) rotate(0deg);
+      filter: brightness(1);
+    }
+    50% {
+      transform: scale(1.02) rotate(1deg);
+      filter: brightness(1.05);
+    }
+    100% {
+      transform: scale(1) rotate(0deg);
+      filter: brightness(1);
+    }
+  }
+
+  .card-interactive {
+    @apply transition-all duration-300 ease-out cursor-pointer;
+  }
+
+  .card-interactive:hover {
+    @apply shadow-xl;
+  }
+
+  .card-interactive:active {
+    animation: cardClickPulse 0.6s ease-out;
+  }
+
+  /**
+   * Custom container utility that centers content and adds responsive padding.
+   *
+   * This overrides Tailwind's default container behavior to:
+   * - Auto-center content (mx-auto)
+   * - Add responsive horizontal padding
+   * - Set max-width for large screens
+   *
+   * Usage: <div className="container">...</div>
+   *
+   * For custom widths, use max-w-* utilities directly:
+   * <div className="max-w-6xl mx-auto px-4">...</div>
+   */
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem; /* 16px - mobile padding */
+    padding-right: 1rem;
+  }
+
+  .flex {
+    min-height: 0;
+    min-width: 0;
+  }
+
+  @media (min-width: 640px) {
+    .container {
+      padding-left: 1.5rem; /* 24px - tablet padding */
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 2rem; /* 32px - desktop padding */
+      padding-right: 2rem;
+      max-width: 1280px; /* Standard content width */
+    }
+  }
+}
