@@ -1,8 +1,13 @@
 {
+  "functions": {
+    "api/**/*.js": {
+      "runtime": "nodejs18.x"
+    }
+  },
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/api/dist/index"
+      "destination": "/api/index"
     }
   ],
   "outputDirectory": "dist/public",
