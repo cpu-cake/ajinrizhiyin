@@ -5,6 +5,11 @@
       "destination": "/api/index"
     }
   ],
+  "functions": {
+    "api/index.ts": {
+      "includeFiles": "server/**"
+    }
+  },
   "outputDirectory": "dist/public",
   "buildCommand": "npm run build"
 }
