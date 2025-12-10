@@ -1,14 +1,7 @@
 {
   "functions": {
     "api/**/*.ts": {
-      "includeFiles": [
-        "server/**",
-        "drizzle/**",
-        "shared/**",
-        "package.json",
-        "pnpm-lock.yaml",
-        "tsconfig.json"
-      ]
+      "includeFiles": "{server/**,drizzle/**,shared/**,package.json,pnpm-lock.yaml,tsconfig.json}"
     }
   },
   "rewrites": [
