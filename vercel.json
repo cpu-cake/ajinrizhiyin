@@ -1,7 +1,6 @@
 {
   "functions": {
     "api/**/*.ts": {
-      "runtime": "nodejs18.x",
       "includeFiles": "{server/**,drizzle/**,shared/**,package.json,pnpm-lock.yaml,tsconfig.json}"
     }
   },
