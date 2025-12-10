@@ -2,14 +2,9 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/api/index"
+      "destination": "/api/dist/index"
     }
   ],
-  "functions": {
-    "api/index.ts": {
-      "includeFiles": "server/**"
-    }
-  },
   "outputDirectory": "dist/public",
   "buildCommand": "npm run build"
 }
