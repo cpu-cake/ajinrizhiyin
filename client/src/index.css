@@ -457,9 +457,9 @@
   -webkit-column-count: 8;
   -moz-column-count: 8;
   column-count: 8;
-  -webkit-column-gap: 16px;
-  -moz-column-gap: 16px;
-  column-gap: 16px;
+  -webkit-column-gap: 20px;
+  -moz-column-gap: 20px;
+  column-gap: 20px;
   -webkit-column-fill: auto;
   -moz-column-fill: auto;
   column-fill: auto;
@@ -509,10 +509,10 @@
 @supports (display: grid) {
   #question-tags-container {
     display: grid;
-    grid-template-columns: repeat(8, minmax(0, 1fr));
+    grid-template-columns: repeat(8, minmax(120px, 1fr));
     grid-template-rows: repeat(6, 38px);
     grid-auto-flow: column;
-    gap: 10px 16px;
+    gap: 10px 20px;
     /* 严格限制为6行 */
     height: 260px;
     max-height: 260px;
@@ -549,6 +549,35 @@
     -webkit-column-count: 4;
     -moz-column-count: 4;
     column-count: 4;
+    -webkit-column-gap: 16px;
+    -moz-column-gap: 16px;
+    column-gap: 16px;
+    /* 严格限制高度为6行 */
+    height: 260px;
+    max-height: 260px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    min-width: 100%;
+    white-space: nowrap;
+  }
+  
+  @supports (display: grid) {
+    #question-tags-container {
+      grid-template-columns: repeat(4, minmax(100px, 1fr));
+      max-height: 260px;
+      height: 260px;
+      gap: 10px 16px;
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #question-tags-container {
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+    column-count: 2;
     -webkit-column-gap: 12px;
     -moz-column-gap: 12px;
     column-gap: 12px;
@@ -565,37 +594,10 @@
   
   @supports (display: grid) {
     #question-tags-container {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(120px, 1fr));
       max-height: 260px;
       height: 260px;
-    }
-  }
-}
-
-@media screen and (max-width: 480px) {
-  #question-tags-container {
-    -webkit-column-count: 2;
-    -moz-column-count: 2;
-    column-count: 2;
-    -webkit-column-gap: 8px;
-    -moz-column-gap: 8px;
-    column-gap: 8px;
-    /* 严格限制高度为6行 */
-    height: 260px;
-    max-height: 260px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    width: 100%;
-    min-width: 100%;
-    white-space: nowrap;
-  }
-  
-  @supports (display: grid) {
-    #question-tags-container {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      max-height: 260px;
-      height: 260px;
+      gap: 10px 12px;
     }
   }
 }

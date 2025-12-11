@@ -528,12 +528,15 @@ export default function Home() {
           )}
 
           {/* 运势分析结果 - 按原始HTML的布局 */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12" style={{
+          <div className="grid grid-cols-1 md:grid-cols-3 mb-8 sm:mb-12" style={{
             width: '100%',
             maxWidth: '100%',
             boxSizing: 'border-box',
             paddingLeft: '0',
-            paddingRight: '0'
+            paddingRight: '0',
+            gap: '16px',
+            rowGap: '16px',
+            columnGap: '16px'
           }}>
             {/* 早安心语 - 跨越全宽 */}
             <div className="md:col-span-3">
@@ -564,9 +567,9 @@ export default function Home() {
             {/* 穿搭灵感 - 跨越2列 */}
             <div className="md:col-span-2" style={{width: '100%', maxWidth: '100%', boxSizing: 'border-box'}}>
               <div className="card-interactive rounded-2xl border-l-4" style={{
-                padding: '16px',
-                paddingTop: '16px',
-                paddingBottom: '16px',
+                padding: '12px 16px',
+                paddingTop: '12px',
+                paddingBottom: '12px',
                 paddingLeft: '16px',
                 paddingRight: '16px',
                 borderLeftColor: '#72a5ff',
@@ -590,9 +593,9 @@ export default function Home() {
             {/* 幸运配色 - 1列 */}
             <div className="md:col-span-1" style={{width: '100%', maxWidth: '100%', boxSizing: 'border-box'}}>
               <div className="card-interactive rounded-2xl border-l-4" style={{
-                padding: '16px',
-                paddingTop: '16px',
-                paddingBottom: '16px',
+                padding: '12px 16px',
+                paddingTop: '12px',
+                paddingBottom: '12px',
                 paddingLeft: '16px',
                 paddingRight: '16px',
                 borderLeftColor: '#64dd17',
@@ -616,9 +619,9 @@ export default function Home() {
             {/* 情绪流动 - 1列 */}
             <div className="md:col-span-1" style={{width: '100%', maxWidth: '100%', boxSizing: 'border-box'}}>
               <div className="card-interactive rounded-2xl border-l-4" style={{
-                padding: '16px',
-                paddingTop: '16px',
-                paddingBottom: '16px',
+                padding: '12px 16px',
+                paddingTop: '12px',
+                paddingBottom: '12px',
                 paddingLeft: '16px',
                 paddingRight: '16px',
                 borderLeftColor: '#ffc107',
@@ -642,9 +645,9 @@ export default function Home() {
             {/* 工作指引 - 跨越2列 */}
             <div className="md:col-span-2" style={{width: '100%', maxWidth: '100%', boxSizing: 'border-box'}}>
               <div className="card-interactive rounded-2xl border-l-4" style={{
-                padding: '16px',
-                paddingTop: '16px',
-                paddingBottom: '16px',
+                padding: '12px 16px',
+                paddingTop: '12px',
+                paddingBottom: '12px',
                 paddingLeft: '16px',
                 paddingRight: '16px',
                 borderLeftColor: '#4db6ac',
@@ -668,9 +671,9 @@ export default function Home() {
             {/* 情感气场 - 跨越2列 */}
             <div className="md:col-span-2" style={{width: '100%', maxWidth: '100%', boxSizing: 'border-box'}}>
               <div className="card-interactive rounded-2xl border-l-4" style={{
-                padding: '16px',
-                paddingTop: '16px',
-                paddingBottom: '16px',
+                padding: '12px 16px',
+                paddingTop: '12px',
+                paddingBottom: '12px',
                 paddingLeft: '16px',
                 paddingRight: '16px',
                 borderLeftColor: '#f48fb1',
@@ -694,9 +697,9 @@ export default function Home() {
             {/* 幸运微光 - 1列 */}
             <div className="md:col-span-1" style={{width: '100%', maxWidth: '100%', boxSizing: 'border-box'}}>
               <div className="card-interactive rounded-2xl border-l-4" style={{
-                padding: '16px',
-                paddingTop: '16px',
-                paddingBottom: '16px',
+                padding: '12px 16px',
+                paddingTop: '12px',
+                paddingBottom: '12px',
                 paddingLeft: '16px',
                 paddingRight: '16px',
                 borderLeftColor: '#9c27b0',
