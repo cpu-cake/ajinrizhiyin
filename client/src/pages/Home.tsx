@@ -317,21 +317,58 @@ export default function Home() {
   // 加载状态
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{
+      <div className="min-h-screen" style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         background: '#fff7ed',
-        backgroundImage: 'linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%)',
+        backgroundImage: '-webkit-linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%), -moz-linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%), -o-linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%), linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%)',
         backgroundSize: '100% 100%',
         backgroundRepeat: 'no-repeat',
-        backgroundAttachment: 'scroll'
+        backgroundAttachment: 'scroll',
+        minHeight: '100vh',
+        minHeight: '-webkit-fill-available'
       }}>
-        <div className="text-center px-4">
-          <div className="mb-6 flex justify-center">
-            <div className="relative w-20 h-20">
-              <div className="absolute inset-0 border-4 border-pink-200 rounded-full"></div>
-              <div className="absolute inset-0 border-4 border-pink-400 rounded-full border-t-transparent animate-spin"></div>
+        <div style={{
+          textAlign: 'center',
+          padding: '0 16px',
+          width: '100%',
+          maxWidth: '100%'
+        }}>
+          <div style={{
+            marginBottom: '24px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}>
+            <div style={{
+              position: 'relative',
+              width: '80px',
+              height: '80px'
+            }}>
+              <div style={{
+                position: 'absolute',
+                inset: 0,
+                border: '4px solid #fbcfe8',
+                borderRadius: '50%'
+              }}></div>
+              <div className="loading-spinner" style={{
+                position: 'absolute',
+                inset: 0,
+                border: '4px solid #f472b6',
+                borderTopColor: 'transparent',
+                borderRadius: '50%',
+                animation: 'spin 1s linear infinite'
+              }}></div>
             </div>
           </div>
-          <p className="text-gray-600 text-lg font-medium">正在为你生成今日专属指引...</p>
+          <p style={{
+            color: '#4b5563',
+            fontSize: '18px',
+            fontWeight: 500,
+            margin: 0,
+            textAlign: 'center'
+          }}>正在为你生成今日专属指引...</p>
         </div>
       </div>
     );
@@ -342,7 +379,7 @@ export default function Home() {
     return (
       <div className="min-h-screen py-6 sm:py-8" style={{
         background: '#fff7ed',
-        backgroundImage: 'linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%)',
+        backgroundImage: '-webkit-linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%), -moz-linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%), -o-linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%), linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%)',
         backgroundSize: '100% 100%',
         backgroundRepeat: 'no-repeat',
         backgroundAttachment: 'scroll'
@@ -379,19 +416,11 @@ export default function Home() {
               </div>
               <span className="material-icons" id="dropdown-arrow">expand_more</span>
             </div>
-            <div id="dropdown-content" style={{paddingTop: '0px', paddingRight: '0px', paddingLeft: '0px', height: '310px'}}>
+            <div id="dropdown-content" style={{paddingTop: '0px', paddingRight: '0px', paddingLeft: '0px'}}>
               <div id="question-tags-container" style={{
-                display: 'flex',
-                flexDirection: 'column', // 纵向排列
-                flexWrap: 'wrap', // 自动换行（换列）
-                alignContent: 'flex-start', // 列从左开始排列
-                rowGap: '10px', // 纵向间距固定10px
-                columnGap: '16px', // 横向间距固定16px
                 padding: '12px',
-                height: '310px', // 增加高度，确保6行后自动换列
-                overflowX: 'auto', // 横向滚动
-                overflowY: 'hidden', // 隐藏纵向滚动
-                width: 'auto'
+                width: '100%',
+                boxSizing: 'border-box'
               }}></div>
             </div>
             {(explanation || isExplanationLoading) && (
@@ -538,7 +567,7 @@ export default function Home() {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{
         background: '#fff7ed',
-        backgroundImage: 'linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%)',
+        backgroundImage: '-webkit-linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%), -moz-linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%), -o-linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%), linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%)',
         backgroundSize: '100% 100%',
         backgroundRepeat: 'no-repeat',
         backgroundAttachment: 'scroll'

@@ -40,6 +40,10 @@
         min-height: 100vh;
         min-height: -webkit-fill-available;
         background: #fff7ed;
+        /* 添加所有浏览器前缀以支持旧版安卓浏览器 */
+        background-image: -webkit-linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%);
+        background-image: -moz-linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%);
+        background-image: -o-linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%);
         background-image: linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%);
         background-attachment: scroll;
         background-size: 100% 100%;
@@ -116,6 +120,25 @@
       @keyframes pulse {
         0%, 100% { opacity: 1; }
         50% { opacity: 0.5; }
+      }
+      
+      /* 加载动画 - 兼容旧浏览器 */
+      @keyframes spin {
+        from {
+          -webkit-transform: rotate(0deg);
+          -ms-transform: rotate(0deg);
+          transform: rotate(0deg);
+        }
+        to {
+          -webkit-transform: rotate(360deg);
+          -ms-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+      
+      .loading-spinner {
+        -webkit-animation: spin 1s linear infinite;
+        animation: spin 1s linear infinite;
       }
     </style>
     <!-- Material Icons -->
