@@ -219,11 +219,30 @@ export default function Home() {
       const hotQuestions = hotQuestionsQuery.data?.hotQuestions || [];
       
       // 添加新标签
-      QUESTIONS.forEach((q) => {
+      QUESTIONS.forEach((q, index) => {
         const tag = document.createElement('span');
         tag.className = 'question-tag';
         tag.style.cursor = 'pointer';
         tag.style.position = 'relative'; // 为徽章定位做准备
+        // 强制应用背景色和边框（兼容安卓浏览器）
+        const colorIndex = (index % 4) + 1;
+        if (colorIndex === 1) {
+          tag.style.backgroundColor = '#ffeaea';
+          tag.style.color = '#d66';
+          tag.style.border = '1px solid #ffcccc';
+        } else if (colorIndex === 2) {
+          tag.style.backgroundColor = '#eaf3ff';
+          tag.style.color = '#72a5ff';
+          tag.style.border = '1px solid #cce0ff';
+        } else if (colorIndex === 3) {
+          tag.style.backgroundColor = '#e8fff0';
+          tag.style.color = '#4db6ac';
+          tag.style.border = '1px solid #c0f5d4';
+        } else {
+          tag.style.backgroundColor = '#fffbe9';
+          tag.style.color = '#ffc107';
+          tag.style.border = '1px solid #ffe6aa';
+        }
         
         // 如果是热门标签，添加火焰徽章
         if (hotQuestions.includes(q)) {
@@ -326,8 +345,7 @@ export default function Home() {
         backgroundSize: '100% 100%',
         backgroundRepeat: 'no-repeat',
         backgroundAttachment: 'scroll',
-        minHeight: '100vh',
-        minHeight: '-webkit-fill-available'
+        minHeight: '100vh'
       }}>
         <div style={{
           textAlign: 'center',
@@ -343,21 +361,32 @@ export default function Home() {
           }}>
             <div style={{
               position: 'relative',
-              width: '80px',
-              height: '80px'
+              width: '120px',
+              height: '120px',
+              minWidth: '120px',
+              minHeight: '120px'
             }}>
               <div style={{
                 position: 'absolute',
-                inset: 0,
-                border: '4px solid #fbcfe8',
-                borderRadius: '50%'
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                border: '6px solid #fbcfe8',
+                borderRadius: '50%',
+                boxSizing: 'border-box'
               }}></div>
               <div className="loading-spinner" style={{
                 position: 'absolute',
-                inset: 0,
-                border: '4px solid #f472b6',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                border: '6px solid #f472b6',
                 borderTopColor: 'transparent',
                 borderRadius: '50%',
+                boxSizing: 'border-box',
+                WebkitAnimation: 'spin 1s linear infinite',
                 animation: 'spin 1s linear infinite'
               }}></div>
             </div>
@@ -435,7 +464,14 @@ export default function Home() {
                     </p>
                   </div>
                 ) : (
-                  <div className="mt-4 p-4 bg-white rounded-lg border-l-4" style={{borderLeftColor: '#4eb7a2', marginBottom: '16px', marginTop: '0px'}}>
+                  <div className="mt-4 p-4 rounded-lg border-l-4" style={{
+                    borderLeftColor: '#4eb7a2',
+                    marginBottom: '16px',
+                    marginTop: '0px',
+                    backgroundColor: '#ffffff',
+                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                    WebkitBoxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+                  }}>
                     <h3 className="font-semibold text-base sm:text-lg mb-3" style={{color: '#4eb7a2'}}>
                       {selectedQuestion}
                     </h3>
@@ -466,7 +502,12 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
             {/* 早安心语 - 跨越全宽 */}
             <div className="md:col-span-3">
-              <div className="card-interactive bg-white rounded-2xl p-4 sm:p-6 shadow-lg border-l-4" style={{borderLeftColor: '#ff9999'}}>
+              <div className="card-interactive rounded-2xl p-4 sm:p-6 border-l-4" style={{
+                borderLeftColor: '#ff9999',
+                backgroundColor: '#ffffff',
+                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+              }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#ff9999'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>waving_hand</span>
                   早安心语
@@ -479,7 +520,12 @@ export default function Home() {
 
             {/* 穿搭灵感 - 跨越2列 */}
             <div className="md:col-span-2">
-              <div className="card-interactive bg-white rounded-2xl p-4 sm:p-6 shadow-lg border-l-4" style={{borderLeftColor: '#72a5ff'}}>
+              <div className="card-interactive rounded-2xl p-4 sm:p-6 border-l-4" style={{
+                borderLeftColor: '#72a5ff',
+                backgroundColor: '#ffffff',
+                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+              }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#72a5ff'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>checkroom</span>
                   穿搭灵感

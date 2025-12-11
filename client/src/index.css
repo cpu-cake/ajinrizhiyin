@@ -447,91 +447,122 @@
 #dropdown-content.open {
   max-height: 500px;
   padding: 10px 10px 0 10px;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
-/* 标签容器布局 - 使用兼容性更好的方式 */
+/* 标签容器布局 - 使用 CSS Columns，限制高度实现每列6行 */
 #question-tags-container {
   display: block;
+  -webkit-column-count: 8;
+  -moz-column-count: 8;
+  column-count: 8;
+  -webkit-column-gap: 16px;
+  -moz-column-gap: 16px;
+  column-gap: 16px;
+  -webkit-column-fill: auto;
+  -moz-column-fill: auto;
+  column-fill: auto;
+  /* 限制高度：6行 * (标签高度约35px + 间距10px) ≈ 6 * 45px = 270px */
+  height: 270px;
+  max-height: 270px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
   width: 100%;
   padding: 12px;
   box-sizing: border-box;
 }
 
-/* 使用 CSS Grid 布局，兼容旧浏览器时降级为 column */
-#question-tags-container {
-  display: -ms-grid;
-  display: grid;
-  /* 旧版浏览器兼容 */
-  -ms-grid-columns: 1fr 16px 1fr 16px 1fr 16px 1fr 16px 1fr 16px 1fr 16px 1fr 16px 1fr;
-  /* 现代浏览器 */
-  grid-template-columns: repeat(8, minmax(0, 1fr));
-  grid-auto-rows: auto;
-  gap: 10px 16px;
-  -webkit-align-items: start;
-  -ms-flex-align: start;
-  align-items: start;
+/* CSS Columns 模式下的标签样式 */
+.question-tag {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 10px;
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
+  break-inside: avoid-column;
+  box-sizing: border-box;
+  white-space: normal;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.4;
+  overflow: hidden;
 }
 
-/* 旧浏览器降级方案 - 使用 CSS Columns（按列填充） */
-@supports not (display: grid) {
+/* 现代浏览器支持 Grid 时使用 Grid */
+@supports (display: grid) {
   #question-tags-container {
-    display: block;
-    -webkit-column-count: 8;
-    -moz-column-count: 8;
-    column-count: 8;
-    -webkit-column-gap: 16px;
-    -moz-column-gap: 16px;
-    column-gap: 16px;
-    -webkit-column-fill: balance;
-    -moz-column-fill: balance;
-    column-fill: balance;
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    grid-auto-rows: auto;
+    grid-auto-flow: row;
+    gap: 10px 16px;
+    height: auto;
+    max-height: none;
+    /* 限制为6行：每行高度约40px，6行 = 240px + padding */
+    max-height: calc(6 * 40px + 24px);
+    overflow-x: auto;
+    overflow-y: hidden;
   }
   
   .question-tag {
-    display: inline-block;
+    display: -webkit-inline-flex;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
     width: 100%;
-    margin-bottom: 10px;
-    -webkit-column-break-inside: avoid;
-    page-break-inside: avoid;
-    break-inside: avoid-column;
+    margin-bottom: 0;
   }
 }
 
-/* 移动端优化 - 减少列数 */
+/* 移动端优化 - 减少列数，但保持每列6行，添加横向滚动 */
 @media screen and (max-width: 768px) {
   #question-tags-container {
-    -ms-grid-columns: 1fr 12px 1fr 12px 1fr 12px 1fr;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 10px 12px;
+    -webkit-column-count: 4;
+    -moz-column-count: 4;
+    column-count: 4;
+    -webkit-column-gap: 12px;
+    -moz-column-gap: 12px;
+    column-gap: 12px;
+    height: 270px;
+    max-height: 270px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    min-width: 100%;
   }
   
-  @supports not (display: grid) {
+  @supports (display: grid) {
     #question-tags-container {
-      -webkit-column-count: 4;
-      -moz-column-count: 4;
-      column-count: 4;
-      -webkit-column-gap: 12px;
-      -moz-column-gap: 12px;
-      column-gap: 12px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      max-height: calc(6 * 40px + 24px);
     }
   }
 }
 
 @media screen and (max-width: 480px) {
   #question-tags-container {
-    -ms-grid-columns: 1fr 8px 1fr;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px 8px;
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+    column-count: 2;
+    -webkit-column-gap: 8px;
+    -moz-column-gap: 8px;
+    column-gap: 8px;
+    height: 270px;
+    max-height: 270px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    min-width: 100%;
   }
   
-  @supports not (display: grid) {
+  @supports (display: grid) {
     #question-tags-container {
-      -webkit-column-count: 2;
-      -moz-column-count: 2;
-      column-count: 2;
-      -webkit-column-gap: 8px;
-      -moz-column-gap: 8px;
-      column-gap: 8px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      max-height: calc(6 * 40px + 24px);
     }
   }
 }
@@ -557,39 +588,45 @@
   cursor: pointer;
   -webkit-transition: background-color 0.2s, -webkit-transform 0.1s;
   transition: background-color 0.2s, transform 0.1s;
-  white-space: nowrap;
+  white-space: normal;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
   width: 100%;
   max-width: 100%;
+  min-width: 0;
   box-sizing: border-box;
-  word-break: break-word;
-  overflow-wrap: break-word;
+  /* 确保背景和文字自适应 */
+  overflow: hidden;
+  line-height: 1.4;
+  /* 强制应用背景色 */
 }
 
 .question-tag:nth-child(4n + 1) {
-  background-color: #ffeaea;
-  color: #d66;
-  border: 1px solid #ffcccc;
+  background-color: #ffeaea !important;
+  color: #d66 !important;
+  border: 1px solid #ffcccc !important;
 }
 
 .question-tag:nth-child(4n + 2) {
-  background-color: #eaf3ff;
-  color: #72a5ff;
-  border: 1px solid #cce0ff;
+  background-color: #eaf3ff !important;
+  color: #72a5ff !important;
+  border: 1px solid #cce0ff !important;
 }
 
 .question-tag:nth-child(4n + 3) {
-  background-color: #e8fff0;
-  color: #4db6ac;
-  border: 1px solid #c0f5d4;
+  background-color: #e8fff0 !important;
+  color: #4db6ac !important;
+  border: 1px solid #c0f5d4 !important;
 }
 
 .question-tag:nth-child(4n + 4) {
-  background-color: #fffbe9;
-  color: #ffc107;
-  border: 1px solid #ffe6aa;
+  background-color: #fffbe9 !important;
+  color: #ffc107 !important;
+  border: 1px solid #ffe6aa !important;
 }
 
 .question-tag:hover {
