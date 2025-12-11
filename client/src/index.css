@@ -477,10 +477,12 @@
   position: relative;
 }
 
-/* CSS Columns 模式下的标签样式 */
+/* CSS Columns 模式下的标签样式 - 横条自适应文字宽度 */
 .question-tag {
   display: inline-block;
-  width: 100%;
+  width: auto;
+  min-width: auto;
+  max-width: 100%;
   margin-bottom: 10px;
   -webkit-column-break-inside: avoid;
   page-break-inside: avoid;
@@ -494,10 +496,13 @@
   /* 确保标签高度一致 */
   min-height: 38px;
   max-height: 38px;
-  /* 确保文字在背景内 */
+  height: auto;
+  /* 确保文字在背景内，横条自适应 */
   padding: 6px 14px;
   text-align: center;
   vertical-align: top;
+  /* 横条样式，不是圆形 */
+  border-radius: 20px;
 }
 
 /* 现代浏览器支持 Grid 时使用 Grid */
@@ -520,16 +525,21 @@
     display: -webkit-inline-flex;
     display: -ms-inline-flexbox;
     display: inline-flex;
-    width: 100%;
+    width: auto;
+    min-width: auto;
+    max-width: 100%;
     margin-bottom: 0;
     min-height: 38px;
     max-height: 38px;
+    height: auto;
     align-items: center;
     justify-content: center;
     /* 文字横向显示 */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    /* 横条样式，不是圆形 */
+    border-radius: 20px;
   }
 }
 
@@ -611,20 +621,21 @@
   cursor: pointer;
   -webkit-transition: background-color 0.2s, -webkit-transform 0.1s;
   transition: background-color 0.2s, transform 0.1s;
-  white-space: normal;
-  word-wrap: break-word;
-  word-break: break-word;
-  overflow-wrap: break-word;
+  /* 横条自适应文字宽度 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
-  width: 100%;
+  width: auto;
+  min-width: auto;
   max-width: 100%;
-  min-width: 0;
   box-sizing: border-box;
-  /* 确保背景和文字自适应 */
-  overflow: hidden;
   line-height: 1.4;
+  height: auto;
+  min-height: 38px;
+  max-height: 38px;
   /* 强制应用背景色 */
 }
 

@@ -260,8 +260,12 @@ export default function Home() {
         const textNode = document.createTextNode(q);
         tag.appendChild(textNode);
         // 强制设置标签样式，确保文字横向且不溢出
+        tag.style.width = 'auto';
+        tag.style.minWidth = 'auto';
+        tag.style.maxWidth = '100%';
         tag.style.minHeight = '38px';
         tag.style.maxHeight = '38px';
+        tag.style.height = 'auto';
         tag.style.padding = '6px 14px';
         tag.style.textAlign = 'center';
         tag.style.display = 'inline-flex';
@@ -270,6 +274,7 @@ export default function Home() {
         tag.style.whiteSpace = 'nowrap';
         tag.style.overflow = 'hidden';
         tag.style.textOverflow = 'ellipsis';
+        tag.style.borderRadius = '20px';
 
         tag.addEventListener('click', () => {
           console.log('点击了问题:', q);
@@ -532,11 +537,19 @@ export default function Home() {
           }}>
             {/* 早安心语 - 跨越全宽 */}
             <div className="md:col-span-3">
-              <div className="card-interactive rounded-2xl p-4 sm:p-6 border-l-4" style={{
+              <div className="card-interactive rounded-2xl border-l-4" style={{
                 borderLeftColor: '#ff9999',
                 backgroundColor: '#ffffff',
                 boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                width: '100%',
+                maxWidth: '100%',
+                boxSizing: 'border-box',
+                padding: '16px',
+                paddingTop: '16px',
+                paddingBottom: '16px',
+                paddingLeft: '16px',
+                paddingRight: '16px'
               }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#ff9999'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>waving_hand</span>
@@ -550,7 +563,12 @@ export default function Home() {
 
             {/* 穿搭灵感 - 跨越2列 */}
             <div className="md:col-span-2" style={{width: '100%', maxWidth: '100%', boxSizing: 'border-box'}}>
-              <div className="card-interactive rounded-2xl p-4 sm:p-6 border-l-4" style={{
+              <div className="card-interactive rounded-2xl border-l-4" style={{
+                padding: '16px',
+                paddingTop: '16px',
+                paddingBottom: '16px',
+                paddingLeft: '16px',
+                paddingRight: '16px',
                 borderLeftColor: '#72a5ff',
                 backgroundColor: '#ffffff',
                 boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
@@ -571,7 +589,12 @@ export default function Home() {
 
             {/* 幸运配色 - 1列 */}
             <div className="md:col-span-1" style={{width: '100%', maxWidth: '100%', boxSizing: 'border-box'}}>
-              <div className="card-interactive rounded-2xl p-4 sm:p-6 border-l-4" style={{
+              <div className="card-interactive rounded-2xl border-l-4" style={{
+                padding: '16px',
+                paddingTop: '16px',
+                paddingBottom: '16px',
+                paddingLeft: '16px',
+                paddingRight: '16px',
                 borderLeftColor: '#64dd17',
                 backgroundColor: '#ffffff',
                 boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
@@ -592,7 +615,12 @@ export default function Home() {
 
             {/* 情绪流动 - 1列 */}
             <div className="md:col-span-1" style={{width: '100%', maxWidth: '100%', boxSizing: 'border-box'}}>
-              <div className="card-interactive rounded-2xl p-4 sm:p-6 border-l-4" style={{
+              <div className="card-interactive rounded-2xl border-l-4" style={{
+                padding: '16px',
+                paddingTop: '16px',
+                paddingBottom: '16px',
+                paddingLeft: '16px',
+                paddingRight: '16px',
                 borderLeftColor: '#ffc107',
                 backgroundColor: '#ffffff',
                 boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
@@ -613,7 +641,12 @@ export default function Home() {
 
             {/* 工作指引 - 跨越2列 */}
             <div className="md:col-span-2" style={{width: '100%', maxWidth: '100%', boxSizing: 'border-box'}}>
-              <div className="card-interactive rounded-2xl p-4 sm:p-6 border-l-4" style={{
+              <div className="card-interactive rounded-2xl border-l-4" style={{
+                padding: '16px',
+                paddingTop: '16px',
+                paddingBottom: '16px',
+                paddingLeft: '16px',
+                paddingRight: '16px',
                 borderLeftColor: '#4db6ac',
                 backgroundColor: '#ffffff',
                 boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
@@ -634,7 +667,12 @@ export default function Home() {
 
             {/* 情感气场 - 跨越2列 */}
             <div className="md:col-span-2" style={{width: '100%', maxWidth: '100%', boxSizing: 'border-box'}}>
-              <div className="card-interactive rounded-2xl p-4 sm:p-6 border-l-4" style={{
+              <div className="card-interactive rounded-2xl border-l-4" style={{
+                padding: '16px',
+                paddingTop: '16px',
+                paddingBottom: '16px',
+                paddingLeft: '16px',
+                paddingRight: '16px',
                 borderLeftColor: '#f48fb1',
                 backgroundColor: '#ffffff',
                 boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
@@ -655,7 +693,12 @@ export default function Home() {
 
             {/* 幸运微光 - 1列 */}
             <div className="md:col-span-1" style={{width: '100%', maxWidth: '100%', boxSizing: 'border-box'}}>
-              <div className="card-interactive rounded-2xl p-4 sm:p-6 border-l-4" style={{
+              <div className="card-interactive rounded-2xl border-l-4" style={{
+                padding: '16px',
+                paddingTop: '16px',
+                paddingBottom: '16px',
+                paddingLeft: '16px',
+                paddingRight: '16px',
                 borderLeftColor: '#9c27b0',
                 backgroundColor: '#ffffff',
                 boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
