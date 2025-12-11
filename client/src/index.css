@@ -256,6 +256,49 @@
   }
 }
 
+/* 安卓原生浏览器特定优化 */
+@supports (-webkit-touch-callout: none) {
+  /* iOS Safari 和安卓 Chrome */
+  body {
+    -webkit-touch-callout: none;
+  }
+}
+
+/* 安卓 WebView 优化 */
+@media screen and (max-width: 768px) {
+  /* 防止页面缩放 */
+  html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  
+  /* 优化触摸反馈 */
+  .card-interactive:active,
+  .question-tag:active,
+  button:active,
+  a:active {
+    transform: scale(0.98);
+    transition: transform 0.1s;
+  }
+  
+  /* 防止长按选择文本（除了输入框） */
+  *:not(input):not(textarea):not([contenteditable="true"]) {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* 允许特定区域选择文本 */
+  .card-interactive,
+  .question-tag,
+  #question-title-bar {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+}
+
 /* 解答小困惑功能样式 */
 #question-section {
   max-width: 900px;
