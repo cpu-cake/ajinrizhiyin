@@ -11,5 +11,5 @@
     }
   ],
   "outputDirectory": "dist/public",
-  "buildCommand": "npm run build"
+  "buildCommand": "yarn build"
 }
