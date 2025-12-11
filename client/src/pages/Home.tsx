@@ -548,9 +548,9 @@ export default function Home() {
                 width: '100%',
                 maxWidth: '100%',
                 boxSizing: 'border-box',
-                padding: '16px',
-                paddingTop: '16px',
-                paddingBottom: '16px',
+                padding: '12px 16px',
+                paddingTop: '12px',
+                paddingBottom: '12px',
                 paddingLeft: '16px',
                 paddingRight: '16px'
               }}>
