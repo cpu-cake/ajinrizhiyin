@@ -580,17 +580,6 @@
   }
   
   /* 禁用 Grid，强制使用 CSS Columns */
-  /*
-  @supports (display: grid) {
-    #question-tags-container {
-      grid-template-columns: 140px 140px repeat(2, minmax(100px, 1fr));
-      max-height: 288px;
-      height: 288px;
-      min-height: 288px;
-      gap: 10px 16px;
-    }
-  }
-  */
 }
 
 @media screen and (max-width: 480px) {
@@ -614,17 +603,6 @@
   }
   
   /* 禁用 Grid，强制使用 CSS Columns */
-  /*
-  @supports (display: grid) {
-    #question-tags-container {
-      grid-template-columns: 160px 160px;
-      max-height: 288px;
-      height: 288px;
-      min-height: 288px;
-      gap: 10px 12px;
-    }
-  }
-  */
 }
 
 .question-tag {
