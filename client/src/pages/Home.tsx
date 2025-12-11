@@ -256,10 +256,10 @@ export default function Home() {
           tag.appendChild(badge);
         }
         
-        // 添加标签文字 - 确保文字在背景内
+        // 添加标签文字 - 确保文字横向显示
         const textNode = document.createTextNode(q);
         tag.appendChild(textNode);
-        // 强制设置标签样式，确保文字不溢出
+        // 强制设置标签样式，确保文字横向且不溢出
         tag.style.minHeight = '38px';
         tag.style.maxHeight = '38px';
         tag.style.padding = '6px 14px';
@@ -267,8 +267,9 @@ export default function Home() {
         tag.style.display = 'inline-flex';
         tag.style.alignItems = 'center';
         tag.style.justifyContent = 'center';
-        tag.style.wordWrap = 'break-word';
+        tag.style.whiteSpace = 'nowrap';
         tag.style.overflow = 'hidden';
+        tag.style.textOverflow = 'ellipsis';
 
         tag.addEventListener('click', () => {
           console.log('点击了问题:', q);
@@ -423,7 +424,15 @@ export default function Home() {
         backgroundRepeat: 'no-repeat',
         backgroundAttachment: 'scroll'
       }}>
-        <div className="max-w-4xl mx-auto px-3 sm:px-4">
+        <div className="max-w-4xl mx-auto" style={{
+          paddingLeft: '16px',
+          paddingRight: '16px',
+          paddingTop: '24px',
+          paddingBottom: '24px',
+          boxSizing: 'border-box',
+          width: '100%',
+          maxWidth: '100%'
+        }}>
           {/* 顶部导航按钮 */}
           <div id="top-navigation">
             <a href="https://snailsleep-7edyehrw.manus.space" target="_blank" rel="noopener noreferrer" className="nav-button" id="sleep-button">
@@ -514,7 +523,13 @@ export default function Home() {
           )}
 
           {/* 运势分析结果 - 按原始HTML的布局 */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12" style={{
+            width: '100%',
+            maxWidth: '100%',
+            boxSizing: 'border-box',
+            paddingLeft: '0',
+            paddingRight: '0'
+          }}>
             {/* 早安心语 - 跨越全宽 */}
             <div className="md:col-span-3">
               <div className="card-interactive rounded-2xl p-4 sm:p-6 border-l-4" style={{
@@ -534,12 +549,15 @@ export default function Home() {
             </div>
 
             {/* 穿搭灵感 - 跨越2列 */}
-            <div className="md:col-span-2">
+            <div className="md:col-span-2" style={{width: '100%', maxWidth: '100%', boxSizing: 'border-box'}}>
               <div className="card-interactive rounded-2xl p-4 sm:p-6 border-l-4" style={{
                 borderLeftColor: '#72a5ff',
                 backgroundColor: '#ffffff',
                 boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                width: '100%',
+                maxWidth: '100%',
+                boxSizing: 'border-box'
               }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#72a5ff'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>checkroom</span>
@@ -552,12 +570,15 @@ export default function Home() {
             </div>
 
             {/* 幸运配色 - 1列 */}
-            <div className="md:col-span-1">
+            <div className="md:col-span-1" style={{width: '100%', maxWidth: '100%', boxSizing: 'border-box'}}>
               <div className="card-interactive rounded-2xl p-4 sm:p-6 border-l-4" style={{
                 borderLeftColor: '#64dd17',
                 backgroundColor: '#ffffff',
                 boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                width: '100%',
+                maxWidth: '100%',
+                boxSizing: 'border-box'
               }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#64dd17'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>palette</span>
@@ -570,12 +591,15 @@ export default function Home() {
             </div>
 
             {/* 情绪流动 - 1列 */}
-            <div className="md:col-span-1">
+            <div className="md:col-span-1" style={{width: '100%', maxWidth: '100%', boxSizing: 'border-box'}}>
               <div className="card-interactive rounded-2xl p-4 sm:p-6 border-l-4" style={{
                 borderLeftColor: '#ffc107',
                 backgroundColor: '#ffffff',
                 boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                width: '100%',
+                maxWidth: '100%',
+                boxSizing: 'border-box'
               }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#ffc107'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>sentiment_satisfied</span>
@@ -588,12 +612,15 @@ export default function Home() {
             </div>
 
             {/* 工作指引 - 跨越2列 */}
-            <div className="md:col-span-2">
+            <div className="md:col-span-2" style={{width: '100%', maxWidth: '100%', boxSizing: 'border-box'}}>
               <div className="card-interactive rounded-2xl p-4 sm:p-6 border-l-4" style={{
                 borderLeftColor: '#4db6ac',
                 backgroundColor: '#ffffff',
                 boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                width: '100%',
+                maxWidth: '100%',
+                boxSizing: 'border-box'
               }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#4db6ac'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>work</span>
@@ -606,12 +633,15 @@ export default function Home() {
             </div>
 
             {/* 情感气场 - 跨越2列 */}
-            <div className="md:col-span-2">
+            <div className="md:col-span-2" style={{width: '100%', maxWidth: '100%', boxSizing: 'border-box'}}>
               <div className="card-interactive rounded-2xl p-4 sm:p-6 border-l-4" style={{
                 borderLeftColor: '#f48fb1',
                 backgroundColor: '#ffffff',
                 boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                width: '100%',
+                maxWidth: '100%',
+                boxSizing: 'border-box'
               }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#f48fb1'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>favorite</span>
@@ -624,12 +654,15 @@ export default function Home() {
             </div>
 
             {/* 幸运微光 - 1列 */}
-            <div className="md:col-span-1">
+            <div className="md:col-span-1" style={{width: '100%', maxWidth: '100%', boxSizing: 'border-box'}}>
               <div className="card-interactive rounded-2xl p-4 sm:p-6 border-l-4" style={{
                 borderLeftColor: '#9c27b0',
                 backgroundColor: '#ffffff',
                 boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                width: '100%',
+                maxWidth: '100%',
+                boxSizing: 'border-box'
               }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#9c27b0'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>star</span>

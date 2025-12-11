@@ -486,12 +486,11 @@
   page-break-inside: avoid;
   break-inside: avoid-column;
   box-sizing: border-box;
-  white-space: normal;
-  word-wrap: break-word;
-  word-break: break-word;
-  overflow-wrap: break-word;
-  line-height: 1.4;
+  /* 文字横向显示，不换行 */
+  white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
   /* 确保标签高度一致 */
   min-height: 38px;
   max-height: 38px;
@@ -527,6 +526,10 @@
     max-height: 38px;
     align-items: center;
     justify-content: center;
+    /* 文字横向显示 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
