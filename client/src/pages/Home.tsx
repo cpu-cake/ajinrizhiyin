@@ -477,8 +477,9 @@ export default function Home() {
                 overflowX: 'auto',
                 overflowY: 'hidden',
                 WebkitOverflowScrolling: 'touch',
-                height: '260px',
-                maxHeight: '260px'
+                height: '288px',
+                maxHeight: '288px',
+                minHeight: '288px'
               }}></div>
             </div>
             {(explanation || isExplanationLoading) && (
@@ -528,7 +529,7 @@ export default function Home() {
           )}
 
           {/* 运势分析结果 - 按原始HTML的布局 */}
-          <div className="grid grid-cols-1 md:grid-cols-3 mb-8 sm:mb-12" style={{
+          <div className="grid grid-cols-1 md:grid-cols-3" style={{
             width: '100%',
             maxWidth: '100%',
             boxSizing: 'border-box',
@@ -536,13 +537,18 @@ export default function Home() {
             paddingRight: '0',
             gap: '16px',
             rowGap: '16px',
-            columnGap: '16px'
+            columnGap: '16px',
+            marginBottom: '32px',
+            marginTop: '0'
           }}>
             {/* 早安心语 - 跨越全宽 */}
             <div className="md:col-span-3">
               <div className="card-interactive rounded-2xl border-l-4" style={{
                 borderLeftColor: '#ff9999',
+                borderLeftWidth: '4px',
+                borderLeftStyle: 'solid',
                 backgroundColor: '#ffffff',
+                background: '#ffffff',
                 boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
                 WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
                 width: '100%',
@@ -552,7 +558,9 @@ export default function Home() {
                 paddingTop: '12px',
                 paddingBottom: '12px',
                 paddingLeft: '16px',
-                paddingRight: '16px'
+                paddingRight: '16px',
+                marginBottom: '16px',
+                marginTop: '0'
               }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#ff9999'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>waving_hand</span>

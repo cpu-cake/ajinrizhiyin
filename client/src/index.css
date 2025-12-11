@@ -451,7 +451,7 @@
   overflow-y: hidden;
 }
 
-/* 标签容器布局 - 使用 CSS Columns，限制高度实现每列6行 */
+/* 标签容器布局 - 优先使用 CSS Columns（安卓兼容性更好），限制高度实现每列6行 */
 #question-tags-container {
   display: block;
   -webkit-column-count: 8;
@@ -463,17 +463,19 @@
   -webkit-column-fill: auto;
   -moz-column-fill: auto;
   column-fill: auto;
-  /* 严格限制高度：6行 * (标签高度约38px + 间距10px) ≈ 6 * 48px = 288px，但为了确保只显示6行，减少到260px */
-  height: 260px;
-  max-height: 260px;
+  -webkit-column-width: auto;
+  -moz-column-width: auto;
+  column-width: auto;
+  /* 严格限制高度：6行 * (标签高度约38px + 间距10px) ≈ 6 * 48px = 288px */
+  height: 288px;
+  max-height: 288px;
+  min-height: 288px;
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   width: 100%;
   padding: 12px;
   box-sizing: border-box;
-  /* 确保横向滚动 */
-  white-space: nowrap;
   position: relative;
 }
 
@@ -505,8 +507,10 @@
   border-radius: 20px;
 }
 
-/* 现代浏览器支持 Grid 时使用 Grid */
-@supports (display: grid) {
+/* 禁用 Grid 布局，优先使用 CSS Columns（安卓原生浏览器兼容性更好） */
+/* 注释掉 Grid 布局，强制使用 CSS Columns */
+/*
+@supports (display: grid) and (not (-webkit-column-count: 8)) {
   #question-tags-container {
     display: grid;
     grid-template-columns: 160px 160px repeat(6, minmax(120px, 1fr));
@@ -514,11 +518,21 @@
     grid-auto-flow: column;
     gap: 10px 20px;
     /* 严格限制为6行 */
-    height: 260px;
-    max-height: 260px;
+    height: 288px;
+    max-height: 288px;
+    min-height: 288px;
     overflow-x: auto;
     overflow-y: hidden;
-    white-space: nowrap;
+  }
+  
+  /* 禁用 Grid 布局，优先使用 CSS Columns（安卓兼容性更好） */
+  @media screen and (max-width: 9999px) {
+    #question-tags-container {
+      display: block !important;
+      -webkit-column-count: 8 !important;
+      -moz-column-count: 8 !important;
+      column-count: 8 !important;
+    }
   }
   
   .question-tag {
@@ -542,6 +556,7 @@
     border-radius: 20px;
   }
 }
+*/
 
 /* 移动端优化 - 减少列数，但保持每列6行，添加横向滚动 */
 @media screen and (max-width: 768px) {
@@ -553,8 +568,9 @@
     -moz-column-gap: 16px;
     column-gap: 16px;
     /* 严格限制高度为6行 */
-    height: 260px;
-    max-height: 260px;
+    height: 288px;
+    max-height: 288px;
+    min-height: 288px;
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
@@ -563,14 +579,18 @@
     white-space: nowrap;
   }
   
+  /* 禁用 Grid，强制使用 CSS Columns */
+  /*
   @supports (display: grid) {
     #question-tags-container {
       grid-template-columns: 140px 140px repeat(2, minmax(100px, 1fr));
-      max-height: 260px;
-      height: 260px;
+      max-height: 288px;
+      height: 288px;
+      min-height: 288px;
       gap: 10px 16px;
     }
   }
+  */
 }
 
 @media screen and (max-width: 480px) {
@@ -582,8 +602,9 @@
     -moz-column-gap: 12px;
     column-gap: 12px;
     /* 严格限制高度为6行 */
-    height: 260px;
-    max-height: 260px;
+    height: 288px;
+    max-height: 288px;
+    min-height: 288px;
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
@@ -592,14 +613,18 @@
     white-space: nowrap;
   }
   
+  /* 禁用 Grid，强制使用 CSS Columns */
+  /*
   @supports (display: grid) {
     #question-tags-container {
       grid-template-columns: 160px 160px;
-      max-height: 260px;
-      height: 260px;
+      max-height: 288px;
+      height: 288px;
+      min-height: 288px;
       gap: 10px 12px;
     }
   }
+  */
 }
 
 .question-tag {
