@@ -317,7 +317,13 @@ export default function Home() {
   // 加载状态
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{background: 'linear-gradient(to bottom, #fff7ed, #fce7f3)'}}>
+      <div className="min-h-screen flex items-center justify-center" style={{
+        background: '#fff7ed',
+        backgroundImage: 'linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%)',
+        backgroundSize: '100% 100%',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'scroll'
+      }}>
         <div className="text-center px-4">
           <div className="mb-6 flex justify-center">
             <div className="relative w-20 h-20">
@@ -334,7 +340,13 @@ export default function Home() {
   // 结果展示
   if (result) {
     return (
-      <div className="min-h-screen py-6 sm:py-8" style={{background: 'linear-gradient(to bottom, #fff7ed, #fce7f3)'}}>
+      <div className="min-h-screen py-6 sm:py-8" style={{
+        background: '#fff7ed',
+        backgroundImage: 'linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%)',
+        backgroundSize: '100% 100%',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'scroll'
+      }}>
         <div className="max-w-4xl mx-auto px-3 sm:px-4">
           {/* 顶部导航按钮 */}
           <div id="top-navigation">
@@ -524,7 +536,13 @@ export default function Home() {
   // 错误状态
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{background: 'linear-gradient(to bottom, #fff7ed, #fce7f3)'}}>
+      <div className="min-h-screen flex items-center justify-center" style={{
+        background: '#fff7ed',
+        backgroundImage: 'linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%)',
+        backgroundSize: '100% 100%',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'scroll'
+      }}>
         <div className="text-center p-6">
           <p className="text-red-600 mb-4">{error}</p>
           <button 

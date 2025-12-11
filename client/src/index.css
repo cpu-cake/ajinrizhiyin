@@ -268,9 +268,15 @@
 @media screen and (max-width: 768px) {
   /* 防止页面缩放 */
   html {
-    -webkit-text-size-adjust: 100%;
-    -ms-text-size-adjust: 100%;
-    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100% !important;
+    -ms-text-size-adjust: 100% !important;
+    text-size-adjust: 100% !important;
+  }
+  
+  body {
+    -webkit-text-size-adjust: 100% !important;
+    -ms-text-size-adjust: 100% !important;
+    text-size-adjust: 100% !important;
   }
   
   /* 优化触摸反馈 */
@@ -282,20 +288,48 @@
     transition: transform 0.1s;
   }
   
-  /* 防止长按选择文本（除了输入框） */
-  *:not(input):not(textarea):not([contenteditable="true"]) {
+  /* 防止长按选择文本（除了输入框和内容区域） */
+  *:not(input):not(textarea):not([contenteditable="true"]):not(.card-interactive):not(p):not(span):not(div[class*="text"]) {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
   }
   
-  /* 允许特定区域选择文本 */
-  .card-interactive,
+  /* 允许内容区域选择文本 */
+  .card-interactive p,
+  .card-interactive span,
+  .card-interactive div {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+  
+  /* 防止特定元素被选择 */
   .question-tag,
-  #question-title-bar {
+  #question-title-bar,
+  button,
+  a {
     -webkit-user-select: none;
     user-select: none;
+  }
+  
+  /* 安卓浏览器滚动优化 */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* 防止安卓浏览器默认行为 */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* 确保背景正确显示 */
+  body, #root {
+    background: #fff7ed !important;
+    background-image: linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%) !important;
+    background-size: 100% 100% !important;
+    background-repeat: no-repeat !important;
+    background-attachment: scroll !important;
   }
 }
 

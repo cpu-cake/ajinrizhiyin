@@ -5,17 +5,26 @@
     <meta charset="UTF-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover, shrink-to-fit=no" />
     <!-- 安卓原生浏览器优化 -->
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="telephone=no, email=no, address=no" />
     <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="theme-color" content="#fff7ed" />
+    <meta name="color-scheme" content="light" />
     <title>今日指引</title>
     <!-- Critical CSS for first paint -->
     <style>
       /* 首屏关键CSS：基础布局和背景 */
+      html {
+        height: 100%;
+        height: -webkit-fill-available;
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+      }
       body {
         margin: 0;
         padding: 0;
@@ -26,22 +35,32 @@
         -webkit-touch-callout: default;
         touch-action: manipulation;
         overscroll-behavior: none;
-        background: linear-gradient(to bottom, #fff7ed, #fce7f3);
-        background-repeat: no-repeat;
+        overscroll-behavior-y: none;
+        width: 100%;
         min-height: 100vh;
         min-height: -webkit-fill-available;
+        background: #fff7ed;
+        background-image: linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%);
+        background-attachment: scroll;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
         /* 安卓安全区域适配 */
-        padding-top: env(safe-area-inset-top);
-        padding-bottom: env(safe-area-inset-bottom);
-        padding-left: env(safe-area-inset-left);
-        padding-right: env(safe-area-inset-right);
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+        padding-left: env(safe-area-inset-left, 0px);
+        padding-right: env(safe-area-inset-right, 0px);
       }
       #root {
-        min-height: 100vh;
-        min-height: -webkit-fill-available;
+        width: 100%;
+        height: 100%;
+        height: -webkit-fill-available;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
         /* 允许内容区域可选择文本 */
         -webkit-user-select: text;
         user-select: text;
+        position: relative;
       }
       
       /* 安卓原生浏览器滚动优化 */
@@ -65,6 +84,22 @@
       button, a, [role="button"], [onclick] {
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
         touch-action: manipulation;
+        -webkit-user-select: none;
+        user-select: none;
+      }
+      
+      /* 安卓浏览器特定修复 */
+      @media screen and (max-width: 768px) {
+        body {
+          overflow-y: auto;
+          overflow-x: hidden;
+        }
+        
+        /* 防止安卓浏览器地址栏影响布局 */
+        html, body {
+          min-height: 100vh;
+          min-height: -webkit-fill-available;
+        }
       }
       /* 加载骨架屏 */
       .loading-skeleton {
@@ -90,6 +125,47 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // 安卓浏览器强制修复
+      (function() {
+        // 防止页面缩放
+        if (navigator.userAgent.match(/Android/i)) {
+          document.addEventListener('touchstart', function(e) {
+            if (e.touches.length > 1) {
+              e.preventDefault();
+            }
+          }, { passive: false });
+          
+          // 设置视口高度
+          function setViewportHeight() {
+            const vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', vh + 'px');
+          }
+          setViewportHeight();
+          window.addEventListener('resize', setViewportHeight);
+          window.addEventListener('orientationchange', function() {
+            setTimeout(setViewportHeight, 100);
+          });
+          
+          // 防止双击缩放
+          let lastTouchEnd = 0;
+          document.addEventListener('touchend', function(e) {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) {
+              e.preventDefault();
+            }
+            lastTouchEnd = now;
+          }, false);
+          
+          // 强制应用背景
+          document.body.style.background = '#fff7ed';
+          document.body.style.backgroundImage = 'linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%)';
+          document.body.style.backgroundSize = '100% 100%';
+          document.body.style.backgroundRepeat = 'no-repeat';
+          document.body.style.backgroundAttachment = 'scroll';
+        }
+      })();
+    </script>
   </body>
 
 </html>
