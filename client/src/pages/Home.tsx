@@ -317,12 +317,15 @@ export default function Home() {
   // 加载状态
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-orange-50 to-pink-100">
-        <div className="text-center">
-          <div className="animate-pulse mb-4">
-            <div className="w-16 h-16 bg-pink-300 rounded-full mx-auto"></div>
+      <div className="min-h-screen flex items-center justify-center" style={{background: 'linear-gradient(to bottom, #fff7ed, #fce7f3)'}}>
+        <div className="text-center px-4">
+          <div className="mb-6 flex justify-center">
+            <div className="relative w-20 h-20">
+              <div className="absolute inset-0 border-4 border-pink-200 rounded-full"></div>
+              <div className="absolute inset-0 border-4 border-pink-400 rounded-full border-t-transparent animate-spin"></div>
+            </div>
           </div>
-          <p className="text-gray-600">正在为你生成今日专属指引...</p>
+          <p className="text-gray-600 text-lg font-medium">正在为你生成今日专属指引...</p>
         </div>
       </div>
     );
@@ -331,7 +334,7 @@ export default function Home() {
   // 结果展示
   if (result) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-orange-50 to-pink-100 py-6 sm:py-8">
+      <div className="min-h-screen py-6 sm:py-8" style={{background: 'linear-gradient(to bottom, #fff7ed, #fce7f3)'}}>
         <div className="max-w-4xl mx-auto px-3 sm:px-4">
           {/* 顶部导航按钮 */}
           <div id="top-navigation">
@@ -521,7 +524,7 @@ export default function Home() {
   // 错误状态
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-orange-50 to-pink-100">
+      <div className="min-h-screen flex items-center justify-center" style={{background: 'linear-gradient(to bottom, #fff7ed, #fce7f3)'}}>
         <div className="text-center p-6">
           <p className="text-red-600 mb-4">{error}</p>
           <button 
