@@ -451,7 +451,7 @@
   overflow-y: hidden;
 }
 
-/* 标签容器布局 - 优先使用 CSS Columns（安卓兼容性更好），限制高度实现每列6行 */
+/* 标签容器布局 - 使用 CSS Columns，限制高度实现每列6行，支持横向滚动 */
 #question-tags-container {
   display: block;
   -webkit-column-count: 8;
@@ -463,20 +463,20 @@
   -webkit-column-fill: auto;
   -moz-column-fill: auto;
   column-fill: auto;
-  -webkit-column-width: auto;
-  -moz-column-width: auto;
-  column-width: auto;
   /* 严格限制高度：6行 * (标签高度约38px + 间距10px) ≈ 6 * 48px = 288px */
   height: 288px;
   max-height: 288px;
   min-height: 288px;
-  overflow-x: auto;
+  /* 确保可以横向滚动 */
+  overflow-x: scroll;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   width: 100%;
   padding: 12px;
   box-sizing: border-box;
   position: relative;
+  /* 确保内容可以横向滚动 */
+  white-space: normal;
 }
 
 /* CSS Columns 模式下的标签样式 - 横条自适应文字宽度 */
@@ -484,27 +484,30 @@
   display: inline-block;
   width: auto;
   min-width: auto;
-  max-width: 100%;
+  max-width: none;
   margin-bottom: 10px;
   -webkit-column-break-inside: avoid;
   page-break-inside: avoid;
   break-inside: avoid-column;
   box-sizing: border-box;
-  /* 文字横向显示，不换行 */
+  /* 文字横向显示，不换行，但允许完整显示 */
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow: visible;
+  text-overflow: clip;
   line-height: 1.4;
   /* 确保标签高度一致 */
   min-height: 38px;
   max-height: 38px;
-  height: auto;
+  height: 38px;
   /* 确保文字在背景内，横条自适应 */
   padding: 6px 14px;
   text-align: center;
   vertical-align: top;
   /* 横条样式，不是圆形 */
   border-radius: 20px;
+  /* 确保标签不会被截断 */
+  flex-shrink: 0;
+  -webkit-flex-shrink: 0;
 }
 
 /* 禁用 Grid 布局，优先使用 CSS Columns（安卓原生浏览器兼容性更好） */
@@ -522,12 +525,12 @@
     height: 288px;
     max-height: 288px;
     min-height: 288px;
-    overflow-x: auto;
+    overflow-x: scroll;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
     width: 100%;
     min-width: 100%;
-    white-space: nowrap;
+    white-space: normal;
   }
   
   /* 禁用 Grid，强制使用 CSS Columns */
@@ -545,12 +548,12 @@
     height: 288px;
     max-height: 288px;
     min-height: 288px;
-    overflow-x: auto;
+    overflow-x: scroll;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
     width: 100%;
     min-width: 100%;
-    white-space: nowrap;
+    white-space: normal;
   }
   
   /* 禁用 Grid，强制使用 CSS Columns */

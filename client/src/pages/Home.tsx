@@ -262,19 +262,20 @@ export default function Home() {
         // 强制设置标签样式，确保文字横向且不溢出
         tag.style.width = 'auto';
         tag.style.minWidth = 'auto';
-        tag.style.maxWidth = '100%';
+        tag.style.maxWidth = 'none';
         tag.style.minHeight = '38px';
         tag.style.maxHeight = '38px';
-        tag.style.height = 'auto';
+        tag.style.height = '38px';
         tag.style.padding = '6px 14px';
         tag.style.textAlign = 'center';
         tag.style.display = 'inline-flex';
         tag.style.alignItems = 'center';
         tag.style.justifyContent = 'center';
         tag.style.whiteSpace = 'nowrap';
-        tag.style.overflow = 'hidden';
-        tag.style.textOverflow = 'ellipsis';
+        tag.style.overflow = 'visible';
+        tag.style.textOverflow = 'clip';
         tag.style.borderRadius = '20px';
+        tag.style.flexShrink = '0';
 
         tag.addEventListener('click', () => {
           console.log('点击了问题:', q);
@@ -469,17 +470,18 @@ export default function Home() {
               </div>
               <span className="material-icons" id="dropdown-arrow">expand_more</span>
             </div>
-            <div id="dropdown-content" style={{paddingTop: '0px', paddingRight: '0px', paddingLeft: '0px', overflowX: 'auto', overflowY: 'hidden'}}>
+            <div id="dropdown-content" style={{paddingTop: '0px', paddingRight: '0px', paddingLeft: '0px', overflowX: 'hidden', overflowY: 'hidden'}}>
               <div id="question-tags-container" style={{
                 padding: '12px',
                 width: '100%',
                 boxSizing: 'border-box',
-                overflowX: 'auto',
+                overflowX: 'scroll',
                 overflowY: 'hidden',
                 WebkitOverflowScrolling: 'touch',
                 height: '288px',
                 maxHeight: '288px',
-                minHeight: '288px'
+                minHeight: '288px',
+                position: 'relative'
               }}></div>
             </div>
             {(explanation || isExplanationLoading) && (
@@ -575,18 +577,23 @@ export default function Home() {
             {/* 穿搭灵感 - 跨越2列 */}
             <div className="md:col-span-2" style={{width: '100%', maxWidth: '100%', boxSizing: 'border-box'}}>
               <div className="card-interactive rounded-2xl border-l-4" style={{
+                borderLeftColor: '#72a5ff',
+                borderLeftWidth: '4px',
+                borderLeftStyle: 'solid',
+                backgroundColor: '#ffffff',
+                background: '#ffffff',
+                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                width: '100%',
+                maxWidth: '100%',
+                boxSizing: 'border-box',
                 padding: '12px 16px',
                 paddingTop: '12px',
                 paddingBottom: '12px',
                 paddingLeft: '16px',
                 paddingRight: '16px',
-                borderLeftColor: '#72a5ff',
-                backgroundColor: '#ffffff',
-                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                width: '100%',
-                maxWidth: '100%',
-                boxSizing: 'border-box'
+                marginBottom: '16px',
+                marginTop: '0'
               }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#72a5ff'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>checkroom</span>
@@ -601,18 +608,23 @@ export default function Home() {
             {/* 幸运配色 - 1列 */}
             <div className="md:col-span-1" style={{width: '100%', maxWidth: '100%', boxSizing: 'border-box'}}>
               <div className="card-interactive rounded-2xl border-l-4" style={{
+                borderLeftColor: '#64dd17',
+                borderLeftWidth: '4px',
+                borderLeftStyle: 'solid',
+                backgroundColor: '#ffffff',
+                background: '#ffffff',
+                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                width: '100%',
+                maxWidth: '100%',
+                boxSizing: 'border-box',
                 padding: '12px 16px',
                 paddingTop: '12px',
                 paddingBottom: '12px',
                 paddingLeft: '16px',
                 paddingRight: '16px',
-                borderLeftColor: '#64dd17',
-                backgroundColor: '#ffffff',
-                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                width: '100%',
-                maxWidth: '100%',
-                boxSizing: 'border-box'
+                marginBottom: '16px',
+                marginTop: '0'
               }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#64dd17'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>palette</span>
@@ -627,18 +639,23 @@ export default function Home() {
             {/* 情绪流动 - 1列 */}
             <div className="md:col-span-1" style={{width: '100%', maxWidth: '100%', boxSizing: 'border-box'}}>
               <div className="card-interactive rounded-2xl border-l-4" style={{
+                borderLeftColor: '#ffc107',
+                borderLeftWidth: '4px',
+                borderLeftStyle: 'solid',
+                backgroundColor: '#ffffff',
+                background: '#ffffff',
+                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                width: '100%',
+                maxWidth: '100%',
+                boxSizing: 'border-box',
                 padding: '12px 16px',
                 paddingTop: '12px',
                 paddingBottom: '12px',
                 paddingLeft: '16px',
                 paddingRight: '16px',
-                borderLeftColor: '#ffc107',
-                backgroundColor: '#ffffff',
-                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                width: '100%',
-                maxWidth: '100%',
-                boxSizing: 'border-box'
+                marginBottom: '16px',
+                marginTop: '0'
               }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#ffc107'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>sentiment_satisfied</span>
@@ -653,18 +670,23 @@ export default function Home() {
             {/* 工作指引 - 跨越2列 */}
             <div className="md:col-span-2" style={{width: '100%', maxWidth: '100%', boxSizing: 'border-box'}}>
               <div className="card-interactive rounded-2xl border-l-4" style={{
+                borderLeftColor: '#4db6ac',
+                borderLeftWidth: '4px',
+                borderLeftStyle: 'solid',
+                backgroundColor: '#ffffff',
+                background: '#ffffff',
+                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                width: '100%',
+                maxWidth: '100%',
+                boxSizing: 'border-box',
                 padding: '12px 16px',
                 paddingTop: '12px',
                 paddingBottom: '12px',
                 paddingLeft: '16px',
                 paddingRight: '16px',
-                borderLeftColor: '#4db6ac',
-                backgroundColor: '#ffffff',
-                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                width: '100%',
-                maxWidth: '100%',
-                boxSizing: 'border-box'
+                marginBottom: '16px',
+                marginTop: '0'
               }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#4db6ac'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>work</span>
@@ -679,18 +701,23 @@ export default function Home() {
             {/* 情感气场 - 跨越2列 */}
             <div className="md:col-span-2" style={{width: '100%', maxWidth: '100%', boxSizing: 'border-box'}}>
               <div className="card-interactive rounded-2xl border-l-4" style={{
+                borderLeftColor: '#f48fb1',
+                borderLeftWidth: '4px',
+                borderLeftStyle: 'solid',
+                backgroundColor: '#ffffff',
+                background: '#ffffff',
+                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                width: '100%',
+                maxWidth: '100%',
+                boxSizing: 'border-box',
                 padding: '12px 16px',
                 paddingTop: '12px',
                 paddingBottom: '12px',
                 paddingLeft: '16px',
                 paddingRight: '16px',
-                borderLeftColor: '#f48fb1',
-                backgroundColor: '#ffffff',
-                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                width: '100%',
-                maxWidth: '100%',
-                boxSizing: 'border-box'
+                marginBottom: '16px',
+                marginTop: '0'
               }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#f48fb1'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>favorite</span>
@@ -705,18 +732,23 @@ export default function Home() {
             {/* 幸运微光 - 1列 */}
             <div className="md:col-span-1" style={{width: '100%', maxWidth: '100%', boxSizing: 'border-box'}}>
               <div className="card-interactive rounded-2xl border-l-4" style={{
+                borderLeftColor: '#9c27b0',
+                borderLeftWidth: '4px',
+                borderLeftStyle: 'solid',
+                backgroundColor: '#ffffff',
+                background: '#ffffff',
+                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                width: '100%',
+                maxWidth: '100%',
+                boxSizing: 'border-box',
                 padding: '12px 16px',
                 paddingTop: '12px',
                 paddingBottom: '12px',
                 paddingLeft: '16px',
                 paddingRight: '16px',
-                borderLeftColor: '#9c27b0',
-                backgroundColor: '#ffffff',
-                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                width: '100%',
-                maxWidth: '100%',
-                boxSizing: 'border-box'
+                marginBottom: '16px',
+                marginTop: '0'
               }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#9c27b0'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>star</span>
