@@ -1,6 +1,6 @@
-import { router, publicProcedure } from "./_core/trpc";
+import { router, publicProcedure } from "./_core/trpc.js";
 import { z } from "zod";
-import { invokeLLM } from "./_core/llm";
+import { invokeLLM } from "./_core/llm.js";
 import {
   createCoinReading,
   updateCoinReadingAnalysis,
@@ -9,7 +9,7 @@ import {
   getTodaysCoinReading,
   updateDeviceLastToss,
   getTodaysUsageCount,
-} from "./db";
+} from "./db.js";
 
 // 使用次数限制提示语
 const LIMIT_MESSAGES_DAYTIME = [
@@ -184,7 +184,7 @@ export const appRouter = router({
           await createCoinReading(device.id, coinResults, todayDate, "question_answer");
           
           // 记录标签点击
-          const { recordQuestionTagClick } = await import("./db");
+          const { recordQuestionTagClick } = await import("./db.js");
           await recordQuestionTagClick(input.question, input.deviceFingerprint);
 
           return {
@@ -209,7 +209,7 @@ export const appRouter = router({
     getToday: publicProcedure
       .query(async () => {
         try {
-          const { getTodayHotQuestions } = await import("./db");
+          const { getTodayHotQuestions } = await import("./db.js");
           const hotQuestions = await getTodayHotQuestions();
           return {
             hotQuestions,

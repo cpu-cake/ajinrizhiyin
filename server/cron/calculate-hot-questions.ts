@@ -6,7 +6,7 @@
  * 2. 配置cron job：每天凌晨4点执行
  */
 
-import { calculateHotQuestions } from "../db";
+import { calculateHotQuestions } from "../db.js";
 
 async function main() {
   console.log("[Cron] Starting hot questions calculation...");

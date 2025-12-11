@@ -1,6 +1,6 @@
 import { eq, and } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { coinReadings, InsertCoinReading, CoinReading, devices, Device, InsertDevice } from "../drizzle/schema";
+import { coinReadings, InsertCoinReading, CoinReading, devices, Device, InsertDevice } from "../drizzle/schema.js";
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
