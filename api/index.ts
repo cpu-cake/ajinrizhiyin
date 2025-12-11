@@ -1,8 +1,10 @@
 import express from 'express';
 import { createExpressMiddleware } from '@trpc/server/adapters/express';
-import { appRouter } from '../server/routers';
-import { createContext } from '../server/_core/context';
-import { registerOAuthRoutes } from '../server/_core/oauth';
+import { createServer } from '@vercel/node';
+// 在 ESM 模块中，使用 .js 扩展名（运行时扩展名）
+import { appRouter } from '../server/routers.js';
+import { createContext } from '../server/_core/context.js';
+import { registerOAuthRoutes } from '../server/_core/oauth.js';
 
 const app = express();
 
@@ -25,4 +27,5 @@ app.use(
   })
 );
 
-export default app;
+// 使用 @vercel/node 的 createServer 来确保在 Vercel 环境中正确工作
+export default createServer(app);

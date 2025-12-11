@@ -1,7 +1,8 @@
 {
   "functions": {
     "api/**/*.ts": {
-      "includeFiles": "{server/**,drizzle/**,shared/**,package.json,yarn.lock,tsconfig.json}"
+      "includeFiles": "{server/**,drizzle/**,shared/**,package.json,yarn.lock,tsconfig.json}",
+      "runtime": "nodejs20.x"
     }
   },
   "rewrites": [
