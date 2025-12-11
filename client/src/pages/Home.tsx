@@ -256,9 +256,19 @@ export default function Home() {
           tag.appendChild(badge);
         }
         
-        // 添加标签文字
+        // 添加标签文字 - 确保文字在背景内
         const textNode = document.createTextNode(q);
         tag.appendChild(textNode);
+        // 强制设置标签样式，确保文字不溢出
+        tag.style.minHeight = '38px';
+        tag.style.maxHeight = '38px';
+        tag.style.padding = '6px 14px';
+        tag.style.textAlign = 'center';
+        tag.style.display = 'inline-flex';
+        tag.style.alignItems = 'center';
+        tag.style.justifyContent = 'center';
+        tag.style.wordWrap = 'break-word';
+        tag.style.overflow = 'hidden';
 
         tag.addEventListener('click', () => {
           console.log('点击了问题:', q);
@@ -445,11 +455,16 @@ export default function Home() {
               </div>
               <span className="material-icons" id="dropdown-arrow">expand_more</span>
             </div>
-            <div id="dropdown-content" style={{paddingTop: '0px', paddingRight: '0px', paddingLeft: '0px'}}>
+            <div id="dropdown-content" style={{paddingTop: '0px', paddingRight: '0px', paddingLeft: '0px', overflowX: 'auto', overflowY: 'hidden'}}>
               <div id="question-tags-container" style={{
                 padding: '12px',
                 width: '100%',
-                boxSizing: 'border-box'
+                boxSizing: 'border-box',
+                overflowX: 'auto',
+                overflowY: 'hidden',
+                WebkitOverflowScrolling: 'touch',
+                height: '260px',
+                maxHeight: '260px'
               }}></div>
             </div>
             {(explanation || isExplanationLoading) && (
@@ -538,7 +553,12 @@ export default function Home() {
 
             {/* 幸运配色 - 1列 */}
             <div className="md:col-span-1">
-              <div className="card-interactive bg-white rounded-2xl p-4 sm:p-6 shadow-lg border-l-4" style={{borderLeftColor: '#64dd17'}}>
+              <div className="card-interactive rounded-2xl p-4 sm:p-6 border-l-4" style={{
+                borderLeftColor: '#64dd17',
+                backgroundColor: '#ffffff',
+                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+              }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#64dd17'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>palette</span>
                   幸运配色
@@ -551,7 +571,12 @@ export default function Home() {
 
             {/* 情绪流动 - 1列 */}
             <div className="md:col-span-1">
-              <div className="card-interactive bg-white rounded-2xl p-4 sm:p-6 shadow-lg border-l-4" style={{borderLeftColor: '#ffc107'}}>
+              <div className="card-interactive rounded-2xl p-4 sm:p-6 border-l-4" style={{
+                borderLeftColor: '#ffc107',
+                backgroundColor: '#ffffff',
+                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+              }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#ffc107'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>sentiment_satisfied</span>
                   情绪流动
@@ -564,7 +589,12 @@ export default function Home() {
 
             {/* 工作指引 - 跨越2列 */}
             <div className="md:col-span-2">
-              <div className="card-interactive bg-white rounded-2xl p-4 sm:p-6 shadow-lg border-l-4" style={{borderLeftColor: '#4db6ac'}}>
+              <div className="card-interactive rounded-2xl p-4 sm:p-6 border-l-4" style={{
+                borderLeftColor: '#4db6ac',
+                backgroundColor: '#ffffff',
+                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+              }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#4db6ac'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>work</span>
                   工作指引
@@ -577,7 +607,12 @@ export default function Home() {
 
             {/* 情感气场 - 跨越2列 */}
             <div className="md:col-span-2">
-              <div className="card-interactive bg-white rounded-2xl p-4 sm:p-6 shadow-lg border-l-4" style={{borderLeftColor: '#f48fb1'}}>
+              <div className="card-interactive rounded-2xl p-4 sm:p-6 border-l-4" style={{
+                borderLeftColor: '#f48fb1',
+                backgroundColor: '#ffffff',
+                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+              }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#f48fb1'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>favorite</span>
                   情感气场
@@ -590,7 +625,12 @@ export default function Home() {
 
             {/* 幸运微光 - 1列 */}
             <div className="md:col-span-1">
-              <div className="card-interactive bg-white rounded-2xl p-4 sm:p-6 shadow-lg border-l-4" style={{borderLeftColor: '#9c27b0'}}>
+              <div className="card-interactive rounded-2xl p-4 sm:p-6 border-l-4" style={{
+                borderLeftColor: '#9c27b0',
+                backgroundColor: '#ffffff',
+                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+              }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#9c27b0'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>star</span>
                   幸运微光
