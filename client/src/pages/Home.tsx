@@ -241,20 +241,25 @@ export default function Home() {
         tag.style.cursor = 'pointer';
         tag.style.position = 'relative'; // 为徽章定位做准备
         // 强制应用背景色和边框（兼容安卓浏览器）
+        // 配色按1、2、3、4、1、2、3、4...循环
         const colorIndex = (index % 4) + 1;
         if (colorIndex === 1) {
+          // 颜色1：粉色
           tag.style.backgroundColor = '#ffeaea';
           tag.style.color = '#d66';
           tag.style.border = '1px solid #ffcccc';
         } else if (colorIndex === 2) {
+          // 颜色2：蓝色
           tag.style.backgroundColor = '#eaf3ff';
           tag.style.color = '#72a5ff';
           tag.style.border = '1px solid #cce0ff';
         } else if (colorIndex === 3) {
+          // 颜色3：绿色
           tag.style.backgroundColor = '#e8fff0';
           tag.style.color = '#4db6ac';
           tag.style.border = '1px solid #c0f5d4';
         } else {
+          // 颜色4：黄色
           tag.style.backgroundColor = '#fffbe9';
           tag.style.color = '#ffc107';
           tag.style.border = '1px solid #ffe6aa';
