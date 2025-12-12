@@ -5,6 +5,7 @@ import { Loader2 } from "lucide-react";
 import { getLoginUrl } from "@/const";
 import { trpc } from "@/lib/trpc";
 import { Streamdown } from "streamdown";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface CoinAnalysis {
   greeting: string;
@@ -396,24 +397,22 @@ export default function Home() {
 
   // 启动动画：逐个显示元素
   useEffect(() => {
+    // 立即显示静态内容（不依赖 result）
+    setVisibleElements(new Set(['top-navigation', 'date-section', 'question-section']));
+    
     if (result) {
-      // 立即显示第一个元素（顶部导航）
-      setVisibleElements(new Set(['top-navigation']));
-      
-      // 定义显示顺序和延迟时间（毫秒）
+      // 定义内容卡片的显示顺序和延迟时间（毫秒）
       const elements = [
-        { id: 'date-section', delay: 200 },
-        { id: 'question-section', delay: 400 },
-        { id: 'greeting-card', delay: 600 },
-        { id: 'outfit-card', delay: 800 },
-        { id: 'color-card', delay: 1000 },
-        { id: 'mood-card', delay: 1200 },
-        { id: 'career-card', delay: 1400 },
-        { id: 'love-card', delay: 1600 },
-        { id: 'luck-card', delay: 1800 },
+        { id: 'greeting-card', delay: 200 },
+        { id: 'outfit-card', delay: 400 },
+        { id: 'color-card', delay: 600 },
+        { id: 'mood-card', delay: 800 },
+        { id: 'career-card', delay: 1000 },
+        { id: 'love-card', delay: 1200 },
+        { id: 'luck-card', delay: 1400 },
       ];
 
-      // 逐个显示元素
+      // 逐个显示内容卡片
       elements.forEach(({ id, delay }) => {
         setTimeout(() => {
           setVisibleElements(prev => new Set(prev).add(id));
@@ -434,79 +433,34 @@ export default function Home() {
     }
   }, [currentQuestionIndex, result]);
 
-  // 加载状态
-  if (isLoading) {
-    return (
-      <div className="min-h-screen" style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: '#fff7ed',
-        backgroundImage: '-webkit-linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%), -moz-linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%), -o-linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%), linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%)',
-        backgroundSize: '100% 100%',
-        backgroundRepeat: 'no-repeat',
-        backgroundAttachment: 'scroll',
-        minHeight: '100vh'
-      }}>
-        <div style={{
-          textAlign: 'center',
-          padding: '0 16px',
-          width: '100%',
-          maxWidth: '100%'
-        }}>
-          <div style={{
-            marginBottom: '24px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}>
-            <div style={{
-              position: 'relative',
-              width: '120px',
-              height: '120px',
-              minWidth: '120px',
-              minHeight: '120px'
-            }}>
-              <div style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                border: '6px solid #fbcfe8',
-                borderRadius: '50%',
-                boxSizing: 'border-box'
-              }}></div>
-              <div className="loading-spinner" style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                border: '6px solid #f472b6',
-                borderTopColor: 'transparent',
-                borderRadius: '50%',
-                boxSizing: 'border-box',
-                WebkitAnimation: 'spin 1s linear infinite',
-                animation: 'spin 1s linear infinite'
-              }}></div>
-            </div>
-          </div>
-          <p style={{
-            color: '#4b5563',
-            fontSize: '18px',
-            fontWeight: 500,
-            margin: 0,
-            textAlign: 'center'
-          }}>正在为你生成今日专属指引...</p>
-        </div>
-      </div>
-    );
-  }
+  // 渐进式渲染：始终显示页面框架，用骨架屏替代等待内容
+  // 不再使用全屏加载动画，而是立即显示静态内容和骨架屏
+  
+  // 骨架屏卡片组件
+  const CardSkeleton = ({ className = "" }: { className?: string }) => (
+    <div className={`card-interactive rounded-2xl border-l-4 ${className}`} style={{
+      borderLeftColor: '#e5e7eb',
+      borderLeftWidth: '4px',
+      borderLeftStyle: 'solid',
+      backgroundColor: '#ffffff',
+      background: '#ffffff',
+      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+      WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+      width: '100%',
+      maxWidth: '100%',
+      boxSizing: 'border-box',
+      padding: '12px 16px',
+      marginBottom: '16px',
+      marginTop: '0'
+    }}>
+      <Skeleton className="h-6 w-32 mb-3" style={{ backgroundColor: '#f3f4f6' }} />
+      <Skeleton className="h-4 w-full mb-2" style={{ backgroundColor: '#f3f4f6' }} />
+      <Skeleton className="h-4 w-full mb-2" style={{ backgroundColor: '#f3f4f6' }} />
+      <Skeleton className="h-4 w-3/4" style={{ backgroundColor: '#f3f4f6' }} />
+    </div>
+  );
 
-  // 结果展示
-  if (result) {
-    return (
+  return (
       <div className="min-h-screen py-6 sm:py-8" style={{
         background: '#fff7ed',
         backgroundImage: '-webkit-linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%), -moz-linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%), -o-linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%), linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%)',
@@ -524,12 +478,12 @@ export default function Home() {
           width: '100%',
           maxWidth: '100%'
         }}>
-          {/* 顶部导航按钮 */}
+          {/* 顶部导航按钮 - 立即显示 */}
           <div 
             id="top-navigation"
             style={{
-              opacity: visibleElements.has('top-navigation') ? 1 : 0,
-              transform: visibleElements.has('top-navigation') ? 'translateY(0)' : 'translateY(20px)',
+              opacity: visibleElements.has('top-navigation') ? 1 : 1,
+              transform: visibleElements.has('top-navigation') ? 'translateY(0)' : 'translateY(0)',
               transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
             }}
           >
@@ -541,13 +495,13 @@ export default function Home() {
             </a>
           </div>
 
-          {/* 顶部 */}
+          {/* 顶部 - 立即显示 */}
           <div 
             id="date-section"
             className="text-left mb-8 sm:mb-12"
             style={{
-              opacity: visibleElements.has('date-section') ? 1 : 0,
-              transform: visibleElements.has('date-section') ? 'translateY(0)' : 'translateY(20px)',
+              opacity: visibleElements.has('date-section') ? 1 : 1,
+              transform: visibleElements.has('date-section') ? 'translateY(0)' : 'translateY(0)',
               transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
             }}
           >
@@ -559,13 +513,13 @@ export default function Home() {
             </p>
           </div>
 
-          {/* 解答小困惑功能 */}
+          {/* 解答小困惑功能 - 立即显示 */}
           <div 
             id="question-section" 
             className="mb-8 sm:mb-10"
             style={{
-              opacity: visibleElements.has('question-section') ? 1 : 0,
-              transform: visibleElements.has('question-section') ? 'translateY(0)' : 'translateY(20px)',
+              opacity: visibleElements.has('question-section') ? 1 : 1,
+              transform: visibleElements.has('question-section') ? 'translateY(0)' : 'translateY(0)',
               transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
             }}
           >
@@ -661,33 +615,37 @@ export default function Home() {
                 transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
               }}
             >
-              <div className="card-interactive rounded-2xl border-l-4" style={{
-                borderLeftColor: '#ff9999',
-                borderLeftWidth: '4px',
-                borderLeftStyle: 'solid',
-                backgroundColor: '#ffffff',
-                background: '#ffffff',
-                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                width: '100%',
-                maxWidth: '100%',
-                boxSizing: 'border-box',
-                padding: '12px 16px',
-                paddingTop: '12px',
-                paddingBottom: '12px',
-                paddingLeft: '16px',
-                paddingRight: '16px',
-                marginBottom: '16px',
-                marginTop: '0'
-              }}>
-                <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#ff9999'}}>
-                  <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>waving_hand</span>
-                  早安心语
-                </h3>
-                <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                  {result.analysis.greeting}
-                </Streamdown>
-              </div>
+              {result ? (
+                <div className="card-interactive rounded-2xl border-l-4" style={{
+                  borderLeftColor: '#ff9999',
+                  borderLeftWidth: '4px',
+                  borderLeftStyle: 'solid',
+                  backgroundColor: '#ffffff',
+                  background: '#ffffff',
+                  boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                  WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                  width: '100%',
+                  maxWidth: '100%',
+                  boxSizing: 'border-box',
+                  padding: '12px 16px',
+                  paddingTop: '12px',
+                  paddingBottom: '12px',
+                  paddingLeft: '16px',
+                  paddingRight: '16px',
+                  marginBottom: '16px',
+                  marginTop: '0'
+                }}>
+                  <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#ff9999'}}>
+                    <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>waving_hand</span>
+                    早安心语
+                  </h3>
+                  <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                    {result.analysis.greeting}
+                  </Streamdown>
+                </div>
+              ) : (
+                <CardSkeleton />
+              )}
             </div>
 
             {/* 穿搭灵感 - 跨越2列 */}
@@ -702,7 +660,8 @@ export default function Home() {
                 transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
               }}
             >
-              <div className="card-interactive rounded-2xl border-l-4" style={{
+              {result ? (
+                <div className="card-interactive rounded-2xl border-l-4" style={{
                 borderLeftColor: '#72a5ff',
                 borderLeftWidth: '4px',
                 borderLeftStyle: 'solid',
@@ -770,6 +729,9 @@ export default function Home() {
                   {result.analysis.color}
                 </Streamdown>
               </div>
+              ) : (
+                <CardSkeleton />
+              )}
             </div>
 
             {/* 情绪流动 - 1列 */}
@@ -784,7 +746,8 @@ export default function Home() {
                 transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
               }}
             >
-              <div className="card-interactive rounded-2xl border-l-4" style={{
+              {result ? (
+                <div className="card-interactive rounded-2xl border-l-4" style={{
                 borderLeftColor: '#ffc107',
                 borderLeftWidth: '4px',
                 borderLeftStyle: 'solid',
@@ -811,6 +774,9 @@ export default function Home() {
                   {result.analysis.mood}
                 </Streamdown>
               </div>
+              ) : (
+                <CardSkeleton />
+              )}
             </div>
 
             {/* 工作指引 - 跨越2列 */}
@@ -825,7 +791,8 @@ export default function Home() {
                 transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
               }}
             >
-              <div className="card-interactive rounded-2xl border-l-4" style={{
+              {result ? (
+                <div className="card-interactive rounded-2xl border-l-4" style={{
                 borderLeftColor: '#4db6ac',
                 borderLeftWidth: '4px',
                 borderLeftStyle: 'solid',
@@ -852,6 +819,9 @@ export default function Home() {
                   {result.analysis.career}
                 </Streamdown>
               </div>
+              ) : (
+                <CardSkeleton />
+              )}
             </div>
 
             {/* 情感气场 - 跨越2列 */}
@@ -866,7 +836,8 @@ export default function Home() {
                 transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
               }}
             >
-              <div className="card-interactive rounded-2xl border-l-4" style={{
+              {result ? (
+                <div className="card-interactive rounded-2xl border-l-4" style={{
                 borderLeftColor: '#f48fb1',
                 borderLeftWidth: '4px',
                 borderLeftStyle: 'solid',
@@ -893,6 +864,9 @@ export default function Home() {
                   {result.analysis.love}
                 </Streamdown>
               </div>
+              ) : (
+                <CardSkeleton />
+              )}
             </div>
 
             {/* 幸运微光 - 1列 */}
@@ -907,7 +881,8 @@ export default function Home() {
                 transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
               }}
             >
-              <div className="card-interactive rounded-2xl border-l-4" style={{
+              {result ? (
+                <div className="card-interactive rounded-2xl border-l-4" style={{
                 borderLeftColor: '#9c27b0',
                 borderLeftWidth: '4px',
                 borderLeftStyle: 'solid',
@@ -934,6 +909,9 @@ export default function Home() {
                   {result.analysis.luck}
                 </Streamdown>
               </div>
+              ) : (
+                <CardSkeleton />
+              )}
             </div>
           </div>
 
