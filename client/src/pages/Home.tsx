@@ -436,7 +436,7 @@ export default function Home() {
   // 渐进式渲染：始终显示页面框架，用骨架屏替代等待内容
   // 不再使用全屏加载动画，而是立即显示静态内容和骨架屏
   
-  // 骨架屏卡片组件
+  // 骨架屏卡片组件（带加载动画）
   const CardSkeleton = ({ className = "" }: { className?: string }) => (
     <div className={`card-interactive rounded-2xl border-l-4 ${className}`} style={{
       borderLeftColor: '#e5e7eb',
@@ -451,12 +451,67 @@ export default function Home() {
       boxSizing: 'border-box',
       padding: '12px 16px',
       marginBottom: '16px',
-      marginTop: '0'
+      marginTop: '0',
+      position: 'relative',
+      overflow: 'hidden'
     }}>
-      <Skeleton className="h-6 w-32 mb-3" style={{ backgroundColor: '#f3f4f6' }} />
-      <Skeleton className="h-4 w-full mb-2" style={{ backgroundColor: '#f3f4f6' }} />
-      <Skeleton className="h-4 w-full mb-2" style={{ backgroundColor: '#f3f4f6' }} />
-      <Skeleton className="h-4 w-3/4" style={{ backgroundColor: '#f3f4f6' }} />
+      {/* 加载动画背景 - 闪烁效果 */}
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        left: '-100%',
+        width: '100%',
+        height: '100%',
+        background: 'linear-gradient(90deg, transparent, rgba(251, 207, 232, 0.3), transparent)',
+        animation: 'shimmer 1.5s infinite',
+        WebkitAnimation: 'shimmer 1.5s infinite'
+      }}></div>
+      {/* 加载指示器 */}
+      <div style={{
+        position: 'absolute',
+        top: '12px',
+        right: '16px',
+        width: '20px',
+        height: '20px',
+        border: '2px solid #fbcfe8',
+        borderTopColor: 'transparent',
+        borderRadius: '50%',
+        animation: 'spin 1s linear infinite',
+        WebkitAnimation: 'spin 1s linear infinite',
+        zIndex: 2
+      }}></div>
+      <Skeleton className="h-6 w-32 mb-3" style={{ backgroundColor: '#f3f4f6', position: 'relative', zIndex: 1, animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite' }} />
+      <Skeleton className="h-4 w-full mb-2" style={{ backgroundColor: '#f3f4f6', position: 'relative', zIndex: 1, animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite' }} />
+      <Skeleton className="h-4 w-full mb-2" style={{ backgroundColor: '#f3f4f6', position: 'relative', zIndex: 1, animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite', animationDelay: '0.2s' }} />
+      <Skeleton className="h-4 w-3/4" style={{ backgroundColor: '#f3f4f6', position: 'relative', zIndex: 1, animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite', animationDelay: '0.4s' }} />
+      <style>{`
+        @keyframes shimmer {
+          0% {
+            left: -100%;
+          }
+          100% {
+            left: 100%;
+          }
+        }
+        @keyframes spin {
+          from {
+            transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+            -webkit-transform: rotate(360deg);
+          }
+        }
+        @keyframes pulse {
+          0%, 100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.5;
+          }
+        }
+      `}</style>
     </div>
   );
 
