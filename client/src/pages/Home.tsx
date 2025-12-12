@@ -662,32 +662,35 @@ export default function Home() {
             >
               {result ? (
                 <div className="card-interactive rounded-2xl border-l-4" style={{
-                borderLeftColor: '#72a5ff',
-                borderLeftWidth: '4px',
-                borderLeftStyle: 'solid',
-                backgroundColor: '#ffffff',
-                background: '#ffffff',
-                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                width: '100%',
-                maxWidth: '100%',
-                boxSizing: 'border-box',
-                padding: '12px 16px',
-                paddingTop: '12px',
-                paddingBottom: '12px',
-                paddingLeft: '16px',
-                paddingRight: '16px',
-                marginBottom: '16px',
-                marginTop: '0'
-              }}>
-                <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#72a5ff'}}>
-                  <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>checkroom</span>
-                  穿搭灵感
-                </h3>
-                <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                  {result.analysis.outfit}
-                </Streamdown>
-              </div>
+                  borderLeftColor: '#72a5ff',
+                  borderLeftWidth: '4px',
+                  borderLeftStyle: 'solid',
+                  backgroundColor: '#ffffff',
+                  background: '#ffffff',
+                  boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                  WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                  width: '100%',
+                  maxWidth: '100%',
+                  boxSizing: 'border-box',
+                  padding: '12px 16px',
+                  paddingTop: '12px',
+                  paddingBottom: '12px',
+                  paddingLeft: '16px',
+                  paddingRight: '16px',
+                  marginBottom: '16px',
+                  marginTop: '0'
+                }}>
+                  <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#72a5ff'}}>
+                    <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>checkroom</span>
+                    穿搭灵感
+                  </h3>
+                  <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                    {result.analysis.outfit}
+                  </Streamdown>
+                </div>
+              ) : (
+                <CardSkeleton />
+              )}
             </div>
 
             {/* 幸运配色 - 1列 */}
@@ -702,33 +705,34 @@ export default function Home() {
                 transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
               }}
             >
-              <div className="card-interactive rounded-2xl border-l-4" style={{
-                borderLeftColor: '#64dd17',
-                borderLeftWidth: '4px',
-                borderLeftStyle: 'solid',
-                backgroundColor: '#ffffff',
-                background: '#ffffff',
-                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                width: '100%',
-                maxWidth: '100%',
-                boxSizing: 'border-box',
-                padding: '12px 16px',
-                paddingTop: '12px',
-                paddingBottom: '12px',
-                paddingLeft: '16px',
-                paddingRight: '16px',
-                marginBottom: '16px',
-                marginTop: '0'
-              }}>
-                <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#64dd17'}}>
-                  <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>palette</span>
-                  幸运配色
-                </h3>
-                <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                  {result.analysis.color}
-                </Streamdown>
-              </div>
+              {result ? (
+                <div className="card-interactive rounded-2xl border-l-4" style={{
+                  borderLeftColor: '#64dd17',
+                  borderLeftWidth: '4px',
+                  borderLeftStyle: 'solid',
+                  backgroundColor: '#ffffff',
+                  background: '#ffffff',
+                  boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                  WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                  width: '100%',
+                  maxWidth: '100%',
+                  boxSizing: 'border-box',
+                  padding: '12px 16px',
+                  paddingTop: '12px',
+                  paddingBottom: '12px',
+                  paddingLeft: '16px',
+                  paddingRight: '16px',
+                  marginBottom: '16px',
+                  marginTop: '0'
+                }}>
+                  <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#64dd17'}}>
+                    <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>palette</span>
+                    幸运配色
+                  </h3>
+                  <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                    {result.analysis.color}
+                  </Streamdown>
+                </div>
               ) : (
                 <CardSkeleton />
               )}
@@ -748,32 +752,32 @@ export default function Home() {
             >
               {result ? (
                 <div className="card-interactive rounded-2xl border-l-4" style={{
-                borderLeftColor: '#ffc107',
-                borderLeftWidth: '4px',
-                borderLeftStyle: 'solid',
-                backgroundColor: '#ffffff',
-                background: '#ffffff',
-                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                width: '100%',
-                maxWidth: '100%',
-                boxSizing: 'border-box',
-                padding: '12px 16px',
-                paddingTop: '12px',
-                paddingBottom: '12px',
-                paddingLeft: '16px',
-                paddingRight: '16px',
-                marginBottom: '16px',
-                marginTop: '0'
-              }}>
-                <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#ffc107'}}>
-                  <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>sentiment_satisfied</span>
-                  情绪流动
-                </h3>
-                <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                  {result.analysis.mood}
-                </Streamdown>
-              </div>
+                  borderLeftColor: '#ffc107',
+                  borderLeftWidth: '4px',
+                  borderLeftStyle: 'solid',
+                  backgroundColor: '#ffffff',
+                  background: '#ffffff',
+                  boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                  WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                  width: '100%',
+                  maxWidth: '100%',
+                  boxSizing: 'border-box',
+                  padding: '12px 16px',
+                  paddingTop: '12px',
+                  paddingBottom: '12px',
+                  paddingLeft: '16px',
+                  paddingRight: '16px',
+                  marginBottom: '16px',
+                  marginTop: '0'
+                }}>
+                  <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#ffc107'}}>
+                    <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>sentiment_satisfied</span>
+                    情绪流动
+                  </h3>
+                  <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                    {result.analysis.mood}
+                  </Streamdown>
+                </div>
               ) : (
                 <CardSkeleton />
               )}
@@ -793,32 +797,32 @@ export default function Home() {
             >
               {result ? (
                 <div className="card-interactive rounded-2xl border-l-4" style={{
-                borderLeftColor: '#4db6ac',
-                borderLeftWidth: '4px',
-                borderLeftStyle: 'solid',
-                backgroundColor: '#ffffff',
-                background: '#ffffff',
-                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                width: '100%',
-                maxWidth: '100%',
-                boxSizing: 'border-box',
-                padding: '12px 16px',
-                paddingTop: '12px',
-                paddingBottom: '12px',
-                paddingLeft: '16px',
-                paddingRight: '16px',
-                marginBottom: '16px',
-                marginTop: '0'
-              }}>
-                <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#4db6ac'}}>
-                  <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>work</span>
-                  工作指引
-                </h3>
-                <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                  {result.analysis.career}
-                </Streamdown>
-              </div>
+                  borderLeftColor: '#4db6ac',
+                  borderLeftWidth: '4px',
+                  borderLeftStyle: 'solid',
+                  backgroundColor: '#ffffff',
+                  background: '#ffffff',
+                  boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                  WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                  width: '100%',
+                  maxWidth: '100%',
+                  boxSizing: 'border-box',
+                  padding: '12px 16px',
+                  paddingTop: '12px',
+                  paddingBottom: '12px',
+                  paddingLeft: '16px',
+                  paddingRight: '16px',
+                  marginBottom: '16px',
+                  marginTop: '0'
+                }}>
+                  <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#4db6ac'}}>
+                    <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>work</span>
+                    工作指引
+                  </h3>
+                  <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                    {result.analysis.career}
+                  </Streamdown>
+                </div>
               ) : (
                 <CardSkeleton />
               )}
@@ -838,32 +842,32 @@ export default function Home() {
             >
               {result ? (
                 <div className="card-interactive rounded-2xl border-l-4" style={{
-                borderLeftColor: '#f48fb1',
-                borderLeftWidth: '4px',
-                borderLeftStyle: 'solid',
-                backgroundColor: '#ffffff',
-                background: '#ffffff',
-                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                width: '100%',
-                maxWidth: '100%',
-                boxSizing: 'border-box',
-                padding: '12px 16px',
-                paddingTop: '12px',
-                paddingBottom: '12px',
-                paddingLeft: '16px',
-                paddingRight: '16px',
-                marginBottom: '16px',
-                marginTop: '0'
-              }}>
-                <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#f48fb1'}}>
-                  <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>favorite</span>
-                  情感气场
-                </h3>
-                <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                  {result.analysis.love}
-                </Streamdown>
-              </div>
+                  borderLeftColor: '#f48fb1',
+                  borderLeftWidth: '4px',
+                  borderLeftStyle: 'solid',
+                  backgroundColor: '#ffffff',
+                  background: '#ffffff',
+                  boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                  WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                  width: '100%',
+                  maxWidth: '100%',
+                  boxSizing: 'border-box',
+                  padding: '12px 16px',
+                  paddingTop: '12px',
+                  paddingBottom: '12px',
+                  paddingLeft: '16px',
+                  paddingRight: '16px',
+                  marginBottom: '16px',
+                  marginTop: '0'
+                }}>
+                  <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#f48fb1'}}>
+                    <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>favorite</span>
+                    情感气场
+                  </h3>
+                  <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                    {result.analysis.love}
+                  </Streamdown>
+                </div>
               ) : (
                 <CardSkeleton />
               )}
@@ -883,32 +887,32 @@ export default function Home() {
             >
               {result ? (
                 <div className="card-interactive rounded-2xl border-l-4" style={{
-                borderLeftColor: '#9c27b0',
-                borderLeftWidth: '4px',
-                borderLeftStyle: 'solid',
-                backgroundColor: '#ffffff',
-                background: '#ffffff',
-                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                width: '100%',
-                maxWidth: '100%',
-                boxSizing: 'border-box',
-                padding: '12px 16px',
-                paddingTop: '12px',
-                paddingBottom: '12px',
-                paddingLeft: '16px',
-                paddingRight: '16px',
-                marginBottom: '16px',
-                marginTop: '0'
-              }}>
-                <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#9c27b0'}}>
-                  <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>star</span>
-                  幸运微光
-                </h3>
-                <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                  {result.analysis.luck}
-                </Streamdown>
-              </div>
+                  borderLeftColor: '#9c27b0',
+                  borderLeftWidth: '4px',
+                  borderLeftStyle: 'solid',
+                  backgroundColor: '#ffffff',
+                  background: '#ffffff',
+                  boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                  WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                  width: '100%',
+                  maxWidth: '100%',
+                  boxSizing: 'border-box',
+                  padding: '12px 16px',
+                  paddingTop: '12px',
+                  paddingBottom: '12px',
+                  paddingLeft: '16px',
+                  paddingRight: '16px',
+                  marginBottom: '16px',
+                  marginTop: '0'
+                }}>
+                  <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#9c27b0'}}>
+                    <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>star</span>
+                    幸运微光
+                  </h3>
+                  <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                    {result.analysis.luck}
+                  </Streamdown>
+                </div>
               ) : (
                 <CardSkeleton />
               )}
