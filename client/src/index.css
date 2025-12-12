@@ -249,6 +249,15 @@
   font-size: 1.2em;
 }
 
+/* 安卓日期字号优化 */
+@media screen and (max-width: 768px) {
+  /* 检测安卓浏览器并减小日期字号 */
+  body.android-browser .date-title {
+    font-size: 1.125rem !important;
+    line-height: 1.5rem !important;
+  }
+}
+
 /* 移动端优化 */
 @media (max-width: 600px) {
   #top-navigation {
@@ -460,6 +469,10 @@
   -webkit-column-gap: 20px;
   -moz-column-gap: 20px;
   column-gap: 20px;
+  /* 增加列宽度，避免标签压住左侧 */
+  -webkit-column-width: 180px;
+  -moz-column-width: 180px;
+  column-width: 180px;
   -webkit-column-fill: auto;
   -moz-column-fill: auto;
   column-fill: auto;
@@ -473,6 +486,7 @@
   -webkit-overflow-scrolling: touch;
   width: 100%;
   padding: 12px;
+  padding-left: 16px;
   box-sizing: border-box;
   position: relative;
   /* 确保内容可以横向滚动 */
@@ -521,6 +535,10 @@
     -webkit-column-gap: 16px;
     -moz-column-gap: 16px;
     column-gap: 16px;
+    /* 增加列宽度，避免标签压住左侧 */
+    -webkit-column-width: 160px;
+    -moz-column-width: 160px;
+    column-width: 160px;
     /* 严格限制高度为6行 */
     height: 288px;
     max-height: 288px;
@@ -531,6 +549,7 @@
     width: 100%;
     min-width: 100%;
     white-space: normal;
+    padding-left: 16px;
   }
   
   /* 禁用 Grid，强制使用 CSS Columns */
@@ -544,6 +563,10 @@
     -webkit-column-gap: 12px;
     -moz-column-gap: 12px;
     column-gap: 12px;
+    /* 增加列宽度，避免标签压住左侧 */
+    -webkit-column-width: 150px;
+    -moz-column-width: 150px;
+    column-width: 150px;
     /* 严格限制高度为6行 */
     height: 288px;
     max-height: 288px;
@@ -554,6 +577,7 @@
     width: 100%;
     min-width: 100%;
     white-space: normal;
+    padding-left: 16px;
   }
   
   /* 禁用 Grid，强制使用 CSS Columns */

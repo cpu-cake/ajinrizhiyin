@@ -338,6 +338,15 @@ export default function Home() {
     };
   }, [result, explainQuestionMutation, hotQuestionsQuery.data]);
 
+  // 检测安卓浏览器并添加类名
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.navigator.userAgent.match(/Android/i)) {
+      document.body.classList.add('android-browser');
+    } else {
+      document.body.classList.add('ios-browser');
+    }
+  }, []);
+
   // 更新轮播文本
   useEffect(() => {
     const carouselText = document.getElementById('carousel-text');
@@ -451,7 +460,7 @@ export default function Home() {
 
           {/* 顶部 */}
           <div className="text-left mb-8 sm:mb-12">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-pink-600 mb-2">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-pink-600 mb-2 date-title">
               {currentDate}
             </h1>
             <p className="text-gray-600 text-base sm:text-lg">
@@ -473,6 +482,7 @@ export default function Home() {
             <div id="dropdown-content" style={{paddingTop: '0px', paddingRight: '0px', paddingLeft: '0px', overflowX: 'hidden', overflowY: 'hidden'}}>
               <div id="question-tags-container" style={{
                 padding: '12px',
+                paddingLeft: '16px',
                 width: '100%',
                 boxSizing: 'border-box',
                 overflowX: 'scroll',
