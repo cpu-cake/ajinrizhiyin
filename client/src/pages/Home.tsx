@@ -244,9 +244,15 @@ export default function Home() {
         tag.style.cursor = 'pointer';
         tag.style.position = 'relative'; // 为徽章定位做准备
         // 强制应用背景色和边框（兼容安卓浏览器）
-        // 配色基于原始索引，实现错落有致的分布，避免按列对齐
-        // 使用原始索引确保颜色在整个48个标签中循环分布
+        // 配色基于原始索引（0-47），实现错落有致的分布，避免按列对齐
+        // 原始索引按列排列：0-5是第1列，6-11是第2列，12-17是第3列...
+        // 使用原始索引 % 4 确保颜色在整个48个标签中按顺序循环：1,2,3,4,1,2,3,4...
+        // 这样同一列不会都是相同颜色，实现错落分布
         const colorIndex = (item.originalIndex % 4) + 1;
+        // 调试信息（可在控制台查看）
+        if (displayIndex < 8) {
+          console.log(`标签 ${displayIndex}: 原始索引=${item.originalIndex}, 颜色=${colorIndex}, 问题="${item.question.substring(0, 10)}..."`);
+        }
         if (colorIndex === 1) {
           // 颜色1：粉色
           tag.style.backgroundColor = '#ffeaea';
