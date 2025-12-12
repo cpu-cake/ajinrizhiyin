@@ -260,9 +260,9 @@ export default function Home() {
         const textNode = document.createTextNode(q);
         tag.appendChild(textNode);
         // 强制设置标签样式，确保文字横向且不溢出
-        tag.style.width = 'auto';
-        tag.style.minWidth = 'auto';
-        tag.style.maxWidth = 'none';
+        tag.style.width = 'fit-content';
+        tag.style.minWidth = 'fit-content';
+        tag.style.maxWidth = 'fit-content';
         tag.style.minHeight = '38px';
         tag.style.maxHeight = '38px';
         tag.style.height = '38px';
@@ -276,7 +276,7 @@ export default function Home() {
         tag.style.textOverflow = 'clip';
         tag.style.borderRadius = '20px';
         tag.style.flexShrink = '0';
-        tag.style.marginBottom = '0';
+        tag.style.margin = '0';
 
         tag.addEventListener('click', () => {
           console.log('点击了问题:', q);
@@ -491,7 +491,7 @@ export default function Home() {
                 WebkitOverflowScrolling: 'touch',
                 position: 'relative',
                 display: 'grid',
-                gridTemplateColumns: 'repeat(8, minmax(0, auto))',
+                gridTemplateColumns: 'repeat(8, minmax(min-content, max-content))',
                 gap: '6px 12px'
               }}></div>
             </div>
