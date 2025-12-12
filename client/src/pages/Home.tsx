@@ -276,7 +276,7 @@ export default function Home() {
         tag.style.textOverflow = 'clip';
         tag.style.borderRadius = '20px';
         tag.style.flexShrink = '0';
-        tag.style.marginBottom = '12px';
+        tag.style.marginBottom = '0';
 
         tag.addEventListener('click', () => {
           console.log('点击了问题:', q);
@@ -490,10 +490,9 @@ export default function Home() {
                 overflowY: 'auto',
                 WebkitOverflowScrolling: 'touch',
                 position: 'relative',
-                display: 'flex',
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                gap: '12px'
+                display: 'grid',
+                gridTemplateColumns: 'repeat(8, minmax(0, auto))',
+                gap: '6px 12px'
               }}></div>
             </div>
             {(explanation || isExplanationLoading) && (

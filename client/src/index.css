@@ -462,11 +462,9 @@
 
 /* 标签容器布局 - 横向排列，每行8个标签，自动换行 */
 #question-tags-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-content: flex-start;
-  gap: 12px 12px;
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, auto));
+  gap: 6px 12px;
   width: 100%;
   padding: 12px;
   padding-left: 16px;
@@ -486,10 +484,10 @@
   align-items: center;
   justify-content: center;
   width: auto;
-  min-width: auto;
-  max-width: none;
-  /* 增加行距：上下间距 */
-  margin-bottom: 12px;
+  min-width: 0;
+  max-width: 100%;
+  /* 减小行距：上下间距 */
+  margin-bottom: 0;
   box-sizing: border-box;
   /* 文字横向显示，不换行，但允许完整显示 */
   white-space: nowrap;
@@ -505,35 +503,34 @@
   text-align: center;
   /* 横条样式，不是圆形 */
   border-radius: 20px;
-  /* 确保标签不会被截断，不压缩，宽度自适应文字 */
-  flex-shrink: 0;
-  -webkit-flex-shrink: 0;
-  flex-grow: 0;
-  flex-basis: auto;
+  /* 标签宽度自适应内容，左对齐 */
+  justify-self: start;
 }
 
-/* 移动端优化 - 保持固定间距，标签自适应宽度 */
+/* 移动端优化 - 保持每行8个标签，调整间距 */
 @media screen and (max-width: 768px) {
   #question-tags-container {
-    gap: 10px 10px;
+    grid-template-columns: repeat(8, minmax(0, auto));
+    gap: 6px 10px;
     padding: 12px;
     padding-left: 16px;
   }
   
   .question-tag {
-    margin-bottom: 12px;
+    margin-bottom: 0;
   }
 }
 
 @media screen and (max-width: 480px) {
   #question-tags-container {
-    gap: 8px 8px;
+    grid-template-columns: repeat(8, minmax(0, auto));
+    gap: 6px 8px;
     padding: 12px;
     padding-left: 16px;
   }
   
   .question-tag {
-    margin-bottom: 12px;
+    margin-bottom: 0;
   }
 }
 
