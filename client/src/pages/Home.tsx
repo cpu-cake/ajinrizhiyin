@@ -637,6 +637,43 @@ export default function Home() {
             )}
           </div>
 
+          {/* 加载动画 - 显示在解答小困惑和卡片之间 */}
+          {!result && getTodayQuery.isLoading && (
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '40px 20px',
+              marginBottom: '32px'
+            }}>
+              {/* 大号旋转加载图标 */}
+              <div 
+                className="skeleton-loader"
+                style={{
+                  width: '64px',
+                  height: '64px',
+                  border: '6px solid #fbcfe8',
+                  borderTopColor: '#ec4899',
+                  borderRightColor: '#ec4899',
+                  borderRadius: '50%',
+                  marginBottom: '16px',
+                  display: 'block'
+                }}
+              ></div>
+              {/* 加载文字提示 */}
+              <div style={{
+                color: '#ec4899',
+                fontSize: '16px',
+                fontWeight: '500',
+                animation: 'pulse 2s ease-in-out infinite',
+                WebkitAnimation: 'pulse 2s ease-in-out infinite'
+              }}>
+                正在加载你的专属指引...
+              </div>
+            </div>
+          )}
+
           {/* 错误提示 */}
           {error && (
             <div className="mb-8 p-4 bg-red-50 border-l-4 border-red-400 rounded">
