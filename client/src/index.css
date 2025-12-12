@@ -460,49 +460,36 @@
   overflow-y: hidden;
 }
 
-/* 标签容器布局 - 使用 CSS Columns，限制高度实现每列6行，支持横向滚动 */
+/* 标签容器布局 - 横向排列，每行8个标签，自动换行 */
 #question-tags-container {
-  display: block;
-  -webkit-column-count: 8;
-  -moz-column-count: 8;
-  column-count: 8;
-  -webkit-column-gap: 20px;
-  -moz-column-gap: 20px;
-  column-gap: 20px;
-  /* 增加列宽度，避免标签压住左侧 */
-  -webkit-column-width: 180px;
-  -moz-column-width: 180px;
-  column-width: 180px;
-  -webkit-column-fill: auto;
-  -moz-column-fill: auto;
-  column-fill: auto;
-  /* 严格限制高度：6行 * (标签高度约38px + 间距10px) ≈ 6 * 48px = 288px */
-  height: 288px;
-  max-height: 288px;
-  min-height: 288px;
-  /* 确保可以横向滚动 */
-  overflow-x: scroll;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 12px 12px;
   width: 100%;
   padding: 12px;
   padding-left: 16px;
   box-sizing: border-box;
   position: relative;
-  /* 确保内容可以横向滚动 */
-  white-space: normal;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  /* 不限制高度，让内容自然展开 */
+  min-height: 200px;
+  max-height: none;
 }
 
-/* CSS Columns 模式下的标签样式 - 横条自适应文字宽度 */
+/* 标签样式 - 横条自适应文字宽度，横向排列 */
 .question-tag {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: auto;
   min-width: auto;
   max-width: none;
-  margin-bottom: 10px;
-  -webkit-column-break-inside: avoid;
-  page-break-inside: avoid;
-  break-inside: avoid-column;
+  /* 增加行距：上下间距 */
+  margin-bottom: 12px;
   box-sizing: border-box;
   /* 文字横向显示，不换行，但允许完整显示 */
   white-space: nowrap;
@@ -516,71 +503,38 @@
   /* 确保文字在背景内，横条自适应 */
   padding: 6px 14px;
   text-align: center;
-  vertical-align: top;
   /* 横条样式，不是圆形 */
   border-radius: 20px;
-  /* 确保标签不会被截断 */
+  /* 确保标签不会被截断，不压缩，宽度自适应文字 */
   flex-shrink: 0;
   -webkit-flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: auto;
 }
 
-/* 禁用 Grid 布局，优先使用 CSS Columns（安卓原生浏览器兼容性更好） */
-
-/* 移动端优化 - 减少列数，但保持每列6行，添加横向滚动 */
+/* 移动端优化 - 保持固定间距，标签自适应宽度 */
 @media screen and (max-width: 768px) {
   #question-tags-container {
-    -webkit-column-count: 4;
-    -moz-column-count: 4;
-    column-count: 4;
-    -webkit-column-gap: 16px;
-    -moz-column-gap: 16px;
-    column-gap: 16px;
-    /* 增加列宽度，避免标签压住左侧 */
-    -webkit-column-width: 160px;
-    -moz-column-width: 160px;
-    column-width: 160px;
-    /* 严格限制高度为6行 */
-    height: 288px;
-    max-height: 288px;
-    min-height: 288px;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    width: 100%;
-    min-width: 100%;
-    white-space: normal;
+    gap: 10px 10px;
+    padding: 12px;
     padding-left: 16px;
   }
   
-  /* 禁用 Grid，强制使用 CSS Columns */
+  .question-tag {
+    margin-bottom: 12px;
+  }
 }
 
 @media screen and (max-width: 480px) {
   #question-tags-container {
-    -webkit-column-count: 2;
-    -moz-column-count: 2;
-    column-count: 2;
-    -webkit-column-gap: 12px;
-    -moz-column-gap: 12px;
-    column-gap: 12px;
-    /* 增加列宽度，避免标签压住左侧 */
-    -webkit-column-width: 150px;
-    -moz-column-width: 150px;
-    column-width: 150px;
-    /* 严格限制高度为6行 */
-    height: 288px;
-    max-height: 288px;
-    min-height: 288px;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    width: 100%;
-    min-width: 100%;
-    white-space: normal;
+    gap: 8px 8px;
+    padding: 12px;
     padding-left: 16px;
   }
   
-  /* 禁用 Grid，强制使用 CSS Columns */
+  .question-tag {
+    margin-bottom: 12px;
+  }
 }
 
 .question-tag {
