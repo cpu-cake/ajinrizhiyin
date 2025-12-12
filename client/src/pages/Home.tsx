@@ -269,11 +269,16 @@ export default function Home() {
           tag.style.backgroundColor = '#fffbe9';
           tag.style.color = '#ffc107';
           tag.style.border = '1px solid #ffe6aa';
-        } else {
+        } else if (colorIndex === 4) {
           // 颜色5：紫色
           tag.style.backgroundColor = '#f3e5f5';
           tag.style.color = '#9c27b0';
           tag.style.border = '1px solid #e1bee7';
+        } else {
+          // 兜底：如果出现意外情况，使用粉色
+          tag.style.backgroundColor = '#ffeaea';
+          tag.style.color = '#d66';
+          tag.style.border = '1px solid #ffcccc';
         }
         
         // 如果是热门标签，添加火焰徽章
