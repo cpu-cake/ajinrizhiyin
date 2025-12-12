@@ -245,30 +245,35 @@ export default function Home() {
         tag.style.position = 'relative'; // 为徽章定位做准备
         // 强制应用背景色和边框（兼容安卓浏览器）
         // 配色基于总标签索引（0-47），实现错落有致的分布，避免按列对齐
-        // 使用总标签索引（displayIndex）确保颜色在整个48个标签中按顺序循环：1,2,3,4,1,2,3,4...
-        // 这样相邻标签（无论是横向还是纵向）都会有不同的颜色，实现错落分布
+        // 使用总标签索引（displayIndex）确保颜色在整个48个标签中按顺序循环：1,2,3,4,5,1,2,3,4,5...
+        // 使用5种颜色（不是8的因数）可以更好地实现错落分布
         const totalIndex = displayIndex; // 标签在 0 到 47 之间的绝对索引
-        const colorIndex = (totalIndex % 4) + 1; // 颜色索引：1, 2, 3, 4 循环
-        if (colorIndex === 1) {
+        const colorIndex = totalIndex % 5; // 颜色索引：0, 1, 2, 3, 4 循环
+        if (colorIndex === 0) {
           // 颜色1：粉色
           tag.style.backgroundColor = '#ffeaea';
           tag.style.color = '#d66';
           tag.style.border = '1px solid #ffcccc';
-        } else if (colorIndex === 2) {
+        } else if (colorIndex === 1) {
           // 颜色2：蓝色
           tag.style.backgroundColor = '#eaf3ff';
           tag.style.color = '#72a5ff';
           tag.style.border = '1px solid #cce0ff';
-        } else if (colorIndex === 3) {
+        } else if (colorIndex === 2) {
           // 颜色3：绿色
           tag.style.backgroundColor = '#e8fff0';
           tag.style.color = '#4db6ac';
           tag.style.border = '1px solid #c0f5d4';
-        } else {
+        } else if (colorIndex === 3) {
           // 颜色4：黄色
           tag.style.backgroundColor = '#fffbe9';
           tag.style.color = '#ffc107';
           tag.style.border = '1px solid #ffe6aa';
+        } else {
+          // 颜色5：紫色
+          tag.style.backgroundColor = '#f3e5f5';
+          tag.style.color = '#9c27b0';
+          tag.style.border = '1px solid #e1bee7';
         }
         
         // 如果是热门标签，添加火焰徽章
@@ -311,7 +316,7 @@ export default function Home() {
           setExplanation(null);
           setIsExplanationLoading(true);
           explainQuestionMutation.mutate(
-            { question: q, deviceFingerprint },
+            { question: item.question, deviceFingerprint },
             {
               onSuccess: (data: any) => {
                 console.log('获取到解读:', data);
