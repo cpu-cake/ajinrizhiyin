@@ -456,62 +456,40 @@ export default function Home() {
       overflow: 'hidden'
     }}>
       {/* 加载动画背景 - 闪烁效果 */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: '-100%',
-        width: '100%',
-        height: '100%',
-        background: 'linear-gradient(90deg, transparent, rgba(251, 207, 232, 0.3), transparent)',
-        animation: 'shimmer 1.5s infinite',
-        WebkitAnimation: 'shimmer 1.5s infinite'
-      }}></div>
-      {/* 加载指示器 */}
-      <div style={{
-        position: 'absolute',
-        top: '12px',
-        right: '16px',
-        width: '20px',
-        height: '20px',
-        border: '2px solid #fbcfe8',
-        borderTopColor: 'transparent',
-        borderRadius: '50%',
-        animation: 'spin 1s linear infinite',
-        WebkitAnimation: 'spin 1s linear infinite',
-        zIndex: 2
-      }}></div>
-      <Skeleton className="h-6 w-32 mb-3" style={{ backgroundColor: '#f3f4f6', position: 'relative', zIndex: 1, animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite' }} />
-      <Skeleton className="h-4 w-full mb-2" style={{ backgroundColor: '#f3f4f6', position: 'relative', zIndex: 1, animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite' }} />
-      <Skeleton className="h-4 w-full mb-2" style={{ backgroundColor: '#f3f4f6', position: 'relative', zIndex: 1, animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite', animationDelay: '0.2s' }} />
-      <Skeleton className="h-4 w-3/4" style={{ backgroundColor: '#f3f4f6', position: 'relative', zIndex: 1, animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite', animationDelay: '0.4s' }} />
-      <style>{`
-        @keyframes shimmer {
-          0% {
-            left: -100%;
-          }
-          100% {
-            left: 100%;
-          }
-        }
-        @keyframes spin {
-          from {
-            transform: rotate(0deg);
-            -webkit-transform: rotate(0deg);
-          }
-          to {
-            transform: rotate(360deg);
-            -webkit-transform: rotate(360deg);
-          }
-        }
-        @keyframes pulse {
-          0%, 100% {
-            opacity: 1;
-          }
-          50% {
-            opacity: 0.5;
-          }
-        }
-      `}</style>
+      <div 
+        className="skeleton-shimmer"
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: '-100%',
+          width: '100%',
+          height: '100%',
+          background: 'linear-gradient(90deg, transparent, rgba(251, 207, 232, 0.4), transparent)',
+          zIndex: 1
+        }}
+      ></div>
+      {/* 加载指示器 - 旋转动画 */}
+      <div 
+        className="skeleton-loader"
+        style={{
+          position: 'absolute',
+          top: '12px',
+          right: '16px',
+          width: '24px',
+          height: '24px',
+          border: '3px solid #fbcfe8',
+          borderTopColor: '#ec4899',
+          borderRadius: '50%',
+          zIndex: 3
+        }}
+      ></div>
+      {/* 骨架屏内容 - 使用脉冲动画 */}
+      <div style={{ position: 'relative', zIndex: 2 }}>
+        <div className="skeleton-pulse" style={{ height: '24px', width: '128px', marginBottom: '12px', borderRadius: '4px', backgroundColor: '#f3f4f6' }}></div>
+        <div className="skeleton-pulse" style={{ height: '16px', width: '100%', marginBottom: '8px', borderRadius: '4px', backgroundColor: '#f3f4f6' }}></div>
+        <div className="skeleton-pulse" style={{ height: '16px', width: '100%', marginBottom: '8px', borderRadius: '4px', backgroundColor: '#f3f4f6', animationDelay: '0.2s' }}></div>
+        <div className="skeleton-pulse" style={{ height: '16px', width: '75%', borderRadius: '4px', backgroundColor: '#f3f4f6', animationDelay: '0.4s' }}></div>
+      </div>
     </div>
   );
 
