@@ -923,8 +923,7 @@ export default function Home() {
         </div>
       </div>
     );
-  }
-
+  
   // 错误状态
   if (error) {
     return (
