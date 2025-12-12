@@ -470,8 +470,8 @@
   padding-left: 16px;
   box-sizing: border-box;
   position: relative;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   /* 不限制高度，让内容自然展开 */
   min-height: 200px;
@@ -517,6 +517,8 @@
     padding: 12px;
     padding-left: 16px;
     grid-auto-columns: min-content;
+    overflow-x: auto;
+    overflow-y: hidden;
   }
   
   .question-tag {
@@ -531,6 +533,8 @@
     padding: 12px;
     padding-left: 16px;
     grid-auto-columns: min-content;
+    overflow-x: auto;
+    overflow-y: hidden;
   }
   
   .question-tag {

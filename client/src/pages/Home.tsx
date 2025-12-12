@@ -218,8 +218,24 @@ export default function Home() {
       // 获取热门标签列表
       const hotQuestions = hotQuestionsQuery.data?.hotQuestions || [];
       
-      // 添加新标签
-      QUESTIONS.forEach((q, index) => {
+      // 重新排列标签：从按列排列改为按行排列
+      // 原来：8列6行，按列排列（1-6是第一列，7-12是第二列...）
+      // 现在：每行8个，按行排列（1,7,13,19,25,31,37,43是第一行，2,8,14,20,26,32,38,44是第二行...）
+      const COLUMNS = 8;
+      const ROWS = 6;
+      const reorderedQuestions: string[] = [];
+      for (let row = 0; row < ROWS; row++) {
+        for (let col = 0; col < COLUMNS; col++) {
+          // 原索引：列号 * 行数 + 行号
+          const originalIndex = col * ROWS + row;
+          if (originalIndex < QUESTIONS.length) {
+            reorderedQuestions.push(QUESTIONS[originalIndex]);
+          }
+        }
+      }
+      
+      // 添加新标签（使用重新排列后的顺序）
+      reorderedQuestions.forEach((q, index) => {
         const tag = document.createElement('span');
         tag.className = 'question-tag';
         tag.style.cursor = 'pointer';
@@ -486,8 +502,8 @@ export default function Home() {
                 paddingLeft: '16px',
                 width: '100%',
                 boxSizing: 'border-box',
-                overflowX: 'hidden',
-                overflowY: 'auto',
+                overflowX: 'auto',
+                overflowY: 'hidden',
                 WebkitOverflowScrolling: 'touch',
                 position: 'relative',
                 display: 'grid',
