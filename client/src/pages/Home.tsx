@@ -453,9 +453,47 @@ export default function Home() {
       marginBottom: '16px',
       marginTop: '0',
       position: 'relative',
-      overflow: 'hidden'
+      overflow: 'hidden',
+      minHeight: '120px'
     }}>
-      {/* 加载动画背景 - 闪烁效果（增强可见性） */}
+      {/* 中央加载动画 - 大号旋转图标 */}
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '20px',
+        minHeight: '100px',
+        position: 'relative',
+        zIndex: 2
+      }}>
+        {/* 大号旋转加载图标 */}
+        <div 
+          className="skeleton-loader"
+          style={{
+            width: '48px',
+            height: '48px',
+            border: '5px solid #fbcfe8',
+            borderTopColor: '#ec4899',
+            borderRightColor: '#ec4899',
+            borderRadius: '50%',
+            marginBottom: '12px',
+            display: 'block'
+          }}
+        ></div>
+        {/* 加载文字提示 */}
+        <div style={{
+          color: '#ec4899',
+          fontSize: '14px',
+          fontWeight: '500',
+          animation: 'pulse 2s ease-in-out infinite',
+          WebkitAnimation: 'pulse 2s ease-in-out infinite'
+        }}>
+          加载中...
+        </div>
+      </div>
+      
+      {/* 背景闪烁效果（可选，如果太花哨可以去掉） */}
       <div 
         className="skeleton-shimmer"
         style={{
@@ -464,67 +502,14 @@ export default function Home() {
           left: 0,
           width: '50%',
           height: '100%',
-          background: 'linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(251, 207, 232, 0.7) 50%, rgba(255, 255, 255, 0) 100%)',
-          zIndex: 1,
+          background: 'linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(251, 207, 232, 0.3) 50%, rgba(255, 255, 255, 0) 100%)',
+          zIndex: 0,
           pointerEvents: 'none',
           willChange: 'transform'
         }}
       ></div>
-      {/* 加载指示器 - 旋转动画（增强可见性） */}
-      <div 
-        className="skeleton-loader"
-        style={{
-          position: 'absolute',
-          top: '12px',
-          right: '16px',
-          width: '28px',
-          height: '28px',
-          border: '4px solid #fbcfe8',
-          borderTopColor: '#ec4899',
-          borderRightColor: '#ec4899',
-          borderRadius: '50%',
-          zIndex: 10,
-          pointerEvents: 'none'
-        }}
-      ></div>
-      {/* 骨架屏内容 - 使用脉冲动画（增强对比度） */}
-      <div style={{ position: 'relative', zIndex: 2 }}>
-        <div className="skeleton-pulse" style={{ 
-          height: '24px', 
-          width: '128px', 
-          marginBottom: '12px', 
-          borderRadius: '4px', 
-          backgroundColor: '#f3f4f6',
-          minHeight: '24px'
-        }}></div>
-        <div className="skeleton-pulse" style={{ 
-          height: '16px', 
-          width: '100%', 
-          marginBottom: '8px', 
-          borderRadius: '4px', 
-          backgroundColor: '#f3f4f6',
-          minHeight: '16px'
-        }}></div>
-        <div className="skeleton-pulse" style={{ 
-          height: '16px', 
-          width: '100%', 
-          marginBottom: '8px', 
-          borderRadius: '4px', 
-          backgroundColor: '#f3f4f6',
-          animationDelay: '0.2s',
-          minHeight: '16px'
-        }}></div>
-        <div className="skeleton-pulse" style={{ 
-          height: '16px', 
-          width: '75%', 
-          borderRadius: '4px', 
-          backgroundColor: '#f3f4f6',
-          animationDelay: '0.4s',
-          minHeight: '16px'
-        }}></div>
-        </div>
-      </div>
-    );
+    </div>
+  );
 
     return (
       <div className="min-h-screen py-6 sm:py-8" style={{
