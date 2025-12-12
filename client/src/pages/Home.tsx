@@ -394,6 +394,34 @@ export default function Home() {
     }
   }, []);
 
+  // 启动动画：逐个显示元素
+  useEffect(() => {
+    if (result) {
+      // 立即显示第一个元素（顶部导航）
+      setVisibleElements(new Set(['top-navigation']));
+      
+      // 定义显示顺序和延迟时间（毫秒）
+      const elements = [
+        { id: 'date-section', delay: 200 },
+        { id: 'question-section', delay: 400 },
+        { id: 'greeting-card', delay: 600 },
+        { id: 'outfit-card', delay: 800 },
+        { id: 'color-card', delay: 1000 },
+        { id: 'mood-card', delay: 1200 },
+        { id: 'career-card', delay: 1400 },
+        { id: 'love-card', delay: 1600 },
+        { id: 'luck-card', delay: 1800 },
+      ];
+
+      // 逐个显示元素
+      elements.forEach(({ id, delay }) => {
+        setTimeout(() => {
+          setVisibleElements(prev => new Set(prev).add(id));
+        }, delay);
+      });
+    }
+  }, [result]);
+
   // 更新轮播文本
   useEffect(() => {
     const carouselText = document.getElementById('carousel-text');
@@ -484,7 +512,8 @@ export default function Home() {
         backgroundImage: '-webkit-linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%), -moz-linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%), -o-linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%), linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%)',
         backgroundSize: '100% 100%',
         backgroundRepeat: 'no-repeat',
-        backgroundAttachment: 'scroll'
+        backgroundAttachment: 'scroll',
+        minHeight: '100vh'
       }}>
         <div className="max-w-4xl mx-auto" style={{
           paddingLeft: '16px',
