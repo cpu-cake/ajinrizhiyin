@@ -223,26 +223,30 @@ export default function Home() {
       // 现在：每行8个，按行排列（1,7,13,19,25,31,37,43是第一行，2,8,14,20,26,32,38,44是第二行...）
       const COLUMNS = 8;
       const ROWS = 6;
-      const reorderedQuestions: string[] = [];
+      const reorderedQuestions: Array<{question: string, originalIndex: number}> = [];
       for (let row = 0; row < ROWS; row++) {
         for (let col = 0; col < COLUMNS; col++) {
           // 原索引：列号 * 行数 + 行号
           const originalIndex = col * ROWS + row;
           if (originalIndex < QUESTIONS.length) {
-            reorderedQuestions.push(QUESTIONS[originalIndex]);
+            reorderedQuestions.push({
+              question: QUESTIONS[originalIndex],
+              originalIndex: originalIndex
+            });
           }
         }
       }
       
       // 添加新标签（使用重新排列后的顺序）
-      reorderedQuestions.forEach((q, index) => {
+      reorderedQuestions.forEach((item, displayIndex) => {
         const tag = document.createElement('span');
         tag.className = 'question-tag';
         tag.style.cursor = 'pointer';
         tag.style.position = 'relative'; // 为徽章定位做准备
         // 强制应用背景色和边框（兼容安卓浏览器）
-        // 配色按1、2、3、4、1、2、3、4...循环
-        const colorIndex = (index % 4) + 1;
+        // 配色基于原始索引，实现错落有致的分布，避免按列对齐
+        // 使用原始索引确保颜色在整个48个标签中循环分布
+        const colorIndex = (item.originalIndex % 4) + 1;
         if (colorIndex === 1) {
           // 颜色1：粉色
           tag.style.backgroundColor = '#ffeaea';
@@ -266,7 +270,7 @@ export default function Home() {
         }
         
         // 如果是热门标签，添加火焰徽章
-        if (hotQuestions.includes(q)) {
+        if (hotQuestions.includes(item.question)) {
           const badge = document.createElement('span');
           badge.textContent = '🔥';
           badge.style.position = 'absolute';
@@ -278,7 +282,7 @@ export default function Home() {
         }
         
         // 添加标签文字 - 确保文字横向显示
-        const textNode = document.createTextNode(q);
+        const textNode = document.createTextNode(item.question);
         tag.appendChild(textNode);
         // 强制设置标签样式，确保文字横向且不溢出
         tag.style.width = 'fit-content';
@@ -300,8 +304,8 @@ export default function Home() {
         tag.style.margin = '0';
 
         tag.addEventListener('click', () => {
-          console.log('点击了问题:', q);
-          setSelectedQuestion(q);
+          console.log('点击了问题:', item.question);
+          setSelectedQuestion(item.question);
           setExplanation(null);
           setIsExplanationLoading(true);
           explainQuestionMutation.mutate(
