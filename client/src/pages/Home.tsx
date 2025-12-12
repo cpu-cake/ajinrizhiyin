@@ -148,6 +148,8 @@ export default function Home() {
   const [explanation, setExplanation] = useState<string | null>(null);
   const [selectedQuestion, setSelectedQuestion] = useState<string>("");
   const [isExplanationLoading, setIsExplanationLoading] = useState(false);
+  // 启动动画：控制元素逐个显示
+  const [visibleElements, setVisibleElements] = useState<Set<string>>(new Set());
 
   const getTodayQuery = trpc.coin.getToday.useQuery(
     { deviceFingerprint },
@@ -494,7 +496,14 @@ export default function Home() {
           maxWidth: '100%'
         }}>
           {/* 顶部导航按钮 */}
-          <div id="top-navigation">
+          <div 
+            id="top-navigation"
+            style={{
+              opacity: visibleElements.has('top-navigation') ? 1 : 0,
+              transform: visibleElements.has('top-navigation') ? 'translateY(0)' : 'translateY(20px)',
+              transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
+            }}
+          >
             <a href="https://snailsleep-7edyehrw.manus.space" target="_blank" rel="noopener noreferrer" className="nav-button" id="sleep-button">
               <span className="material-icons">bedtime</span>开始助眠
             </a>
@@ -504,7 +513,15 @@ export default function Home() {
           </div>
 
           {/* 顶部 */}
-          <div className="text-left mb-8 sm:mb-12">
+          <div 
+            id="date-section"
+            className="text-left mb-8 sm:mb-12"
+            style={{
+              opacity: visibleElements.has('date-section') ? 1 : 0,
+              transform: visibleElements.has('date-section') ? 'translateY(0)' : 'translateY(20px)',
+              transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
+            }}
+          >
             <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-pink-600 mb-2 date-title">
               {currentDate}
             </h1>
@@ -514,7 +531,15 @@ export default function Home() {
           </div>
 
           {/* 解答小困惑功能 */}
-          <div id="question-section" className="mb-8 sm:mb-10">
+          <div 
+            id="question-section" 
+            className="mb-8 sm:mb-10"
+            style={{
+              opacity: visibleElements.has('question-section') ? 1 : 0,
+              transform: visibleElements.has('question-section') ? 'translateY(0)' : 'translateY(20px)',
+              transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
+            }}
+          >
             <div id="question-title-bar" style={{marginTop: '-21px', marginBottom: '15px', userSelect: 'none'}}>
               <div id="question-label">
                 <span className="material-icons">lightbulb</span>解答小困惑
@@ -599,7 +624,14 @@ export default function Home() {
             marginTop: '0'
           }}>
             {/* 早安心语 - 跨越全宽 */}
-            <div className="md:col-span-3">
+            <div 
+              className="md:col-span-3"
+              style={{
+                opacity: visibleElements.has('greeting-card') ? 1 : 0,
+                transform: visibleElements.has('greeting-card') ? 'translateY(0)' : 'translateY(20px)',
+                transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
+              }}
+            >
               <div className="card-interactive rounded-2xl border-l-4" style={{
                 borderLeftColor: '#ff9999',
                 borderLeftWidth: '4px',
@@ -630,7 +662,17 @@ export default function Home() {
             </div>
 
             {/* 穿搭灵感 - 跨越2列 */}
-            <div className="md:col-span-2" style={{width: '100%', maxWidth: '100%', boxSizing: 'border-box'}}>
+            <div 
+              className="md:col-span-2" 
+              style={{
+                width: '100%', 
+                maxWidth: '100%', 
+                boxSizing: 'border-box',
+                opacity: visibleElements.has('outfit-card') ? 1 : 0,
+                transform: visibleElements.has('outfit-card') ? 'translateY(0)' : 'translateY(20px)',
+                transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
+              }}
+            >
               <div className="card-interactive rounded-2xl border-l-4" style={{
                 borderLeftColor: '#72a5ff',
                 borderLeftWidth: '4px',
@@ -661,7 +703,17 @@ export default function Home() {
             </div>
 
             {/* 幸运配色 - 1列 */}
-            <div className="md:col-span-1" style={{width: '100%', maxWidth: '100%', boxSizing: 'border-box'}}>
+            <div 
+              className="md:col-span-1" 
+              style={{
+                width: '100%', 
+                maxWidth: '100%', 
+                boxSizing: 'border-box',
+                opacity: visibleElements.has('color-card') ? 1 : 0,
+                transform: visibleElements.has('color-card') ? 'translateY(0)' : 'translateY(20px)',
+                transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
+              }}
+            >
               <div className="card-interactive rounded-2xl border-l-4" style={{
                 borderLeftColor: '#64dd17',
                 borderLeftWidth: '4px',
@@ -692,7 +744,17 @@ export default function Home() {
             </div>
 
             {/* 情绪流动 - 1列 */}
-            <div className="md:col-span-1" style={{width: '100%', maxWidth: '100%', boxSizing: 'border-box'}}>
+            <div 
+              className="md:col-span-1" 
+              style={{
+                width: '100%', 
+                maxWidth: '100%', 
+                boxSizing: 'border-box',
+                opacity: visibleElements.has('mood-card') ? 1 : 0,
+                transform: visibleElements.has('mood-card') ? 'translateY(0)' : 'translateY(20px)',
+                transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
+              }}
+            >
               <div className="card-interactive rounded-2xl border-l-4" style={{
                 borderLeftColor: '#ffc107',
                 borderLeftWidth: '4px',
@@ -723,7 +785,17 @@ export default function Home() {
             </div>
 
             {/* 工作指引 - 跨越2列 */}
-            <div className="md:col-span-2" style={{width: '100%', maxWidth: '100%', boxSizing: 'border-box'}}>
+            <div 
+              className="md:col-span-2" 
+              style={{
+                width: '100%', 
+                maxWidth: '100%', 
+                boxSizing: 'border-box',
+                opacity: visibleElements.has('career-card') ? 1 : 0,
+                transform: visibleElements.has('career-card') ? 'translateY(0)' : 'translateY(20px)',
+                transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
+              }}
+            >
               <div className="card-interactive rounded-2xl border-l-4" style={{
                 borderLeftColor: '#4db6ac',
                 borderLeftWidth: '4px',
@@ -754,7 +826,17 @@ export default function Home() {
             </div>
 
             {/* 情感气场 - 跨越2列 */}
-            <div className="md:col-span-2" style={{width: '100%', maxWidth: '100%', boxSizing: 'border-box'}}>
+            <div 
+              className="md:col-span-2" 
+              style={{
+                width: '100%', 
+                maxWidth: '100%', 
+                boxSizing: 'border-box',
+                opacity: visibleElements.has('love-card') ? 1 : 0,
+                transform: visibleElements.has('love-card') ? 'translateY(0)' : 'translateY(20px)',
+                transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
+              }}
+            >
               <div className="card-interactive rounded-2xl border-l-4" style={{
                 borderLeftColor: '#f48fb1',
                 borderLeftWidth: '4px',
@@ -785,7 +867,17 @@ export default function Home() {
             </div>
 
             {/* 幸运微光 - 1列 */}
-            <div className="md:col-span-1" style={{width: '100%', maxWidth: '100%', boxSizing: 'border-box'}}>
+            <div 
+              className="md:col-span-1" 
+              style={{
+                width: '100%', 
+                maxWidth: '100%', 
+                boxSizing: 'border-box',
+                opacity: visibleElements.has('luck-card') ? 1 : 0,
+                transform: visibleElements.has('luck-card') ? 'translateY(0)' : 'translateY(20px)',
+                transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
+              }}
+            >
               <div className="card-interactive rounded-2xl border-l-4" style={{
                 borderLeftColor: '#9c27b0',
                 borderLeftWidth: '4px',
