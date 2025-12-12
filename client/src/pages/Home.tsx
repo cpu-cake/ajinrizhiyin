@@ -249,6 +249,11 @@ export default function Home() {
         // 使用5种颜色（不是8的因数）可以更好地实现错落分布
         const totalIndex = displayIndex; // 标签在 0 到 47 之间的绝对索引
         const colorIndex = totalIndex % 5; // 颜色索引：0, 1, 2, 3, 4 循环
+        
+        // 调试信息：前10个标签打印颜色索引
+        if (displayIndex < 10) {
+          console.log(`标签 ${displayIndex}: totalIndex=${totalIndex}, colorIndex=${colorIndex}`);
+        }
         if (colorIndex === 0) {
           // 颜色1：粉色
           tag.style.backgroundColor = '#ffeaea';
@@ -270,10 +275,12 @@ export default function Home() {
           tag.style.color = '#ffc107';
           tag.style.border = '1px solid #ffe6aa';
         } else if (colorIndex === 4) {
-          // 颜色5：紫色
+          // 颜色5：紫色（增强对比度，确保可见）
           tag.style.backgroundColor = '#f3e5f5';
-          tag.style.color = '#9c27b0';
-          tag.style.border = '1px solid #e1bee7';
+          tag.style.color = '#7b1fa2';
+          tag.style.border = '1px solid #ce93d8';
+          // 强制应用样式，确保不被覆盖
+          tag.setAttribute('data-color-index', '4');
         } else {
           // 兜底：如果出现意外情况，使用粉色
           tag.style.backgroundColor = '#ffeaea';

@@ -581,6 +581,9 @@
   /* 强制应用背景色 */
 }
 
+/* 注释掉旧的4色CSS规则，改为使用JavaScript动态设置5种颜色 */
+/* 这些规则会覆盖JavaScript设置的内联样式，所以需要移除 */
+/*
 .question-tag:nth-child(4n + 1) {
   background-color: #ffeaea !important;
   color: #d66 !important;
@@ -604,6 +607,7 @@
   color: #ffc107 !important;
   border: 1px solid #ffe6aa !important;
 }
+*/
 
 .question-tag:hover {
   opacity: 0.9;
