@@ -689,13 +689,15 @@
   }
 }
 
-/* 骨架屏加载动画 */
+/* 骨架屏加载动画 - 闪烁效果 */
 @keyframes shimmer {
   0% {
-    left: -100%;
+    transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
   }
   100% {
-    left: 100%;
+    transform: translateX(100%);
+    -webkit-transform: translateX(100%);
   }
 }
 
@@ -723,26 +725,28 @@
 @keyframes skeleton-pulse {
   0%, 100% {
     background-color: #f3f4f6;
+    opacity: 1;
   }
   50% {
-    background-color: #e5e7eb;
+    background-color: #d1d5db;
+    opacity: 0.8;
   }
 }
 
 /* 骨架屏加载指示器动画 */
 .skeleton-loader {
-  animation: spin 1s linear infinite;
-  -webkit-animation: spin 1s linear infinite;
+  animation: spin 0.8s linear infinite;
+  -webkit-animation: spin 0.8s linear infinite;
 }
 
-/* 骨架屏闪烁背景 */
+/* 骨架屏闪烁背景 - 增强可见性 */
 .skeleton-shimmer {
-  animation: shimmer 1.5s infinite;
-  -webkit-animation: shimmer 1.5s infinite;
+  animation: shimmer 2s ease-in-out infinite;
+  -webkit-animation: shimmer 2s ease-in-out infinite;
 }
 
-/* 骨架屏脉冲效果 */
+/* 骨架屏脉冲效果 - 增强对比度 */
 .skeleton-pulse {
-  animation: skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  -webkit-animation: skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+  -webkit-animation: skeleton-pulse 1.5s ease-in-out infinite;
 }

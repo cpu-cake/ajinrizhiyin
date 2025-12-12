@@ -455,45 +455,78 @@ export default function Home() {
       position: 'relative',
       overflow: 'hidden'
     }}>
-      {/* 加载动画背景 - 闪烁效果 */}
+      {/* 加载动画背景 - 闪烁效果（增强可见性） */}
       <div 
         className="skeleton-shimmer"
         style={{
           position: 'absolute',
           top: 0,
-          left: '-100%',
-          width: '100%',
+          left: 0,
+          width: '50%',
           height: '100%',
-          background: 'linear-gradient(90deg, transparent, rgba(251, 207, 232, 0.4), transparent)',
-          zIndex: 1
+          background: 'linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(251, 207, 232, 0.7) 50%, rgba(255, 255, 255, 0) 100%)',
+          zIndex: 1,
+          pointerEvents: 'none',
+          willChange: 'transform'
         }}
       ></div>
-      {/* 加载指示器 - 旋转动画 */}
+      {/* 加载指示器 - 旋转动画（增强可见性） */}
       <div 
         className="skeleton-loader"
         style={{
           position: 'absolute',
           top: '12px',
           right: '16px',
-          width: '24px',
-          height: '24px',
-          border: '3px solid #fbcfe8',
+          width: '28px',
+          height: '28px',
+          border: '4px solid #fbcfe8',
           borderTopColor: '#ec4899',
+          borderRightColor: '#ec4899',
           borderRadius: '50%',
-          zIndex: 3
+          zIndex: 10,
+          pointerEvents: 'none'
         }}
       ></div>
-      {/* 骨架屏内容 - 使用脉冲动画 */}
+      {/* 骨架屏内容 - 使用脉冲动画（增强对比度） */}
       <div style={{ position: 'relative', zIndex: 2 }}>
-        <div className="skeleton-pulse" style={{ height: '24px', width: '128px', marginBottom: '12px', borderRadius: '4px', backgroundColor: '#f3f4f6' }}></div>
-        <div className="skeleton-pulse" style={{ height: '16px', width: '100%', marginBottom: '8px', borderRadius: '4px', backgroundColor: '#f3f4f6' }}></div>
-        <div className="skeleton-pulse" style={{ height: '16px', width: '100%', marginBottom: '8px', borderRadius: '4px', backgroundColor: '#f3f4f6', animationDelay: '0.2s' }}></div>
-        <div className="skeleton-pulse" style={{ height: '16px', width: '75%', borderRadius: '4px', backgroundColor: '#f3f4f6', animationDelay: '0.4s' }}></div>
+        <div className="skeleton-pulse" style={{ 
+          height: '24px', 
+          width: '128px', 
+          marginBottom: '12px', 
+          borderRadius: '4px', 
+          backgroundColor: '#f3f4f6',
+          minHeight: '24px'
+        }}></div>
+        <div className="skeleton-pulse" style={{ 
+          height: '16px', 
+          width: '100%', 
+          marginBottom: '8px', 
+          borderRadius: '4px', 
+          backgroundColor: '#f3f4f6',
+          minHeight: '16px'
+        }}></div>
+        <div className="skeleton-pulse" style={{ 
+          height: '16px', 
+          width: '100%', 
+          marginBottom: '8px', 
+          borderRadius: '4px', 
+          backgroundColor: '#f3f4f6',
+          animationDelay: '0.2s',
+          minHeight: '16px'
+        }}></div>
+        <div className="skeleton-pulse" style={{ 
+          height: '16px', 
+          width: '75%', 
+          borderRadius: '4px', 
+          backgroundColor: '#f3f4f6',
+          animationDelay: '0.4s',
+          minHeight: '16px'
+        }}></div>
+        </div>
       </div>
-    </div>
-  );
+    );
 
-  return (
+    return (
       <div className="min-h-screen py-6 sm:py-8" style={{
         background: '#fff7ed',
         backgroundImage: '-webkit-linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%), -moz-linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%), -o-linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%), linear-gradient(180deg, #fff7ed 0%, #fce7f3 100%)',
@@ -668,14 +701,14 @@ export default function Home() {
                   marginBottom: '16px',
                   marginTop: '0'
                 }}>
-                  <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#ff9999'}}>
-                    <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>waving_hand</span>
-                    早安心语
-                  </h3>
-                  <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                    {result.analysis.greeting}
-                  </Streamdown>
-                </div>
+                <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#ff9999'}}>
+                  <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>waving_hand</span>
+                  早安心语
+                </h3>
+                <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                  {result.analysis.greeting}
+                </Streamdown>
+              </div>
               ) : (
                 <CardSkeleton />
               )}
@@ -713,14 +746,14 @@ export default function Home() {
                   marginBottom: '16px',
                   marginTop: '0'
                 }}>
-                  <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#72a5ff'}}>
-                    <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>checkroom</span>
-                    穿搭灵感
-                  </h3>
-                  <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                    {result.analysis.outfit}
-                  </Streamdown>
-                </div>
+                <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#72a5ff'}}>
+                  <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>checkroom</span>
+                  穿搭灵感
+                </h3>
+                <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                  {result.analysis.outfit}
+                </Streamdown>
+              </div>
               ) : (
                 <CardSkeleton />
               )}
@@ -758,14 +791,14 @@ export default function Home() {
                   marginBottom: '16px',
                   marginTop: '0'
                 }}>
-                  <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#64dd17'}}>
-                    <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>palette</span>
-                    幸运配色
-                  </h3>
-                  <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                    {result.analysis.color}
-                  </Streamdown>
-                </div>
+                <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#64dd17'}}>
+                  <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>palette</span>
+                  幸运配色
+                </h3>
+                <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                  {result.analysis.color}
+                </Streamdown>
+              </div>
               ) : (
                 <CardSkeleton />
               )}
@@ -803,14 +836,14 @@ export default function Home() {
                   marginBottom: '16px',
                   marginTop: '0'
                 }}>
-                  <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#ffc107'}}>
-                    <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>sentiment_satisfied</span>
-                    情绪流动
-                  </h3>
-                  <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                    {result.analysis.mood}
-                  </Streamdown>
-                </div>
+                <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#ffc107'}}>
+                  <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>sentiment_satisfied</span>
+                  情绪流动
+                </h3>
+                <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                  {result.analysis.mood}
+                </Streamdown>
+              </div>
               ) : (
                 <CardSkeleton />
               )}
@@ -848,14 +881,14 @@ export default function Home() {
                   marginBottom: '16px',
                   marginTop: '0'
                 }}>
-                  <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#4db6ac'}}>
-                    <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>work</span>
-                    工作指引
-                  </h3>
-                  <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                    {result.analysis.career}
-                  </Streamdown>
-                </div>
+                <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#4db6ac'}}>
+                  <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>work</span>
+                  工作指引
+                </h3>
+                <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                  {result.analysis.career}
+                </Streamdown>
+              </div>
               ) : (
                 <CardSkeleton />
               )}
@@ -893,14 +926,14 @@ export default function Home() {
                   marginBottom: '16px',
                   marginTop: '0'
                 }}>
-                  <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#f48fb1'}}>
-                    <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>favorite</span>
-                    情感气场
-                  </h3>
-                  <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                    {result.analysis.love}
-                  </Streamdown>
-                </div>
+                <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#f48fb1'}}>
+                  <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>favorite</span>
+                  情感气场
+                </h3>
+                <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                  {result.analysis.love}
+                </Streamdown>
+              </div>
               ) : (
                 <CardSkeleton />
               )}
@@ -938,14 +971,14 @@ export default function Home() {
                   marginBottom: '16px',
                   marginTop: '0'
                 }}>
-                  <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#9c27b0'}}>
-                    <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>star</span>
-                    幸运微光
-                  </h3>
-                  <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                    {result.analysis.luck}
-                  </Streamdown>
-                </div>
+                <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#9c27b0'}}>
+                  <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>star</span>
+                  幸运微光
+                </h3>
+                <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                  {result.analysis.luck}
+                </Streamdown>
+              </div>
               ) : (
                 <CardSkeleton />
               )}
@@ -956,7 +989,7 @@ export default function Home() {
         </div>
       </div>
     );
-  
+
   // 错误状态
   if (error) {
     return (
