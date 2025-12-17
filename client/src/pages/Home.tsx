@@ -538,7 +538,7 @@ export default function Home() {
               transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
             }}
           >
-            <a href="https://snailsleep-7edyehrw.manus.space" target="_blank" rel="noopener noreferrer" className="nav-button" id="sleep-button">
+            <a href="https://sleep.health-sleep.com/" target="_blank" rel="noopener noreferrer" className="nav-button" id="sleep-button">
               <span className="material-icons">bedtime</span>开始助眠
             </a>
             <a href="https://goodnight-etwfsck7.manus.space" target="_blank" rel="noopener noreferrer" className="nav-button" id="goodnight-button">
