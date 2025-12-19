@@ -6,18 +6,8 @@
   },
   "rewrites": [
     {
-      "source": "/api/cron/(.*)",
-      "destination": "/api/cron/$1"
-    },
-    {
       "source": "/api/(.*)",
       "destination": "/api/index"
-    }
-  ],
-  "crons": [
-    {
-      "path": "/api/cron/hot-questions",
-      "schedule": "0 20 * * *"
     }
   ],
   "outputDirectory": "dist/public",
