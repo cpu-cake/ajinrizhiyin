@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
@@ -196,50 +196,74 @@ export default function Home() {
     }, 100);
   }, []);
 
-  // 当基础查询完成时，并行请求各个字段
+  // 使用 ref 记录已经开始加载的字段，避免重复请求
+  const loadingFieldsRef = useRef<Set<string>>(new Set());
+  
+  // 当基础查询完成时，设置基础数据并请求缺失字段
   useEffect(() => {
     if (getTodayQuery.data) {
       const baseData = getTodayQuery.data;
+      const existingAnalysis = baseData.analysis as CoinAnalysis || {};
       
-      // 设置基础结果（可能包含已缓存的字段）
-      setResult({
-        id: baseData.id,
-        coinResults: baseData.coinResults,
-        analysis: baseData.analysis as CoinAnalysis || {},
-        isCached: baseData.isCached,
+      // 设置基础结果
+      setResult((prev) => {
+        // 如果已有数据且 ID 相同，合并已加载的字段
+        if (prev && prev.id === baseData.id) {
+          return {
+            ...prev,
+            analysis: {
+              ...existingAnalysis,
+              ...prev.analysis,
+            },
+          };
+        }
+        // 新数据，重置加载状态
+        loadingFieldsRef.current = new Set();
+        return {
+          id: baseData.id,
+          coinResults: baseData.coinResults,
+          analysis: existingAnalysis,
+          isCached: baseData.isCached,
+        };
       });
       setIsLoading(false);
       setError(null);
 
       // 并行请求所有缺失的字段
-      const existingAnalysis = baseData.analysis as CoinAnalysis || {};
-      FIELD_NAMES.forEach(async (fieldName) => {
-        // 如果字段已存在，跳过
-        if (existingAnalysis[fieldName]) {
-          return;
-        }
+      if (deviceFingerprint) {
+        FIELD_NAMES.forEach(async (fieldName) => {
+          // 如果字段已存在（缓存）或正在加载，跳过
+          if (existingAnalysis[fieldName] || loadingFieldsRef.current.has(fieldName)) {
+            return;
+          }
 
-        try {
-          const fieldData = await trpcUtils.coin.getField.fetch({
-            deviceFingerprint,
-            fieldName,
-          });
+          // 标记为正在加载
+          loadingFieldsRef.current.add(fieldName);
 
-          // 更新 result 中的对应字段
-          setResult((prev) => {
-            if (!prev) return prev;
-            return {
-              ...prev,
-              analysis: {
-                ...prev.analysis,
-                [fieldName]: fieldData.value,
-              },
-            };
-          });
-        } catch (err) {
-          console.error(`Failed to fetch field ${fieldName}:`, err);
-        }
-      });
+          try {
+            const fieldData = await trpcUtils.coin.getField.fetch({
+              deviceFingerprint,
+              fieldName,
+            });
+
+            // 更新 result 中的对应字段
+            setResult((prev) => {
+              if (!prev) return prev;
+              return {
+                ...prev,
+                analysis: {
+                  ...prev.analysis,
+                  [fieldName]: fieldData.value,
+                },
+              };
+            });
+          } catch (err) {
+            console.error(`Failed to fetch field ${fieldName}:`, err);
+            // 加载失败时移除标记，允许重试
+            loadingFieldsRef.current.delete(fieldName);
+          }
+        });
+      }
     } else if (getTodayQuery.isLoading) {
       setIsLoading(true);
     } else if (getTodayQuery.error) {
