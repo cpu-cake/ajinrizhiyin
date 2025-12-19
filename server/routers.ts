@@ -9,7 +9,49 @@ import {
   getTodaysCoinReading,
   updateDeviceLastToss,
   getTodaysUsageCount,
+  updateCoinReadingField,
 } from "./db.js";
+
+// 字段配置：每个字段的提示词和描述
+const FIELD_CONFIGS = {
+  greeting: {
+    name: "早安心语",
+    prompt: "温暖的早安祝福和鼓励，1-2句话",
+    description: "早安心语：温暖的早安祝福",
+  },
+  outfit: {
+    name: "穿搭灵感",
+    prompt: "根据能量指数推荐的穿搭风格，1-2句话",
+    description: "穿搭灵感：今天适合的穿搭建议",
+  },
+  color: {
+    name: "幸运配色",
+    prompt: "推荐的幸运颜色和其含义，1-2句话",
+    description: "幸运配色：推荐的幸运颜色和其含义",
+  },
+  mood: {
+    name: "情绪流动",
+    prompt: "今天的情绪特点和调整建议，1-2句话",
+    description: "情绪流动：今天的情绪特点和调整建议",
+  },
+  career: {
+    name: "工作指引",
+    prompt: "工作方面的建议，1-2句话",
+    description: "工作指引：工作方面的建议",
+  },
+  love: {
+    name: "情感气场",
+    prompt: "人际关系和情感方面的建议，1-2句话",
+    description: "情感气场：人际关系和情感方面的建议",
+  },
+  luck: {
+    name: "幸运微光",
+    prompt: "今天可能的小幸运，1-2句话",
+    description: "幸运微光：今天可能的小幸运",
+  },
+} as const;
+
+type FieldName = keyof typeof FIELD_CONFIGS;
 
 // 使用次数限制提示语
 const LIMIT_MESSAGES_DAYTIME = [
@@ -45,9 +87,9 @@ export const appRouter = router({
    */
   coin: router({
     /**
-     * 获取今日运势
+     * 获取今日运势基础信息
      * 基于设备指纹，每天只投掷一次
-     * 如果当天已投掷过，返回缓存结果
+     * 返回硬币结果和已缓存的分析字段（如果有）
      */
     getToday: publicProcedure
       .input(
@@ -73,24 +115,92 @@ export const appRouter = router({
 
           // 检查是否已有今天的投掷记录
           const existingReading = await getTodaysCoinReading(device.id, todayDate);
-          if (existingReading && existingReading.analysis) {
+          if (existingReading) {
             return {
               id: existingReading.id,
               coinResults: existingReading.coinResults,
-              analysis: existingReading.analysis,
+              analysis: existingReading.analysis || {},
               isCached: true,
             };
           }
 
-          // 执行新的投掷和分析
-          const result = await performNewToss(device.id, todayDate);
+          // 执行新的投掷（不进行分析，分析由 getField 单独处理）
+          const result = await performNewTossWithoutAnalysis(device.id, todayDate);
 
           // 更新设备的最后投掷日期
           await updateDeviceLastToss(device.id, result.id, todayDate);
 
-          return result;
+          return {
+            ...result,
+            analysis: {},
+          };
         } catch (error) {
           console.error("[Coin] Get today error:", error);
+          throw error;
+        }
+      }),
+
+    /**
+     * 获取单个分析字段
+     * 如果已缓存则直接返回，否则调用 LLM 生成
+     */
+    getField: publicProcedure
+      .input(
+        z.object({
+          deviceFingerprint: z.string(),
+          fieldName: z.enum(["greeting", "outfit", "color", "mood", "career", "love", "luck"]),
+        })
+      )
+      .query(async ({ input }) => {
+        try {
+          const { deviceFingerprint, fieldName } = input;
+
+          // 获取设备记录
+          const device = await getOrCreateDevice(deviceFingerprint);
+          if (!device) {
+            throw new Error("Failed to get device");
+          }
+
+          // 获取今天的日期
+          const today = new Date();
+          const todayDate = new Date(
+            today.getFullYear(),
+            today.getMonth(),
+            today.getDate()
+          );
+
+          // 获取今天的投掷记录
+          const reading = await getTodaysCoinReading(device.id, todayDate);
+          if (!reading) {
+            throw new Error("No coin reading found for today");
+          }
+
+          // 检查字段是否已缓存
+          const analysis = reading.analysis as Record<string, string> | null;
+          if (analysis && analysis[fieldName]) {
+            return {
+              fieldName,
+              value: analysis[fieldName],
+              isCached: true,
+            };
+          }
+
+          // 调用 LLM 生成该字段
+          const fieldValue = await generateSingleField(
+            reading.coinResults,
+            fieldName as FieldName
+          );
+
+          // 保存到数据库
+          await updateCoinReadingField(reading.id, fieldName, fieldValue);
+
+          return {
+            fieldName,
+            value: fieldValue,
+            isCached: false,
+          };
+        } catch (error) {
+          console.error("[Coin] Get field error:", error);
           throw error;
         }
       }),
@@ -225,9 +335,9 @@ export const appRouter = router({
 });
 
 /**
- * 执行新的投掷和分析
+ * 执行新的投掷（不进行分析）
  */
-async function performNewToss(
+async function performNewTossWithoutAnalysis(
   deviceId: number,
   tossDate: Date
 ) {
@@ -249,93 +359,21 @@ async function performNewToss(
     throw new Error("Failed to create coin reading");
   }
 
-  // 构建LLM提示词
-  const prompt = buildAnalysisPrompt(coinResults);
-
-  // 调用LLM进行分析
-  const response = await invokeLLM({
-    messages: [
-      {
-        role: "system",
-        content:
-          [
-            "你是一位专业的个人发展顾问，基于提供的数字特征给出个性化指引。",
-            "必须严格输出 JSON，键名只能是 greeting/outfit/color/mood/career/love/luck，对应值为简洁中文字符串；不得输出 Markdown、解释、思维链、额外字段。",
-            "语气要温暖、鼓励，内容直白，避免使用“硬币/卦/卦象/象/此象/运势/爻”等字样。",
-          ].join(" "),
-      },
-      {
-        role: "user",
-        content: prompt,
-      },
-    ],
-    response_format: {
-      type: "json_schema",
-      json_schema: {
-        name: "fortune_analysis",
-        strict: true,
-        schema: {
-          type: "object",
-          properties: {
-            greeting: {
-              type: "string",
-              description: "早安心语：温暖的早安祝福",
-            },
-            outfit: {
-              type: "string",
-              description: "穿搭灵感：今天适合的穿搭建议",
-            },
-            color: {
-              type: "string",
-              description: "幸运配色：推荐的幸运颜色和其含义",
-            },
-            mood: {
-              type: "string",
-              description: "情绪流动：今天的情绪特点和调整建议",
-            },
-            career: {
-              type: "string",
-              description: "工作指引：工作方面的建议",
-            },
-            love: {
-              type: "string",
-              description: "情感气场：人际关系和情感方面的建议",
-            },
-            luck: {
-              type: "string",
-              description: "幸运微光：今天可能的小幸运",
-            },
-          },
-          required: ["greeting", "outfit", "color", "mood", "career", "love", "luck"],
-          additionalProperties: false,
-        },
-      },
-    },
-  });
-
-  // 解析LLM响应
-  const analysisContent = response.choices[0]?.message?.content;
-  if (!analysisContent || typeof analysisContent !== 'string') {
-    throw new Error("Failed to get analysis from LLM");
-  }
-
-  const analysis = JSON.parse(analysisContent);
-
-  // 更新投掷记录的分析结果
-  await updateCoinReadingAnalysis(reading.id, analysis);
-
   return {
     id: reading.id,
     coinResults,
-    analysis,
     isCached: false,
   };
 }
 
 /**
- * 根据硬币投掷结果构建LLM分析提示词
+ * 生成单个分析字段
  */
-function buildAnalysisPrompt(coinResults: number[]): string {
+async function generateSingleField(
+  coinResults: number[],
+  fieldName: FieldName
+): Promise<string> {
+  const fieldConfig = FIELD_CONFIGS[fieldName];
   const sum = coinResults.reduce((a, b) => a + b, 0);
   const seedIndex = sum % 4;
 
@@ -352,23 +390,40 @@ function buildAnalysisPrompt(coinResults: number[]): string {
     })
     .join("\n");
 
-  return `用户提供了一些数字特征，具体如下：
+  const prompt = `用户提供了一些数字特征，具体如下：
 
 ${resultDescription}
 
 总值：${sum}
 能量指数：${seedIndex}（0-3之间，0表示静谦，3表示活力）
 
-请根据这些特征，为用户提供个性化的指引。分析应该包括：
-1. 早安心语：温暖的早安祝福和鼓励
-2. 穿搭灵感：根据能量指数推荐的穿搭风格
-3. 幸运配色：推荐的幸运颜色和其含义
-4. 情绪流动：今天的情绪特点
-5. 工作指引：工作方面的建议
-6. 情感气场：人际关系和情感方面的建议
-7. 幸运微光：今天可能的小幸运
+请根据这些特征，为用户提供"${fieldConfig.name}"的个性化指引：${fieldConfig.prompt}
 
-请用温暖、鼓励、充满希望的语气进行分析。`;
+请用温暖、鼓励、充满希望的语气，直接输出内容，不要有前缀标题。`;
+
+  const response = await invokeLLM({
+    messages: [
+      {
+        role: "system",
+        content: [
+          "你是一位专业的个人发展顾问，基于提供的数字特征给出个性化指引。",
+          "直接输出内容，不要有标题前缀，不要用Markdown格式。",
+          "语气要温暖、鼓励，内容直白，避免使用"硬币/卦/卦象/象/此象/运势/爻"等字样。",
+        ].join(" "),
+      },
+      {
+        role: "user",
+        content: prompt,
+      },
+    ],
+  });
+
+  const content = response.choices[0]?.message?.content;
+  if (!content || typeof content !== "string") {
+    throw new Error("Failed to get field content from LLM");
+  }
+
+  return content.trim();
 }
 
 export type AppRouter = typeof appRouter;

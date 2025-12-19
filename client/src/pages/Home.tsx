@@ -8,13 +8,13 @@ import { Streamdown } from "streamdown";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface CoinAnalysis {
-  greeting: string;
-  outfit: string;
-  color: string;
-  mood: string;
-  career: string;
-  love: string;
-  luck: string;
+  greeting?: string;
+  outfit?: string;
+  color?: string;
+  mood?: string;
+  career?: string;
+  love?: string;
+  luck?: string;
 }
 
 interface AnalysisResult {
@@ -23,6 +23,10 @@ interface AnalysisResult {
   analysis: CoinAnalysis;
   isCached: boolean;
 }
+
+// 字段名称列表，用于并行请求
+const FIELD_NAMES = ["greeting", "outfit", "color", "mood", "career", "love", "luck"] as const;
+type FieldName = typeof FIELD_NAMES[number];
 
 /**
  * 生成设备指纹
@@ -152,10 +156,14 @@ export default function Home() {
   // 启动动画：控制元素逐个显示
   const [visibleElements, setVisibleElements] = useState<Set<string>>(new Set());
 
+  // 获取今日基础数据（硬币结果和已缓存的字段）
   const getTodayQuery = trpc.coin.getToday.useQuery(
     { deviceFingerprint },
     { enabled: !!deviceFingerprint }
   );
+
+  // 使用 trpc 的 useUtils 来手动调用 getField
+  const trpcUtils = trpc.useUtils();
 
   const explainQuestionMutation = trpc.coin.explainQuestion.useMutation();
   
@@ -180,19 +188,57 @@ export default function Home() {
     }, 100);
   }, []);
 
-  // 当查询完成时，显示结果
+  // 当基础查询完成时，并行请求各个字段
   useEffect(() => {
     if (getTodayQuery.data) {
-      setResult(getTodayQuery.data);
+      const baseData = getTodayQuery.data;
+      
+      // 设置基础结果（可能包含已缓存的字段）
+      setResult({
+        id: baseData.id,
+        coinResults: baseData.coinResults,
+        analysis: baseData.analysis as CoinAnalysis || {},
+        isCached: baseData.isCached,
+      });
       setIsLoading(false);
       setError(null);
+
+      // 并行请求所有缺失的字段
+      const existingAnalysis = baseData.analysis as CoinAnalysis || {};
+      FIELD_NAMES.forEach(async (fieldName) => {
+        // 如果字段已存在，跳过
+        if (existingAnalysis[fieldName]) {
+          return;
+        }
+
+        try {
+          const fieldData = await trpcUtils.coin.getField.fetch({
+            deviceFingerprint,
+            fieldName,
+          });
+
+          // 更新 result 中的对应字段
+          setResult((prev) => {
+            if (!prev) return prev;
+            return {
+              ...prev,
+              analysis: {
+                ...prev.analysis,
+                [fieldName]: fieldData.value,
+              },
+            };
+          });
+        } catch (err) {
+          console.error(`Failed to fetch field ${fieldName}:`, err);
+        }
+      });
     } else if (getTodayQuery.isLoading) {
       setIsLoading(true);
     } else if (getTodayQuery.error) {
       setIsLoading(false);
       setError('加载失败，请刷新页面重试');
     }
-  }, [getTodayQuery.data, getTodayQuery.isLoading, getTodayQuery.error]);
+  }, [getTodayQuery.data, getTodayQuery.isLoading, getTodayQuery.error, deviceFingerprint, trpcUtils]);
 
   // 初始化轮播和下拉菜单
   useEffect(() => {
@@ -703,37 +749,40 @@ export default function Home() {
                 transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
               }}
             >
-              {result ? (
-                <div className="card-interactive rounded-2xl border-l-4" style={{
-                  borderLeftColor: '#ff9999',
-                  borderLeftWidth: '4px',
-                  borderLeftStyle: 'solid',
-                  backgroundColor: '#ffffff',
-                  background: '#ffffff',
-                  boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                  WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                  width: '100%',
-                  maxWidth: '100%',
-                  boxSizing: 'border-box',
-                  padding: '12px 16px',
-                  paddingTop: '12px',
-                  paddingBottom: '12px',
-                  paddingLeft: '16px',
-                  paddingRight: '16px',
-                  marginBottom: '16px',
-                  marginTop: '0'
-                }}>
+              <div className="card-interactive rounded-2xl border-l-4" style={{
+                borderLeftColor: '#ff9999',
+                borderLeftWidth: '4px',
+                borderLeftStyle: 'solid',
+                backgroundColor: '#ffffff',
+                background: '#ffffff',
+                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                width: '100%',
+                maxWidth: '100%',
+                boxSizing: 'border-box',
+                padding: '12px 16px',
+                paddingTop: '12px',
+                paddingBottom: '12px',
+                paddingLeft: '16px',
+                paddingRight: '16px',
+                marginBottom: '16px',
+                marginTop: '0'
+              }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#ff9999'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>waving_hand</span>
                   早安心语
                 </h3>
-                <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                  {result.analysis.greeting}
-                </Streamdown>
+                {result?.analysis?.greeting ? (
+                  <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                    {result.analysis.greeting}
+                  </Streamdown>
+                ) : (
+                  <div className="space-y-2">
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-3/4" />
+                  </div>
+                )}
               </div>
-              ) : (
-                <CardSkeleton />
-              )}
             </div>
 
             {/* 穿搭灵感 - 跨越2列 */}
@@ -748,37 +797,40 @@ export default function Home() {
                 transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
               }}
             >
-              {result ? (
-                <div className="card-interactive rounded-2xl border-l-4" style={{
-                  borderLeftColor: '#72a5ff',
-                  borderLeftWidth: '4px',
-                  borderLeftStyle: 'solid',
-                  backgroundColor: '#ffffff',
-                  background: '#ffffff',
-                  boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                  WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                  width: '100%',
-                  maxWidth: '100%',
-                  boxSizing: 'border-box',
-                  padding: '12px 16px',
-                  paddingTop: '12px',
-                  paddingBottom: '12px',
-                  paddingLeft: '16px',
-                  paddingRight: '16px',
-                  marginBottom: '16px',
-                  marginTop: '0'
-                }}>
+              <div className="card-interactive rounded-2xl border-l-4" style={{
+                borderLeftColor: '#72a5ff',
+                borderLeftWidth: '4px',
+                borderLeftStyle: 'solid',
+                backgroundColor: '#ffffff',
+                background: '#ffffff',
+                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                width: '100%',
+                maxWidth: '100%',
+                boxSizing: 'border-box',
+                padding: '12px 16px',
+                paddingTop: '12px',
+                paddingBottom: '12px',
+                paddingLeft: '16px',
+                paddingRight: '16px',
+                marginBottom: '16px',
+                marginTop: '0'
+              }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#72a5ff'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>checkroom</span>
                   穿搭灵感
                 </h3>
-                <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                  {result.analysis.outfit}
-                </Streamdown>
+                {result?.analysis?.outfit ? (
+                  <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                    {result.analysis.outfit}
+                  </Streamdown>
+                ) : (
+                  <div className="space-y-2">
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-3/4" />
+                  </div>
+                )}
               </div>
-              ) : (
-                <CardSkeleton />
-              )}
             </div>
 
             {/* 幸运配色 - 1列 */}
@@ -793,37 +845,40 @@ export default function Home() {
                 transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
               }}
             >
-              {result ? (
-                <div className="card-interactive rounded-2xl border-l-4" style={{
-                  borderLeftColor: '#64dd17',
-                  borderLeftWidth: '4px',
-                  borderLeftStyle: 'solid',
-                  backgroundColor: '#ffffff',
-                  background: '#ffffff',
-                  boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                  WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                  width: '100%',
-                  maxWidth: '100%',
-                  boxSizing: 'border-box',
-                  padding: '12px 16px',
-                  paddingTop: '12px',
-                  paddingBottom: '12px',
-                  paddingLeft: '16px',
-                  paddingRight: '16px',
-                  marginBottom: '16px',
-                  marginTop: '0'
-                }}>
+              <div className="card-interactive rounded-2xl border-l-4" style={{
+                borderLeftColor: '#64dd17',
+                borderLeftWidth: '4px',
+                borderLeftStyle: 'solid',
+                backgroundColor: '#ffffff',
+                background: '#ffffff',
+                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                width: '100%',
+                maxWidth: '100%',
+                boxSizing: 'border-box',
+                padding: '12px 16px',
+                paddingTop: '12px',
+                paddingBottom: '12px',
+                paddingLeft: '16px',
+                paddingRight: '16px',
+                marginBottom: '16px',
+                marginTop: '0'
+              }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#64dd17'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>palette</span>
                   幸运配色
                 </h3>
-                <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                  {result.analysis.color}
-                </Streamdown>
+                {result?.analysis?.color ? (
+                  <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                    {result.analysis.color}
+                  </Streamdown>
+                ) : (
+                  <div className="space-y-2">
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-2/3" />
+                  </div>
+                )}
               </div>
-              ) : (
-                <CardSkeleton />
-              )}
             </div>
 
             {/* 情绪流动 - 1列 */}
@@ -838,37 +893,40 @@ export default function Home() {
                 transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
               }}
             >
-              {result ? (
-                <div className="card-interactive rounded-2xl border-l-4" style={{
-                  borderLeftColor: '#ffc107',
-                  borderLeftWidth: '4px',
-                  borderLeftStyle: 'solid',
-                  backgroundColor: '#ffffff',
-                  background: '#ffffff',
-                  boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                  WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                  width: '100%',
-                  maxWidth: '100%',
-                  boxSizing: 'border-box',
-                  padding: '12px 16px',
-                  paddingTop: '12px',
-                  paddingBottom: '12px',
-                  paddingLeft: '16px',
-                  paddingRight: '16px',
-                  marginBottom: '16px',
-                  marginTop: '0'
-                }}>
+              <div className="card-interactive rounded-2xl border-l-4" style={{
+                borderLeftColor: '#ffc107',
+                borderLeftWidth: '4px',
+                borderLeftStyle: 'solid',
+                backgroundColor: '#ffffff',
+                background: '#ffffff',
+                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                width: '100%',
+                maxWidth: '100%',
+                boxSizing: 'border-box',
+                padding: '12px 16px',
+                paddingTop: '12px',
+                paddingBottom: '12px',
+                paddingLeft: '16px',
+                paddingRight: '16px',
+                marginBottom: '16px',
+                marginTop: '0'
+              }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#ffc107'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>sentiment_satisfied</span>
                   情绪流动
                 </h3>
-                <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                  {result.analysis.mood}
-                </Streamdown>
+                {result?.analysis?.mood ? (
+                  <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                    {result.analysis.mood}
+                  </Streamdown>
+                ) : (
+                  <div className="space-y-2">
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-2/3" />
+                  </div>
+                )}
               </div>
-              ) : (
-                <CardSkeleton />
-              )}
             </div>
 
             {/* 工作指引 - 跨越2列 */}
@@ -883,37 +941,40 @@ export default function Home() {
                 transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
               }}
             >
-              {result ? (
-                <div className="card-interactive rounded-2xl border-l-4" style={{
-                  borderLeftColor: '#4db6ac',
-                  borderLeftWidth: '4px',
-                  borderLeftStyle: 'solid',
-                  backgroundColor: '#ffffff',
-                  background: '#ffffff',
-                  boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                  WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                  width: '100%',
-                  maxWidth: '100%',
-                  boxSizing: 'border-box',
-                  padding: '12px 16px',
-                  paddingTop: '12px',
-                  paddingBottom: '12px',
-                  paddingLeft: '16px',
-                  paddingRight: '16px',
-                  marginBottom: '16px',
-                  marginTop: '0'
-                }}>
+              <div className="card-interactive rounded-2xl border-l-4" style={{
+                borderLeftColor: '#4db6ac',
+                borderLeftWidth: '4px',
+                borderLeftStyle: 'solid',
+                backgroundColor: '#ffffff',
+                background: '#ffffff',
+                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                width: '100%',
+                maxWidth: '100%',
+                boxSizing: 'border-box',
+                padding: '12px 16px',
+                paddingTop: '12px',
+                paddingBottom: '12px',
+                paddingLeft: '16px',
+                paddingRight: '16px',
+                marginBottom: '16px',
+                marginTop: '0'
+              }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#4db6ac'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>work</span>
                   工作指引
                 </h3>
-                <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                  {result.analysis.career}
-                </Streamdown>
+                {result?.analysis?.career ? (
+                  <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                    {result.analysis.career}
+                  </Streamdown>
+                ) : (
+                  <div className="space-y-2">
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-3/4" />
+                  </div>
+                )}
               </div>
-              ) : (
-                <CardSkeleton />
-              )}
             </div>
 
             {/* 情感气场 - 跨越2列 */}
@@ -928,37 +989,40 @@ export default function Home() {
                 transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
               }}
             >
-              {result ? (
-                <div className="card-interactive rounded-2xl border-l-4" style={{
-                  borderLeftColor: '#f48fb1',
-                  borderLeftWidth: '4px',
-                  borderLeftStyle: 'solid',
-                  backgroundColor: '#ffffff',
-                  background: '#ffffff',
-                  boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                  WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                  width: '100%',
-                  maxWidth: '100%',
-                  boxSizing: 'border-box',
-                  padding: '12px 16px',
-                  paddingTop: '12px',
-                  paddingBottom: '12px',
-                  paddingLeft: '16px',
-                  paddingRight: '16px',
-                  marginBottom: '16px',
-                  marginTop: '0'
-                }}>
+              <div className="card-interactive rounded-2xl border-l-4" style={{
+                borderLeftColor: '#f48fb1',
+                borderLeftWidth: '4px',
+                borderLeftStyle: 'solid',
+                backgroundColor: '#ffffff',
+                background: '#ffffff',
+                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                width: '100%',
+                maxWidth: '100%',
+                boxSizing: 'border-box',
+                padding: '12px 16px',
+                paddingTop: '12px',
+                paddingBottom: '12px',
+                paddingLeft: '16px',
+                paddingRight: '16px',
+                marginBottom: '16px',
+                marginTop: '0'
+              }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#f48fb1'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>favorite</span>
                   情感气场
                 </h3>
-                <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                  {result.analysis.love}
-                </Streamdown>
+                {result?.analysis?.love ? (
+                  <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                    {result.analysis.love}
+                  </Streamdown>
+                ) : (
+                  <div className="space-y-2">
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-3/4" />
+                  </div>
+                )}
               </div>
-              ) : (
-                <CardSkeleton />
-              )}
             </div>
 
             {/* 幸运微光 - 1列 */}
@@ -973,37 +1037,40 @@ export default function Home() {
                 transition: 'opacity 0.6s ease-out, transform 0.6s ease-out'
               }}
             >
-              {result ? (
-                <div className="card-interactive rounded-2xl border-l-4" style={{
-                  borderLeftColor: '#9c27b0',
-                  borderLeftWidth: '4px',
-                  borderLeftStyle: 'solid',
-                  backgroundColor: '#ffffff',
-                  background: '#ffffff',
-                  boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                  WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-                  width: '100%',
-                  maxWidth: '100%',
-                  boxSizing: 'border-box',
-                  padding: '12px 16px',
-                  paddingTop: '12px',
-                  paddingBottom: '12px',
-                  paddingLeft: '16px',
-                  paddingRight: '16px',
-                  marginBottom: '16px',
-                  marginTop: '0'
-                }}>
+              <div className="card-interactive rounded-2xl border-l-4" style={{
+                borderLeftColor: '#9c27b0',
+                borderLeftWidth: '4px',
+                borderLeftStyle: 'solid',
+                backgroundColor: '#ffffff',
+                background: '#ffffff',
+                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                WebkitBoxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                width: '100%',
+                maxWidth: '100%',
+                boxSizing: 'border-box',
+                padding: '12px 16px',
+                paddingTop: '12px',
+                paddingBottom: '12px',
+                paddingLeft: '16px',
+                paddingRight: '16px',
+                marginBottom: '16px',
+                marginTop: '0'
+              }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#9c27b0'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>star</span>
                   幸运微光
                 </h3>
-                <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                  {result.analysis.luck}
-                </Streamdown>
+                {result?.analysis?.luck ? (
+                  <Streamdown className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                    {result.analysis.luck}
+                  </Streamdown>
+                ) : (
+                  <div className="space-y-2">
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-2/3" />
+                  </div>
+                )}
               </div>
-              ) : (
-                <CardSkeleton />
-              )}
             </div>
           </div>
 

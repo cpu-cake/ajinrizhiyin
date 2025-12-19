@@ -201,6 +201,53 @@ export async function updateCoinReadingAnalysis(
 }
 
 /**
+ * 更新硬币投掷记录的单个分析字段
+ */
+export async function updateCoinReadingField(
+  readingId: number,
+  fieldName: string,
+  fieldValue: string
+): Promise<void> {
+  const db = await getDb();
+  if (!db) {
+    const reading = memoryStore.readings.find(r => r.id === readingId);
+    if (reading) {
+      if (!reading.analysis) {
+        reading.analysis = {} as CoinReading["analysis"];
+      }
+      (reading.analysis as Record<string, string>)[fieldName] = fieldValue;
+      reading.updatedAt = new Date();
+    }
+    return;
+  }
+
+  try {
+    // 先获取现有的 analysis
+    const existing = await db
+      .select()
+      .from(coinReadings)
+      .where(eq(coinReadings.id, readingId))
+      .limit(1);
+    
+    if (existing.length > 0) {
+      const currentAnalysis = existing[0].analysis || {};
+      const updatedAnalysis = {
+        ...currentAnalysis,
+        [fieldName]: fieldValue,
+      };
+      
+      await db
+        .update(coinReadings)
+        .set({ analysis: updatedAnalysis })
+        .where(eq(coinReadings.id, readingId));
+    }
+  } catch (error) {
+    console.error("[Database] Failed to update coin reading field:", error);
+    throw error;
+  }
+}
+
+/**
  * 更新设备的最后投掷信息
  */
 export async function updateDeviceLastToss(deviceId: number, readingId: number, tossDate: Date): Promise<void> {
