@@ -380,15 +380,15 @@ async function generateSingleField(
     .map((val, idx) => {
       const descriptions = [
         "三个反面",
-        "两个反面一个正面",
-        "一个反面两个正面",
-        "三个正面",
+        "两个反面",
+        "一个反面",
+        "零个反面",
       ];
       return `位置${idx + 1}：${descriptions[val]}（值${val}）`;
     })
     .join("\n");
 
-  const prompt = `用户提供了一些数字特征，具体如下：
+  const prompt = `用户提供了卦象（六爻三卜），具体如下：
 
 ${resultDescription}
 
@@ -404,7 +404,7 @@ ${resultDescription}
       {
         role: "system",
         content: [
-          "你是一位专业的个人发展顾问，基于提供的数字特征给出个性化指引。",
+          "你是一位专业的个人发展顾问，请用摇卦解读这个卦象给出个性化指引。",
           "直接输出内容，不要有标题前缀，不要用Markdown格式。",
           "语气要温暖、鼓励，内容直白，避免使用硬币、卦、卦象、象、此象、运势、爻等字样。",
         ].join(" "),

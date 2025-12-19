@@ -5,7 +5,16 @@ import { Loader2 } from "lucide-react";
 import { getLoginUrl } from "@/const";
 import { trpc } from "@/lib/trpc";
 import { Streamdown } from "streamdown";
-import { Skeleton } from "@/components/ui/skeleton";
+
+// 卡片内容加载动画组件
+function CardLoadingIndicator() {
+  return (
+    <div className="flex items-center justify-center py-2">
+      <Loader2 className="h-4 w-4 animate-spin text-gray-400 mr-2" />
+      <span className="text-sm text-gray-400">正在加载你的专属指引...</span>
+    </div>
+  );
+}
 
 interface CoinAnalysis {
   greeting?: string;
@@ -776,10 +785,7 @@ export default function Home() {
                     {result.analysis.greeting}
                   </Streamdown>
                 ) : (
-                  <div className="space-y-2">
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-4 w-3/4" />
-                  </div>
+                  <CardLoadingIndicator />
                 )}
               </div>
             </div>
@@ -824,10 +830,7 @@ export default function Home() {
                     {result.analysis.outfit}
                   </Streamdown>
                 ) : (
-                  <div className="space-y-2">
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-4 w-3/4" />
-                  </div>
+                  <CardLoadingIndicator />
                 )}
               </div>
             </div>
@@ -872,10 +875,7 @@ export default function Home() {
                     {result.analysis.color}
                   </Streamdown>
                 ) : (
-                  <div className="space-y-2">
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-4 w-2/3" />
-                  </div>
+                  <CardLoadingIndicator />
                 )}
               </div>
             </div>
@@ -920,10 +920,7 @@ export default function Home() {
                     {result.analysis.mood}
                   </Streamdown>
                 ) : (
-                  <div className="space-y-2">
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-4 w-2/3" />
-                  </div>
+                  <CardLoadingIndicator />
                 )}
               </div>
             </div>
@@ -968,10 +965,7 @@ export default function Home() {
                     {result.analysis.career}
                   </Streamdown>
                 ) : (
-                  <div className="space-y-2">
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-4 w-3/4" />
-                  </div>
+                  <CardLoadingIndicator />
                 )}
               </div>
             </div>
@@ -1016,10 +1010,7 @@ export default function Home() {
                     {result.analysis.love}
                   </Streamdown>
                 ) : (
-                  <div className="space-y-2">
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-4 w-3/4" />
-                  </div>
+                  <CardLoadingIndicator />
                 )}
               </div>
             </div>
@@ -1064,10 +1055,7 @@ export default function Home() {
                     {result.analysis.luck}
                   </Streamdown>
                 ) : (
-                  <div className="space-y-2">
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-4 w-2/3" />
-                  </div>
+                  <CardLoadingIndicator />
                 )}
               </div>
             </div>
