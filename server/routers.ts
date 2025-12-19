@@ -3,8 +3,6 @@ import { z } from "zod";
 import { invokeLLM } from "./_core/llm.js";
 import {
   createCoinReading,
-  updateCoinReadingAnalysis,
-  getDeviceCoinReadings,
   getOrCreateDevice,
   getTodaysCoinReading,
   updateDeviceLastToss,
@@ -397,7 +395,7 @@ ${resultDescription}
 总值：${sum}
 能量指数：${seedIndex}（0-3之间，0表示静谦，3表示活力）
 
-请根据这些特征，为用户提供"${fieldConfig.name}"的个性化指引：${fieldConfig.prompt}
+请根据这些特征，为用户提供【${fieldConfig.name}】的个性化指引：${fieldConfig.prompt}
 
 请用温暖、鼓励、充满希望的语气，直接输出内容，不要有前缀标题。`;
 
@@ -408,7 +406,7 @@ ${resultDescription}
         content: [
           "你是一位专业的个人发展顾问，基于提供的数字特征给出个性化指引。",
           "直接输出内容，不要有标题前缀，不要用Markdown格式。",
-          "语气要温暖、鼓励，内容直白，避免使用"硬币/卦/卦象/象/此象/运势/爻"等字样。",
+          "语气要温暖、鼓励，内容直白，避免使用硬币、卦、卦象、象、此象、运势、爻等字样。",
         ].join(" "),
       },
       {

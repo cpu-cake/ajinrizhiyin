@@ -26,7 +26,6 @@ interface AnalysisResult {
 
 // 字段名称列表，用于并行请求
 const FIELD_NAMES = ["greeting", "outfit", "color", "mood", "career", "love", "luck"] as const;
-type FieldName = typeof FIELD_NAMES[number];
 
 /**
  * 生成设备指纹

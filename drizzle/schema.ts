@@ -31,14 +31,15 @@ export const coinReadings = mysqlTable("coin_readings", {
   // 例如：[2, 1, 3, 0, 2, 1] 表示六爻的投掷结果
   coinResults: json("coinResults").$type<number[]>().notNull(),
   // LLM分析的结果，包含各个方面的运势解读
+  // 字段可选，支持分步加载
   analysis: json("analysis").$type<{
-    greeting: string;
-    outfit: string;
-    color: string;
-    mood: string;
-    career: string;
-    love: string;
-    luck: string;
+    greeting?: string;
+    outfit?: string;
+    color?: string;
+    mood?: string;
+    career?: string;
+    love?: string;
+    luck?: string;
   }>(),
   // 投掷日期
   tossDate: date("tossDate").notNull(),
