@@ -619,7 +619,7 @@ export default function Home() {
             <a href="https://sleep.health-sleep.com/" target="_blank" rel="noopener noreferrer" className="nav-button" id="sleep-button">
               <span className="material-icons">bedtime</span>开始助眠
             </a>
-            <a href="https://goodnight-etwfsck7.manus.space" target="_blank" rel="noopener noreferrer" className="nav-button" id="goodnight-button">
+            <a href="https://night.health-sleep.com" target="_blank" rel="noopener noreferrer" className="nav-button" id="goodnight-button">
               <span className="material-icons">dark_mode</span>说晚安
             </a>
           </div>
