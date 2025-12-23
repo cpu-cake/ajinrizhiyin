@@ -230,10 +230,18 @@ export async function updateCoinReadingField(
       .limit(1);
     
     if (existing.length > 0) {
-      const currentAnalysis = existing[0].analysis || {};
+      const currentAnalysis = existing[0].analysis || {} as Record<string, string>;
       const updatedAnalysis = {
         ...currentAnalysis,
         [fieldName]: fieldValue,
+      } as {
+        greeting: string;
+        outfit: string;
+        color: string;
+        mood: string;
+        career: string;
+        love: string;
+        luck: string;
       };
       
       await db
