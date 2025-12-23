@@ -186,8 +186,8 @@ export default function Home() {
     }
   );
   
-  // 获取单个字段的API
-  const getFieldMutation = trpc.coin.getField.useMutation();
+  // 获取 trpc utils 用于手动调用 query
+  const trpcUtils = trpc.useUtils();
 
   const explainQuestionMutation = trpc.coin.explainQuestion.useMutation();
   
@@ -214,7 +214,7 @@ export default function Home() {
     }));
     
     try {
-      const response = await getFieldMutation.mutateAsync({
+      const response = await trpcUtils.coin.getField.fetch({
         deviceFingerprint,
         fieldName,
       });
@@ -273,7 +273,7 @@ export default function Home() {
     } finally {
       loadingFieldsRef.current.delete(fieldName);
     }
-  }, [deviceFingerprint, result, getFieldMutation]);
+  }, [deviceFingerprint, result, trpcUtils]);
 
   // 重试加载字段
   const retryLoadField = useCallback((fieldName: FieldName) => {
@@ -365,10 +365,26 @@ export default function Home() {
       // 获取热门标签列表
       const hotQuestions = hotQuestionsQuery.data?.hotQuestions || [];
       
+      // 标签颜色配置（5种颜色循环）
+      const tagColors = [
+        { bg: '#ffeaea', color: '#d66666', border: '#ffcccc' },  // 粉红
+        { bg: '#eaf3ff', color: '#72a5ff', border: '#cce0ff' },  // 蓝色
+        { bg: '#e8fff0', color: '#4db6ac', border: '#c0f5d4' },  // 绿色
+        { bg: '#fffbe9', color: '#f5a623', border: '#ffe6aa' },  // 黄色
+        { bg: '#f3e8ff', color: '#9c27b0', border: '#e1bee7' },  // 紫色
+      ];
+      
       // 添加新标签
-      QUESTIONS.forEach((q) => {
+      QUESTIONS.forEach((q, index) => {
         const tag = document.createElement('span');
         tag.className = 'question-tag';
+        
+        // 设置标签颜色（循环使用5种颜色）
+        const colorIndex = index % tagColors.length;
+        const colors = tagColors[colorIndex];
+        tag.style.backgroundColor = colors.bg;
+        tag.style.color = colors.color;
+        tag.style.border = `1px solid ${colors.border}`;
         tag.style.cursor = 'pointer';
         tag.style.position = 'relative'; // 为徽章定位做准备
         
