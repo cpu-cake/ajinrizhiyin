@@ -5,6 +5,7 @@ import { Loader2 } from "lucide-react";
 import { getLoginUrl } from "@/const";
 import { trpc } from "@/lib/trpc";
 import { Streamdown } from "streamdown";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface CoinAnalysis {
   greeting: string;
@@ -285,10 +286,14 @@ export default function Home() {
   }, [loadField]);
 
   // 加载所有缺失的字段
+  // 注意：使用 forEach 确保所有请求并行发出，不等待前一个完成
+  // 哪个先返回就先显示哪个，不需要等待所有内容都生成完毕
   const loadMissingFields = useCallback(() => {
     if (!result || !deviceFingerprint) return;
     
+    // 并行发出所有缺失字段的请求
     FIELD_NAMES.forEach(fieldName => {
+      // 只加载缺失的字段（已缓存的字段不会再次请求）
       if (!result.analysis?.[fieldName] && !loadingFieldsRef.current.has(fieldName)) {
         loadField(fieldName);
       }
@@ -387,6 +392,8 @@ export default function Home() {
         tag.style.border = `1px solid ${colors.border}`;
         tag.style.cursor = 'pointer';
         tag.style.position = 'relative'; // 为徽章定位做准备
+        tag.style.overflow = 'visible'; // 确保角标不被裁剪
+        tag.style.zIndex = '1'; // 确保层级正确
         
         // 如果是热门标签，添加火焰徽章
         if (hotQuestions.includes(q)) {
@@ -397,6 +404,8 @@ export default function Home() {
           badge.style.right = '-8px';
           badge.style.fontSize = '16px';
           badge.style.zIndex = '10';
+          badge.style.pointerEvents = 'none'; // 防止角标阻挡点击
+          badge.style.lineHeight = '1';
           tag.appendChild(badge);
         }
         
@@ -520,19 +529,94 @@ export default function Home() {
     );
   };
 
-  // 加载状态
+  // 加载状态 - 显示所有卡片的骨架屏
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-orange-50 to-pink-100">
-        <div className="text-center">
-          <div 
-            className="w-16 h-16 border-4 border-pink-200 border-t-pink-500 rounded-full mx-auto mb-4"
-            style={{
-              animation: 'spin 1s linear infinite',
-              WebkitAnimation: 'spin 1s linear infinite',
-            }}
-          ></div>
-          <p className="text-gray-600">正在为你生成今日专属指引...</p>
+      <div className="min-h-screen bg-gradient-to-b from-orange-50 to-pink-100 py-6 sm:py-8">
+        <div className="max-w-4xl mx-auto px-3 sm:px-4">
+          {/* 顶部导航按钮骨架 */}
+          <div id="top-navigation" className="mb-6">
+            <Skeleton className="h-10 w-32 inline-block mr-2" />
+            <Skeleton className="h-10 w-32 inline-block" />
+          </div>
+
+          {/* 顶部标题骨架 */}
+          <div className="text-left mb-8 sm:mb-12">
+            <Skeleton className="h-10 w-64 mb-2" />
+            <Skeleton className="h-6 w-48" />
+          </div>
+
+          {/* 解答小困惑区域骨架 */}
+          <div className="mb-8 sm:mb-10">
+            <Skeleton className="h-12 w-full mb-4 rounded-lg" />
+            <Skeleton className="h-64 w-full rounded-lg" />
+          </div>
+
+          {/* 运势分析结果骨架 - 7个卡片 */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
+            {/* 早安心语 - 跨越全宽 */}
+            <div className="md:col-span-3">
+              <div className="rounded-2xl p-4 sm:p-6 shadow-lg bg-white">
+                <Skeleton className="h-6 w-24 mb-3" />
+                <Skeleton className="h-4 w-full mb-2" />
+                <Skeleton className="h-4 w-3/4" />
+              </div>
+            </div>
+
+            {/* 穿搭灵感 - 跨越2列 */}
+            <div className="md:col-span-2">
+              <div className="rounded-2xl p-4 sm:p-6 shadow-lg bg-white">
+                <Skeleton className="h-6 w-24 mb-3" />
+                <Skeleton className="h-4 w-full mb-2" />
+                <Skeleton className="h-4 w-5/6" />
+              </div>
+            </div>
+
+            {/* 幸运配色 - 1列 */}
+            <div className="md:col-span-1">
+              <div className="rounded-2xl p-4 sm:p-6 shadow-lg bg-white">
+                <Skeleton className="h-6 w-24 mb-3" />
+                <Skeleton className="h-4 w-full mb-2" />
+                <Skeleton className="h-4 w-2/3" />
+              </div>
+            </div>
+
+            {/* 情绪流动 - 1列 */}
+            <div className="md:col-span-1">
+              <div className="rounded-2xl p-4 sm:p-6 shadow-lg bg-white">
+                <Skeleton className="h-6 w-24 mb-3" />
+                <Skeleton className="h-4 w-full mb-2" />
+                <Skeleton className="h-4 w-4/5" />
+              </div>
+            </div>
+
+            {/* 工作指引 - 跨越2列 */}
+            <div className="md:col-span-2">
+              <div className="rounded-2xl p-4 sm:p-6 shadow-lg bg-white">
+                <Skeleton className="h-6 w-24 mb-3" />
+                <Skeleton className="h-4 w-full mb-2" />
+                <Skeleton className="h-4 w-5/6" />
+              </div>
+            </div>
+
+            {/* 情感气场 - 跨越2列 */}
+            <div className="md:col-span-2">
+              <div className="rounded-2xl p-4 sm:p-6 shadow-lg bg-white">
+                <Skeleton className="h-6 w-24 mb-3" />
+                <Skeleton className="h-4 w-full mb-2" />
+                <Skeleton className="h-4 w-4/5" />
+              </div>
+            </div>
+
+            {/* 幸运微光 - 1列 */}
+            <div className="md:col-span-1">
+              <div className="rounded-2xl p-4 sm:p-6 shadow-lg bg-white">
+                <Skeleton className="h-6 w-24 mb-3" />
+                <Skeleton className="h-4 w-full mb-2" />
+                <Skeleton className="h-4 w-3/4" />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -574,19 +658,19 @@ export default function Home() {
               </div>
               <span className="material-icons" id="dropdown-arrow">expand_more</span>
             </div>
-            <div id="dropdown-content" style={{paddingTop: '0px', paddingRight: '0px', paddingLeft: '0px', height: '310px'}}>
+            <div id="dropdown-content" style={{paddingTop: '0px', paddingRight: '0px', paddingLeft: '0px', height: '310px', overflow: 'visible'}}>
               <div id="question-tags-container" style={{
-                display: 'flex',
-                flexDirection: 'column', // 纵向排列
-                flexWrap: 'wrap', // 自动换行（换列）
-                alignContent: 'flex-start', // 列从左开始排列
-                rowGap: '10px', // 纵向间距固定10px
-                columnGap: '16px', // 横向间距固定16px
+                display: 'grid',
+                gridTemplateColumns: 'repeat(8, minmax(min-content, max-content))',
+                gridTemplateRows: 'repeat(6, minmax(38px, max-content))',
+                gridAutoFlow: 'row',
+                gap: '10px 16px',
                 padding: '12px',
-                height: '310px', // 增加高度，确保6行后自动换列
-                overflowX: 'auto', // 横向滚动
-                overflowY: 'hidden', // 隐藏纵向滚动
-                width: 'auto'
+                height: '310px',
+                overflowX: 'auto',
+                overflowY: 'hidden',
+                width: 'auto',
+                WebkitOverflowScrolling: 'touch'
               }}></div>
             </div>
             {(explanation || isExplanationLoading) && (
@@ -657,7 +741,14 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
             {/* 早安心语 - 跨越全宽 */}
             <div className="md:col-span-3">
-              <div className="card-interactive bg-white rounded-2xl p-4 sm:p-6 shadow-lg border-l-4" style={{borderLeftColor: '#ff9999'}}>
+              <div className="card-interactive rounded-2xl p-4 sm:p-6 shadow-lg" style={{
+                backgroundColor: '#ffffff',
+                background: '#ffffff',
+                borderLeft: '4px solid #ff9999',
+                borderLeftWidth: '4px',
+                borderLeftStyle: 'solid',
+                borderLeftColor: '#ff9999'
+              }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#ff9999'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>waving_hand</span>
                   早安心语
@@ -668,7 +759,14 @@ export default function Home() {
 
             {/* 穿搭灵感 - 跨越2列 */}
             <div className="md:col-span-2">
-              <div className="card-interactive bg-white rounded-2xl p-4 sm:p-6 shadow-lg border-l-4" style={{borderLeftColor: '#72a5ff'}}>
+              <div className="card-interactive rounded-2xl p-4 sm:p-6 shadow-lg" style={{
+                backgroundColor: '#ffffff',
+                background: '#ffffff',
+                borderLeft: '4px solid #72a5ff',
+                borderLeftWidth: '4px',
+                borderLeftStyle: 'solid',
+                borderLeftColor: '#72a5ff'
+              }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#72a5ff'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>checkroom</span>
                   穿搭灵感
@@ -679,7 +777,14 @@ export default function Home() {
 
             {/* 幸运配色 - 1列 */}
             <div className="md:col-span-1">
-              <div className="card-interactive bg-white rounded-2xl p-4 sm:p-6 shadow-lg border-l-4" style={{borderLeftColor: '#64dd17'}}>
+              <div className="card-interactive rounded-2xl p-4 sm:p-6 shadow-lg" style={{
+                backgroundColor: '#ffffff',
+                background: '#ffffff',
+                borderLeft: '4px solid #64dd17',
+                borderLeftWidth: '4px',
+                borderLeftStyle: 'solid',
+                borderLeftColor: '#64dd17'
+              }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#64dd17'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>palette</span>
                   幸运配色
@@ -690,7 +795,14 @@ export default function Home() {
 
             {/* 情绪流动 - 1列 */}
             <div className="md:col-span-1">
-              <div className="card-interactive bg-white rounded-2xl p-4 sm:p-6 shadow-lg border-l-4" style={{borderLeftColor: '#ffc107'}}>
+              <div className="card-interactive rounded-2xl p-4 sm:p-6 shadow-lg" style={{
+                backgroundColor: '#ffffff',
+                background: '#ffffff',
+                borderLeft: '4px solid #ffc107',
+                borderLeftWidth: '4px',
+                borderLeftStyle: 'solid',
+                borderLeftColor: '#ffc107'
+              }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#ffc107'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>sentiment_satisfied</span>
                   情绪流动
@@ -701,7 +813,14 @@ export default function Home() {
 
             {/* 工作指引 - 跨越2列 */}
             <div className="md:col-span-2">
-              <div className="card-interactive bg-white rounded-2xl p-4 sm:p-6 shadow-lg border-l-4" style={{borderLeftColor: '#4db6ac'}}>
+              <div className="card-interactive rounded-2xl p-4 sm:p-6 shadow-lg" style={{
+                backgroundColor: '#ffffff',
+                background: '#ffffff',
+                borderLeft: '4px solid #4db6ac',
+                borderLeftWidth: '4px',
+                borderLeftStyle: 'solid',
+                borderLeftColor: '#4db6ac'
+              }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#4db6ac'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>work</span>
                   工作指引
@@ -712,7 +831,14 @@ export default function Home() {
 
             {/* 情感气场 - 跨越2列 */}
             <div className="md:col-span-2">
-              <div className="card-interactive bg-white rounded-2xl p-4 sm:p-6 shadow-lg border-l-4" style={{borderLeftColor: '#f48fb1'}}>
+              <div className="card-interactive rounded-2xl p-4 sm:p-6 shadow-lg" style={{
+                backgroundColor: '#ffffff',
+                background: '#ffffff',
+                borderLeft: '4px solid #f48fb1',
+                borderLeftWidth: '4px',
+                borderLeftStyle: 'solid',
+                borderLeftColor: '#f48fb1'
+              }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#f48fb1'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>favorite</span>
                   情感气场
@@ -723,7 +849,14 @@ export default function Home() {
 
             {/* 幸运微光 - 1列 */}
             <div className="md:col-span-1">
-              <div className="card-interactive bg-white rounded-2xl p-4 sm:p-6 shadow-lg border-l-4" style={{borderLeftColor: '#9c27b0'}}>
+              <div className="card-interactive rounded-2xl p-4 sm:p-6 shadow-lg" style={{
+                backgroundColor: '#ffffff',
+                background: '#ffffff',
+                borderLeft: '4px solid #9c27b0',
+                borderLeftWidth: '4px',
+                borderLeftStyle: 'solid',
+                borderLeftColor: '#9c27b0'
+              }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#9c27b0'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>star</span>
                   幸运微光
