@@ -736,14 +736,16 @@ export default function Home() {
                 borderLeftWidth: '4px',
                 borderLeftStyle: 'solid',
                 borderLeftColor: '#ff9999',
-                paddingTop: '24px',
-                paddingBottom: '24px'
+                paddingTop: '28px',
+                paddingBottom: '28px'
               }}>
-                <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#ff9999'}}>
+                <h3 className="text-base sm:text-lg font-bold mb-4 flex items-center" style={{color: '#ff9999'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>waving_hand</span>
                   早安心语
                 </h3>
-                {renderFieldContent('greeting', result.analysis.greeting)}
+                <div style={{paddingTop: '4px'}}>
+                  {renderFieldContent('greeting', result.analysis.greeting)}
+                </div>
               </div>
             </div>
 
@@ -756,14 +758,16 @@ export default function Home() {
                 borderLeftWidth: '4px',
                 borderLeftStyle: 'solid',
                 borderLeftColor: '#72a5ff',
-                paddingTop: '24px',
-                paddingBottom: '24px'
+                paddingTop: '28px',
+                paddingBottom: '28px'
               }}>
-                <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#72a5ff'}}>
+                <h3 className="text-base sm:text-lg font-bold mb-4 flex items-center" style={{color: '#72a5ff'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>checkroom</span>
                   穿搭灵感
                 </h3>
-                {renderFieldContent('outfit', result.analysis.outfit)}
+                <div style={{paddingTop: '4px'}}>
+                  {renderFieldContent('outfit', result.analysis.outfit)}
+                </div>
               </div>
             </div>
 
@@ -776,14 +780,16 @@ export default function Home() {
                 borderLeftWidth: '4px',
                 borderLeftStyle: 'solid',
                 borderLeftColor: '#64dd17',
-                paddingTop: '24px',
-                paddingBottom: '24px'
+                paddingTop: '28px',
+                paddingBottom: '28px'
               }}>
-                <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#64dd17'}}>
+                <h3 className="text-base sm:text-lg font-bold mb-4 flex items-center" style={{color: '#64dd17'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>palette</span>
                   幸运配色
                 </h3>
-                {renderFieldContent('color', result.analysis.color)}
+                <div style={{paddingTop: '4px'}}>
+                  {renderFieldContent('color', result.analysis.color)}
+                </div>
               </div>
             </div>
 
@@ -796,14 +802,16 @@ export default function Home() {
                 borderLeftWidth: '4px',
                 borderLeftStyle: 'solid',
                 borderLeftColor: '#ffc107',
-                paddingTop: '24px',
-                paddingBottom: '24px'
+                paddingTop: '28px',
+                paddingBottom: '28px'
               }}>
-                <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#ffc107'}}>
+                <h3 className="text-base sm:text-lg font-bold mb-4 flex items-center" style={{color: '#ffc107'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>sentiment_satisfied</span>
                   情绪流动
                 </h3>
-                {renderFieldContent('mood', result.analysis.mood)}
+                <div style={{paddingTop: '4px'}}>
+                  {renderFieldContent('mood', result.analysis.mood)}
+                </div>
               </div>
             </div>
 
@@ -816,14 +824,16 @@ export default function Home() {
                 borderLeftWidth: '4px',
                 borderLeftStyle: 'solid',
                 borderLeftColor: '#4db6ac',
-                paddingTop: '24px',
-                paddingBottom: '24px'
+                paddingTop: '28px',
+                paddingBottom: '28px'
               }}>
-                <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#4db6ac'}}>
+                <h3 className="text-base sm:text-lg font-bold mb-4 flex items-center" style={{color: '#4db6ac'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>work</span>
                   工作指引
                 </h3>
-                {renderFieldContent('career', result.analysis.career)}
+                <div style={{paddingTop: '4px'}}>
+                  {renderFieldContent('career', result.analysis.career)}
+                </div>
               </div>
             </div>
 
@@ -836,14 +846,16 @@ export default function Home() {
                 borderLeftWidth: '4px',
                 borderLeftStyle: 'solid',
                 borderLeftColor: '#f48fb1',
-                paddingTop: '24px',
-                paddingBottom: '24px'
+                paddingTop: '28px',
+                paddingBottom: '28px'
               }}>
-                <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#f48fb1'}}>
+                <h3 className="text-base sm:text-lg font-bold mb-4 flex items-center" style={{color: '#f48fb1'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>favorite</span>
                   情感气场
                 </h3>
-                {renderFieldContent('love', result.analysis.love)}
+                <div style={{paddingTop: '4px'}}>
+                  {renderFieldContent('love', result.analysis.love)}
+                </div>
               </div>
             </div>
 
@@ -856,14 +868,16 @@ export default function Home() {
                 borderLeftWidth: '4px',
                 borderLeftStyle: 'solid',
                 borderLeftColor: '#9c27b0',
-                paddingTop: '24px',
-                paddingBottom: '24px'
+                paddingTop: '28px',
+                paddingBottom: '28px'
               }}>
-                <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#9c27b0'}}>
+                <h3 className="text-base sm:text-lg font-bold mb-4 flex items-center" style={{color: '#9c27b0'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>star</span>
                   幸运微光
                 </h3>
-                {renderFieldContent('luck', result.analysis.luck)}
+                <div style={{paddingTop: '4px'}}>
+                  {renderFieldContent('luck', result.analysis.luck)}
+                </div>
               </div>
             </div>
           </div>
