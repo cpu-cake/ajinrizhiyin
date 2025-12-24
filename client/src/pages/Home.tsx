@@ -725,21 +725,30 @@ export default function Home() {
             </div>
           )}
 
-          {/* 运势分析结果 - 按原始HTML的布局 */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
-            {/* 早安心语 - 跨越全宽 */}
-            <div className="md:col-span-3">
-              <div className="card-interactive rounded-2xl px-4 sm:px-6 shadow-lg" style={{
+          {/* 运势分析结果 - 使用内联样式确保安卓兼容性 */}
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            width: '100%',
+            marginBottom: '32px',
+          }}>
+            {/* 早安心语 - 全宽 */}
+            <div style={{ marginBottom: '16px', width: '100%' }}>
+              <div className="card-interactive" style={{
                 backgroundColor: '#ffffff',
-                background: '#ffffff',
                 borderLeft: '4px solid #ff9999',
-                borderLeftWidth: '4px',
-                borderLeftStyle: 'solid',
-                borderLeftColor: '#ff9999',
-                paddingTop: '32px',
-                paddingBottom: '32px'
+                borderRadius: '16px',
+                padding: '24px 16px',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
               }}>
-                <h3 className="text-base sm:text-lg font-bold mb-4 flex items-center" style={{color: '#ff9999'}}>
+                <h3 style={{
+                  fontSize: '16px',
+                  fontWeight: 'bold',
+                  marginBottom: '16px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  color: '#ff9999',
+                }}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>waving_hand</span>
                   早安心语
                 </h3>
@@ -749,19 +758,23 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 穿搭灵感 - 跨越2列 */}
-            <div className="md:col-span-2">
-              <div className="card-interactive rounded-2xl px-4 sm:px-6 shadow-lg" style={{
+            {/* 穿搭灵感 */}
+            <div style={{ marginBottom: '16px', width: '100%' }}>
+              <div className="card-interactive" style={{
                 backgroundColor: '#ffffff',
-                background: '#ffffff',
                 borderLeft: '4px solid #72a5ff',
-                borderLeftWidth: '4px',
-                borderLeftStyle: 'solid',
-                borderLeftColor: '#72a5ff',
-                paddingTop: '32px',
-                paddingBottom: '32px'
+                borderRadius: '16px',
+                padding: '24px 16px',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
               }}>
-                <h3 className="text-base sm:text-lg font-bold mb-4 flex items-center" style={{color: '#72a5ff'}}>
+                <h3 style={{
+                  fontSize: '16px',
+                  fontWeight: 'bold',
+                  marginBottom: '16px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  color: '#72a5ff',
+                }}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>checkroom</span>
                   穿搭灵感
                 </h3>
@@ -771,19 +784,23 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 幸运配色 - 1列 */}
-            <div className="md:col-span-1">
-              <div className="card-interactive rounded-2xl px-4 sm:px-6 shadow-lg" style={{
+            {/* 幸运配色 */}
+            <div style={{ marginBottom: '16px', width: '100%' }}>
+              <div className="card-interactive" style={{
                 backgroundColor: '#ffffff',
-                background: '#ffffff',
                 borderLeft: '4px solid #64dd17',
-                borderLeftWidth: '4px',
-                borderLeftStyle: 'solid',
-                borderLeftColor: '#64dd17',
-                paddingTop: '32px',
-                paddingBottom: '32px'
+                borderRadius: '16px',
+                padding: '24px 16px',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
               }}>
-                <h3 className="text-base sm:text-lg font-bold mb-4 flex items-center" style={{color: '#64dd17'}}>
+                <h3 style={{
+                  fontSize: '16px',
+                  fontWeight: 'bold',
+                  marginBottom: '16px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  color: '#64dd17',
+                }}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>palette</span>
                   幸运配色
                 </h3>
@@ -793,19 +810,23 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 情绪流动 - 1列 */}
-            <div className="md:col-span-1">
-              <div className="card-interactive rounded-2xl px-4 sm:px-6 shadow-lg" style={{
+            {/* 情绪流动 */}
+            <div style={{ marginBottom: '16px', width: '100%' }}>
+              <div className="card-interactive" style={{
                 backgroundColor: '#ffffff',
-                background: '#ffffff',
                 borderLeft: '4px solid #ffc107',
-                borderLeftWidth: '4px',
-                borderLeftStyle: 'solid',
-                borderLeftColor: '#ffc107',
-                paddingTop: '32px',
-                paddingBottom: '32px'
+                borderRadius: '16px',
+                padding: '24px 16px',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
               }}>
-                <h3 className="text-base sm:text-lg font-bold mb-4 flex items-center" style={{color: '#ffc107'}}>
+                <h3 style={{
+                  fontSize: '16px',
+                  fontWeight: 'bold',
+                  marginBottom: '16px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  color: '#ffc107',
+                }}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>sentiment_satisfied</span>
                   情绪流动
                 </h3>
@@ -815,19 +836,23 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 工作指引 - 跨越2列 */}
-            <div className="md:col-span-2">
-              <div className="card-interactive rounded-2xl px-4 sm:px-6 shadow-lg" style={{
+            {/* 工作指引 */}
+            <div style={{ marginBottom: '16px', width: '100%' }}>
+              <div className="card-interactive" style={{
                 backgroundColor: '#ffffff',
-                background: '#ffffff',
                 borderLeft: '4px solid #4db6ac',
-                borderLeftWidth: '4px',
-                borderLeftStyle: 'solid',
-                borderLeftColor: '#4db6ac',
-                paddingTop: '32px',
-                paddingBottom: '32px'
+                borderRadius: '16px',
+                padding: '24px 16px',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
               }}>
-                <h3 className="text-base sm:text-lg font-bold mb-4 flex items-center" style={{color: '#4db6ac'}}>
+                <h3 style={{
+                  fontSize: '16px',
+                  fontWeight: 'bold',
+                  marginBottom: '16px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  color: '#4db6ac',
+                }}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>work</span>
                   工作指引
                 </h3>
@@ -837,19 +862,23 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 情感气场 - 跨越2列 */}
-            <div className="md:col-span-2">
-              <div className="card-interactive rounded-2xl px-4 sm:px-6 shadow-lg" style={{
+            {/* 情感气场 */}
+            <div style={{ marginBottom: '16px', width: '100%' }}>
+              <div className="card-interactive" style={{
                 backgroundColor: '#ffffff',
-                background: '#ffffff',
                 borderLeft: '4px solid #f48fb1',
-                borderLeftWidth: '4px',
-                borderLeftStyle: 'solid',
-                borderLeftColor: '#f48fb1',
-                paddingTop: '32px',
-                paddingBottom: '32px'
+                borderRadius: '16px',
+                padding: '24px 16px',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
               }}>
-                <h3 className="text-base sm:text-lg font-bold mb-4 flex items-center" style={{color: '#f48fb1'}}>
+                <h3 style={{
+                  fontSize: '16px',
+                  fontWeight: 'bold',
+                  marginBottom: '16px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  color: '#f48fb1',
+                }}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>favorite</span>
                   情感气场
                 </h3>
@@ -859,19 +888,23 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 幸运微光 - 1列 */}
-            <div className="md:col-span-1">
-              <div className="card-interactive rounded-2xl px-4 sm:px-6 shadow-lg" style={{
+            {/* 幸运微光 */}
+            <div style={{ marginBottom: '16px', width: '100%' }}>
+              <div className="card-interactive" style={{
                 backgroundColor: '#ffffff',
-                background: '#ffffff',
                 borderLeft: '4px solid #9c27b0',
-                borderLeftWidth: '4px',
-                borderLeftStyle: 'solid',
-                borderLeftColor: '#9c27b0',
-                paddingTop: '32px',
-                paddingBottom: '32px'
+                borderRadius: '16px',
+                padding: '24px 16px',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
               }}>
-                <h3 className="text-base sm:text-lg font-bold mb-4 flex items-center" style={{color: '#9c27b0'}}>
+                <h3 style={{
+                  fontSize: '16px',
+                  fontWeight: 'bold',
+                  marginBottom: '16px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  color: '#9c27b0',
+                }}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>star</span>
                   幸运微光
                 </h3>
