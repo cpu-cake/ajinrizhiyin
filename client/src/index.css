@@ -451,6 +451,9 @@
   overflow: hidden;
   transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
   padding: 0 10px;
+  /* 确保未展开时完全隐藏，防止标签显示 */
+  opacity: 0;
+  visibility: hidden;
 }
 
 #dropdown-content.open {
@@ -458,6 +461,9 @@
   padding: 10px 10px 0 10px;
   overflow-x: hidden;
   overflow-y: hidden;
+  /* 展开时显示 */
+  opacity: 1;
+  visibility: visible;
 }
 
 /* 标签容器布局 - 横向排列，每行8个标签，自动换行 */

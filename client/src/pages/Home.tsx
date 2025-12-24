@@ -658,20 +658,8 @@ export default function Home() {
               </div>
               <span className="material-icons" id="dropdown-arrow">expand_more</span>
             </div>
-            <div id="dropdown-content" style={{paddingTop: '0px', paddingRight: '0px', paddingLeft: '0px', height: '310px', overflow: 'visible'}}>
-              <div id="question-tags-container" style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(8, minmax(min-content, max-content))',
-                gridTemplateRows: 'repeat(6, minmax(38px, max-content))',
-                gridAutoFlow: 'row',
-                gap: '10px 16px',
-                padding: '12px',
-                height: '310px',
-                overflowX: 'auto',
-                overflowY: 'hidden',
-                width: 'auto',
-                WebkitOverflowScrolling: 'touch'
-              }}></div>
+            <div id="dropdown-content">
+              <div id="question-tags-container"></div>
             </div>
             {(explanation || isExplanationLoading) && (
               <>
@@ -741,7 +729,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
             {/* 早安心语 - 跨越全宽 */}
             <div className="md:col-span-3">
-              <div className="card-interactive rounded-2xl p-4 sm:p-6 shadow-lg" style={{
+              <div className="card-interactive rounded-2xl py-5 px-4 sm:py-6 sm:px-6 shadow-lg" style={{
                 backgroundColor: '#ffffff',
                 background: '#ffffff',
                 borderLeft: '4px solid #ff9999',
@@ -759,7 +747,7 @@ export default function Home() {
 
             {/* 穿搭灵感 - 跨越2列 */}
             <div className="md:col-span-2">
-              <div className="card-interactive rounded-2xl p-4 sm:p-6 shadow-lg" style={{
+              <div className="card-interactive rounded-2xl py-5 px-4 sm:py-6 sm:px-6 shadow-lg" style={{
                 backgroundColor: '#ffffff',
                 background: '#ffffff',
                 borderLeft: '4px solid #72a5ff',
@@ -777,7 +765,7 @@ export default function Home() {
 
             {/* 幸运配色 - 1列 */}
             <div className="md:col-span-1">
-              <div className="card-interactive rounded-2xl p-4 sm:p-6 shadow-lg" style={{
+              <div className="card-interactive rounded-2xl py-5 px-4 sm:py-6 sm:px-6 shadow-lg" style={{
                 backgroundColor: '#ffffff',
                 background: '#ffffff',
                 borderLeft: '4px solid #64dd17',
@@ -795,7 +783,7 @@ export default function Home() {
 
             {/* 情绪流动 - 1列 */}
             <div className="md:col-span-1">
-              <div className="card-interactive rounded-2xl p-4 sm:p-6 shadow-lg" style={{
+              <div className="card-interactive rounded-2xl py-5 px-4 sm:py-6 sm:px-6 shadow-lg" style={{
                 backgroundColor: '#ffffff',
                 background: '#ffffff',
                 borderLeft: '4px solid #ffc107',
@@ -813,7 +801,7 @@ export default function Home() {
 
             {/* 工作指引 - 跨越2列 */}
             <div className="md:col-span-2">
-              <div className="card-interactive rounded-2xl p-4 sm:p-6 shadow-lg" style={{
+              <div className="card-interactive rounded-2xl py-5 px-4 sm:py-6 sm:px-6 shadow-lg" style={{
                 backgroundColor: '#ffffff',
                 background: '#ffffff',
                 borderLeft: '4px solid #4db6ac',
@@ -831,7 +819,7 @@ export default function Home() {
 
             {/* 情感气场 - 跨越2列 */}
             <div className="md:col-span-2">
-              <div className="card-interactive rounded-2xl p-4 sm:p-6 shadow-lg" style={{
+              <div className="card-interactive rounded-2xl py-5 px-4 sm:py-6 sm:px-6 shadow-lg" style={{
                 backgroundColor: '#ffffff',
                 background: '#ffffff',
                 borderLeft: '4px solid #f48fb1',
@@ -849,7 +837,7 @@ export default function Home() {
 
             {/* 幸运微光 - 1列 */}
             <div className="md:col-span-1">
-              <div className="card-interactive rounded-2xl p-4 sm:p-6 shadow-lg" style={{
+              <div className="card-interactive rounded-2xl py-5 px-4 sm:py-6 sm:px-6 shadow-lg" style={{
                 backgroundColor: '#ffffff',
                 background: '#ffffff',
                 borderLeft: '4px solid #9c27b0',
