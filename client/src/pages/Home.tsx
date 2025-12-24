@@ -729,13 +729,15 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
             {/* 早安心语 - 跨越全宽 */}
             <div className="md:col-span-3">
-              <div className="card-interactive rounded-2xl py-5 px-4 sm:py-6 sm:px-6 shadow-lg" style={{
+              <div className="card-interactive rounded-2xl px-4 sm:px-6 shadow-lg" style={{
                 backgroundColor: '#ffffff',
                 background: '#ffffff',
                 borderLeft: '4px solid #ff9999',
                 borderLeftWidth: '4px',
                 borderLeftStyle: 'solid',
-                borderLeftColor: '#ff9999'
+                borderLeftColor: '#ff9999',
+                paddingTop: '24px',
+                paddingBottom: '24px'
               }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#ff9999'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>waving_hand</span>
@@ -747,13 +749,15 @@ export default function Home() {
 
             {/* 穿搭灵感 - 跨越2列 */}
             <div className="md:col-span-2">
-              <div className="card-interactive rounded-2xl py-5 px-4 sm:py-6 sm:px-6 shadow-lg" style={{
+              <div className="card-interactive rounded-2xl px-4 sm:px-6 shadow-lg" style={{
                 backgroundColor: '#ffffff',
                 background: '#ffffff',
                 borderLeft: '4px solid #72a5ff',
                 borderLeftWidth: '4px',
                 borderLeftStyle: 'solid',
-                borderLeftColor: '#72a5ff'
+                borderLeftColor: '#72a5ff',
+                paddingTop: '24px',
+                paddingBottom: '24px'
               }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#72a5ff'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>checkroom</span>
@@ -765,13 +769,15 @@ export default function Home() {
 
             {/* 幸运配色 - 1列 */}
             <div className="md:col-span-1">
-              <div className="card-interactive rounded-2xl py-5 px-4 sm:py-6 sm:px-6 shadow-lg" style={{
+              <div className="card-interactive rounded-2xl px-4 sm:px-6 shadow-lg" style={{
                 backgroundColor: '#ffffff',
                 background: '#ffffff',
                 borderLeft: '4px solid #64dd17',
                 borderLeftWidth: '4px',
                 borderLeftStyle: 'solid',
-                borderLeftColor: '#64dd17'
+                borderLeftColor: '#64dd17',
+                paddingTop: '24px',
+                paddingBottom: '24px'
               }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#64dd17'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>palette</span>
@@ -783,13 +789,15 @@ export default function Home() {
 
             {/* 情绪流动 - 1列 */}
             <div className="md:col-span-1">
-              <div className="card-interactive rounded-2xl py-5 px-4 sm:py-6 sm:px-6 shadow-lg" style={{
+              <div className="card-interactive rounded-2xl px-4 sm:px-6 shadow-lg" style={{
                 backgroundColor: '#ffffff',
                 background: '#ffffff',
                 borderLeft: '4px solid #ffc107',
                 borderLeftWidth: '4px',
                 borderLeftStyle: 'solid',
-                borderLeftColor: '#ffc107'
+                borderLeftColor: '#ffc107',
+                paddingTop: '24px',
+                paddingBottom: '24px'
               }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#ffc107'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>sentiment_satisfied</span>
@@ -801,13 +809,15 @@ export default function Home() {
 
             {/* 工作指引 - 跨越2列 */}
             <div className="md:col-span-2">
-              <div className="card-interactive rounded-2xl py-5 px-4 sm:py-6 sm:px-6 shadow-lg" style={{
+              <div className="card-interactive rounded-2xl px-4 sm:px-6 shadow-lg" style={{
                 backgroundColor: '#ffffff',
                 background: '#ffffff',
                 borderLeft: '4px solid #4db6ac',
                 borderLeftWidth: '4px',
                 borderLeftStyle: 'solid',
-                borderLeftColor: '#4db6ac'
+                borderLeftColor: '#4db6ac',
+                paddingTop: '24px',
+                paddingBottom: '24px'
               }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#4db6ac'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>work</span>
@@ -819,13 +829,15 @@ export default function Home() {
 
             {/* 情感气场 - 跨越2列 */}
             <div className="md:col-span-2">
-              <div className="card-interactive rounded-2xl py-5 px-4 sm:py-6 sm:px-6 shadow-lg" style={{
+              <div className="card-interactive rounded-2xl px-4 sm:px-6 shadow-lg" style={{
                 backgroundColor: '#ffffff',
                 background: '#ffffff',
                 borderLeft: '4px solid #f48fb1',
                 borderLeftWidth: '4px',
                 borderLeftStyle: 'solid',
-                borderLeftColor: '#f48fb1'
+                borderLeftColor: '#f48fb1',
+                paddingTop: '24px',
+                paddingBottom: '24px'
               }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#f48fb1'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>favorite</span>
@@ -837,13 +849,15 @@ export default function Home() {
 
             {/* 幸运微光 - 1列 */}
             <div className="md:col-span-1">
-              <div className="card-interactive rounded-2xl py-5 px-4 sm:py-6 sm:px-6 shadow-lg" style={{
+              <div className="card-interactive rounded-2xl px-4 sm:px-6 shadow-lg" style={{
                 backgroundColor: '#ffffff',
                 background: '#ffffff',
                 borderLeft: '4px solid #9c27b0',
                 borderLeftWidth: '4px',
                 borderLeftStyle: 'solid',
-                borderLeftColor: '#9c27b0'
+                borderLeftColor: '#9c27b0',
+                paddingTop: '24px',
+                paddingBottom: '24px'
               }}>
                 <h3 className="text-base sm:text-lg font-bold mb-3 flex items-center" style={{color: '#9c27b0'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>star</span>
