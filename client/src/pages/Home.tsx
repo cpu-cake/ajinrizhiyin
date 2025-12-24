@@ -736,8 +736,8 @@ export default function Home() {
                 borderLeftWidth: '4px',
                 borderLeftStyle: 'solid',
                 borderLeftColor: '#ff9999',
-                paddingTop: '28px',
-                paddingBottom: '28px'
+                paddingTop: '32px',
+                paddingBottom: '32px'
               }}>
                 <h3 className="text-base sm:text-lg font-bold mb-4 flex items-center" style={{color: '#ff9999'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>waving_hand</span>
@@ -758,8 +758,8 @@ export default function Home() {
                 borderLeftWidth: '4px',
                 borderLeftStyle: 'solid',
                 borderLeftColor: '#72a5ff',
-                paddingTop: '28px',
-                paddingBottom: '28px'
+                paddingTop: '32px',
+                paddingBottom: '32px'
               }}>
                 <h3 className="text-base sm:text-lg font-bold mb-4 flex items-center" style={{color: '#72a5ff'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>checkroom</span>
@@ -780,8 +780,8 @@ export default function Home() {
                 borderLeftWidth: '4px',
                 borderLeftStyle: 'solid',
                 borderLeftColor: '#64dd17',
-                paddingTop: '28px',
-                paddingBottom: '28px'
+                paddingTop: '32px',
+                paddingBottom: '32px'
               }}>
                 <h3 className="text-base sm:text-lg font-bold mb-4 flex items-center" style={{color: '#64dd17'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>palette</span>
@@ -802,8 +802,8 @@ export default function Home() {
                 borderLeftWidth: '4px',
                 borderLeftStyle: 'solid',
                 borderLeftColor: '#ffc107',
-                paddingTop: '28px',
-                paddingBottom: '28px'
+                paddingTop: '32px',
+                paddingBottom: '32px'
               }}>
                 <h3 className="text-base sm:text-lg font-bold mb-4 flex items-center" style={{color: '#ffc107'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>sentiment_satisfied</span>
@@ -824,8 +824,8 @@ export default function Home() {
                 borderLeftWidth: '4px',
                 borderLeftStyle: 'solid',
                 borderLeftColor: '#4db6ac',
-                paddingTop: '28px',
-                paddingBottom: '28px'
+                paddingTop: '32px',
+                paddingBottom: '32px'
               }}>
                 <h3 className="text-base sm:text-lg font-bold mb-4 flex items-center" style={{color: '#4db6ac'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>work</span>
@@ -846,8 +846,8 @@ export default function Home() {
                 borderLeftWidth: '4px',
                 borderLeftStyle: 'solid',
                 borderLeftColor: '#f48fb1',
-                paddingTop: '28px',
-                paddingBottom: '28px'
+                paddingTop: '32px',
+                paddingBottom: '32px'
               }}>
                 <h3 className="text-base sm:text-lg font-bold mb-4 flex items-center" style={{color: '#f48fb1'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>favorite</span>
@@ -868,8 +868,8 @@ export default function Home() {
                 borderLeftWidth: '4px',
                 borderLeftStyle: 'solid',
                 borderLeftColor: '#9c27b0',
-                paddingTop: '28px',
-                paddingBottom: '28px'
+                paddingTop: '32px',
+                paddingBottom: '32px'
               }}>
                 <h3 className="text-base sm:text-lg font-bold mb-4 flex items-center" style={{color: '#9c27b0'}}>
                   <span className="material-icons" style={{marginRight: '8px', fontSize: '24px'}}>star</span>
