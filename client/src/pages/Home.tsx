@@ -725,27 +725,33 @@ export default function Home() {
             </div>
           )}
 
-          {/* 运势分析结果 - 使用内联样式确保安卓兼容性 */}
+          {/* 运势分析结果 - 使用最大兼容性的内联样式 */}
           <div style={{
-            display: 'flex',
-            flexDirection: 'column',
+            display: 'block',
             width: '100%',
             marginBottom: '32px',
+            paddingTop: '8px',
           }}>
             {/* 早安心语 - 全宽 */}
-            <div style={{ marginBottom: '16px', width: '100%' }}>
+            <div style={{ 
+              paddingBottom: '16px',
+              width: '100%',
+              display: 'block',
+            }}>
               <div className="card-interactive" style={{
                 backgroundColor: '#ffffff',
                 borderLeft: '4px solid #ff9999',
                 borderRadius: '16px',
                 padding: '24px 16px',
                 boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                WebkitBoxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
               }}>
                 <h3 style={{
                   fontSize: '16px',
                   fontWeight: 'bold',
                   marginBottom: '16px',
                   display: 'flex',
+                  WebkitBoxAlign: 'center',
                   alignItems: 'center',
                   color: '#ff9999',
                 }}>
@@ -759,19 +765,25 @@ export default function Home() {
             </div>
 
             {/* 穿搭灵感 */}
-            <div style={{ marginBottom: '16px', width: '100%' }}>
+            <div style={{ 
+              paddingBottom: '16px',
+              width: '100%',
+              display: 'block',
+            }}>
               <div className="card-interactive" style={{
                 backgroundColor: '#ffffff',
                 borderLeft: '4px solid #72a5ff',
                 borderRadius: '16px',
                 padding: '24px 16px',
                 boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                WebkitBoxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
               }}>
                 <h3 style={{
                   fontSize: '16px',
                   fontWeight: 'bold',
                   marginBottom: '16px',
                   display: 'flex',
+                  WebkitBoxAlign: 'center',
                   alignItems: 'center',
                   color: '#72a5ff',
                 }}>
@@ -785,19 +797,25 @@ export default function Home() {
             </div>
 
             {/* 幸运配色 */}
-            <div style={{ marginBottom: '16px', width: '100%' }}>
+            <div style={{ 
+              paddingBottom: '16px',
+              width: '100%',
+              display: 'block',
+            }}>
               <div className="card-interactive" style={{
                 backgroundColor: '#ffffff',
                 borderLeft: '4px solid #64dd17',
                 borderRadius: '16px',
                 padding: '24px 16px',
                 boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                WebkitBoxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
               }}>
                 <h3 style={{
                   fontSize: '16px',
                   fontWeight: 'bold',
                   marginBottom: '16px',
                   display: 'flex',
+                  WebkitBoxAlign: 'center',
                   alignItems: 'center',
                   color: '#64dd17',
                 }}>
@@ -811,19 +829,25 @@ export default function Home() {
             </div>
 
             {/* 情绪流动 */}
-            <div style={{ marginBottom: '16px', width: '100%' }}>
+            <div style={{ 
+              paddingBottom: '16px',
+              width: '100%',
+              display: 'block',
+            }}>
               <div className="card-interactive" style={{
                 backgroundColor: '#ffffff',
                 borderLeft: '4px solid #ffc107',
                 borderRadius: '16px',
                 padding: '24px 16px',
                 boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                WebkitBoxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
               }}>
                 <h3 style={{
                   fontSize: '16px',
                   fontWeight: 'bold',
                   marginBottom: '16px',
                   display: 'flex',
+                  WebkitBoxAlign: 'center',
                   alignItems: 'center',
                   color: '#ffc107',
                 }}>
@@ -837,19 +861,25 @@ export default function Home() {
             </div>
 
             {/* 工作指引 */}
-            <div style={{ marginBottom: '16px', width: '100%' }}>
+            <div style={{ 
+              paddingBottom: '16px',
+              width: '100%',
+              display: 'block',
+            }}>
               <div className="card-interactive" style={{
                 backgroundColor: '#ffffff',
                 borderLeft: '4px solid #4db6ac',
                 borderRadius: '16px',
                 padding: '24px 16px',
                 boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                WebkitBoxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
               }}>
                 <h3 style={{
                   fontSize: '16px',
                   fontWeight: 'bold',
                   marginBottom: '16px',
                   display: 'flex',
+                  WebkitBoxAlign: 'center',
                   alignItems: 'center',
                   color: '#4db6ac',
                 }}>
@@ -863,19 +893,25 @@ export default function Home() {
             </div>
 
             {/* 情感气场 */}
-            <div style={{ marginBottom: '16px', width: '100%' }}>
+            <div style={{ 
+              paddingBottom: '16px',
+              width: '100%',
+              display: 'block',
+            }}>
               <div className="card-interactive" style={{
                 backgroundColor: '#ffffff',
                 borderLeft: '4px solid #f48fb1',
                 borderRadius: '16px',
                 padding: '24px 16px',
                 boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                WebkitBoxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
               }}>
                 <h3 style={{
                   fontSize: '16px',
                   fontWeight: 'bold',
                   marginBottom: '16px',
                   display: 'flex',
+                  WebkitBoxAlign: 'center',
                   alignItems: 'center',
                   color: '#f48fb1',
                 }}>
@@ -889,19 +925,25 @@ export default function Home() {
             </div>
 
             {/* 幸运微光 */}
-            <div style={{ marginBottom: '16px', width: '100%' }}>
+            <div style={{ 
+              paddingBottom: '16px',
+              width: '100%',
+              display: 'block',
+            }}>
               <div className="card-interactive" style={{
                 backgroundColor: '#ffffff',
                 borderLeft: '4px solid #9c27b0',
                 borderRadius: '16px',
                 padding: '24px 16px',
                 boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                WebkitBoxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
               }}>
                 <h3 style={{
                   fontSize: '16px',
                   fontWeight: 'bold',
                   marginBottom: '16px',
                   display: 'flex',
+                  WebkitBoxAlign: 'center',
                   alignItems: 'center',
                   color: '#9c27b0',
                 }}>

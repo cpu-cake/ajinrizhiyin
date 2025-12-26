@@ -288,13 +288,21 @@
     text-size-adjust: 100% !important;
   }
   
+  /* 强制卡片间距 - 安卓兼容性修复 */
+  .card-interactive {
+    margin-bottom: 16px !important;
+    display: block !important;
+  }
+  
   /* 优化触摸反馈 */
   .card-interactive:active,
   .question-tag:active,
   button:active,
   a:active {
     transform: scale(0.98);
+    -webkit-transform: scale(0.98);
     transition: transform 0.1s;
+    -webkit-transition: -webkit-transform 0.1s;
   }
   
   /* 防止长按选择文本（除了输入框和内容区域） */
