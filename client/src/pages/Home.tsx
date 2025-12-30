@@ -957,6 +957,15 @@ export default function Home() {
             </div>
           </div>
 
+          {/* 底部声明 */}
+          <div style={{
+            textAlign: 'center',
+            padding: '16px 0 32px',
+            color: '#9ca3af',
+            fontSize: '12px',
+          }}>
+            以上内容由人工智能生成合成
+          </div>
 
         </div>
       </div>
