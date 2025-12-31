@@ -1,7 +1,7 @@
 import { eq, and } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/neon-http";
 import { neon } from "@neondatabase/serverless";
-import { coinReadings, InsertCoinReading, CoinReading, devices, Device, InsertDevice } from "../drizzle/schema.js";
+import { coinReadings, CoinReading, devices, Device } from "../drizzle/schema.js";
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
@@ -11,7 +11,7 @@ type MemoryReading = CoinReading & { id: number };
 type MemoryQuestionTagClick = {
   questionText: string;
   deviceFingerprint: string;
-  clickDate: Date;
+  clickDate: string;
 };
 
 const memoryStore = {
@@ -20,10 +20,19 @@ const memoryStore = {
   questionClicks: [] as MemoryQuestionTagClick[],
 };
 
-const sameDay = (a: Date, b: Date) =>
-  a.getFullYear() === b.getFullYear() &&
-  a.getMonth() === b.getMonth() &&
-  a.getDate() === b.getDate();
+// 将 Date 转换为 YYYY-MM-DD 字符串
+function formatDate(date: Date): string {
+  return date.toISOString().split('T')[0];
+}
+
+// 获取中国时区（UTC+8）的今天日期字符串
+function getChinaTodayStr(): string {
+  const now = new Date();
+  const chinaTime = new Date(now.getTime() + 8 * 60 * 60 * 1000);
+  return chinaTime.toISOString().split('T')[0];
+}
+
+const sameDay = (a: string, b: string) => a === b;
 
 // Lazily create the drizzle instance so local tooling can run without a DB.
 export async function getDb() {
@@ -61,7 +70,6 @@ export async function getOrCreateDevice(deviceFingerprint: string): Promise<Devi
   }
 
   try {
-    // 尝试获取现有设备
     const existing = await db
       .select()
       .from(devices)
@@ -72,12 +80,10 @@ export async function getOrCreateDevice(deviceFingerprint: string): Promise<Devi
       return existing[0];
     }
 
-    // 创建新设备
     await db.insert(devices).values({
       deviceFingerprint,
     });
 
-    // 获取刚创建的设备
     const created = await db
       .select()
       .from(devices)
@@ -96,8 +102,10 @@ export async function getOrCreateDevice(deviceFingerprint: string): Promise<Devi
  */
 export async function getTodaysCoinReading(deviceId: number, todayDate: Date): Promise<CoinReading | null> {
   const db = await getDb();
+  const dateStr = formatDate(todayDate);
+  
   if (!db) {
-    const found = memoryStore.readings.find(r => r.deviceId === deviceId && sameDay(r.tossDate, todayDate));
+    const found = memoryStore.readings.find(r => r.deviceId === deviceId && sameDay(r.tossDate, dateStr));
     return found || null;
   }
 
@@ -108,7 +116,7 @@ export async function getTodaysCoinReading(deviceId: number, todayDate: Date): P
       .where(
         and(
           eq(coinReadings.deviceId, deviceId),
-          eq(coinReadings.tossDate, todayDate)
+          eq(coinReadings.tossDate, dateStr)
         )
       )
       .limit(1);
@@ -122,7 +130,6 @@ export async function getTodaysCoinReading(deviceId: number, todayDate: Date): P
 
 /**
  * 创建硬币投掷记录
- * @param type 记录类型（daily_fortune 或 question_answer）
  */
 export async function createCoinReading(
   deviceId: number,
@@ -131,12 +138,14 @@ export async function createCoinReading(
   type: string = "daily_fortune"
 ): Promise<CoinReading | null> {
   const db = await getDb();
+  const dateStr = formatDate(tossDate);
+  
   if (!db) {
     const created: MemoryReading = {
       id: memoryStore.readings.length + 1,
       deviceId,
       coinResults,
-      tossDate,
+      tossDate: dateStr,
       type,
       analysis: null,
       createdAt: new Date(),
@@ -149,19 +158,18 @@ export async function createCoinReading(
   try {
     await db.insert(coinReadings).values({
       coinResults,
-      tossDate,
+      tossDate: dateStr,
       deviceId,
       type,
     });
 
-    // 获取刚插入的记录
     const inserted = await db
       .select()
       .from(coinReadings)
       .where(
         and(
           eq(coinReadings.deviceId, deviceId),
-          eq(coinReadings.tossDate, tossDate)
+          eq(coinReadings.tossDate, dateStr)
         )
       )
       .orderBy(coinReadings.createdAt)
@@ -224,7 +232,6 @@ export async function updateCoinReadingField(
   }
 
   try {
-    // 先获取现有的 analysis
     const existing = await db
       .select()
       .from(coinReadings)
@@ -262,11 +269,13 @@ export async function updateCoinReadingField(
  */
 export async function updateDeviceLastToss(deviceId: number, readingId: number, tossDate: Date): Promise<void> {
   const db = await getDb();
+  const dateStr = formatDate(tossDate);
+  
   if (!db) {
     const device = memoryStore.devices.find(d => d.id === deviceId);
     if (device) {
       device.lastReadingId = readingId;
-      device.lastTossDate = tossDate;
+      device.lastTossDate = dateStr;
       device.updatedAt = new Date();
     }
     return;
@@ -277,7 +286,7 @@ export async function updateDeviceLastToss(deviceId: number, readingId: number, 
       .update(devices)
       .set({
         lastReadingId: readingId,
-        lastTossDate: tossDate,
+        lastTossDate: dateStr,
       })
       .where(eq(devices.id, deviceId));
   } catch (error) {
@@ -288,15 +297,16 @@ export async function updateDeviceLastToss(deviceId: number, readingId: number, 
 
 /**
  * 获取设备今天的使用次数
- * @param type 可选，指定统计的记录类型（daily_fortune 或 question_answer）
  */
 export async function getTodaysUsageCount(deviceId: number, todayDate: Date, type?: string): Promise<number> {
   const db = await getDb();
+  const dateStr = formatDate(todayDate);
+  
   if (!db) {
     return memoryStore.readings.filter(
       r =>
         r.deviceId === deviceId &&
-        sameDay(r.tossDate, todayDate) &&
+        sameDay(r.tossDate, dateStr) &&
         (!type || r.type === type)
     ).length;
   }
@@ -304,10 +314,9 @@ export async function getTodaysUsageCount(deviceId: number, todayDate: Date, typ
   try {
     const conditions = [
       eq(coinReadings.deviceId, deviceId),
-      eq(coinReadings.tossDate, todayDate)
+      eq(coinReadings.tossDate, dateStr)
     ];
     
-    // 如果指定了type，则只统计该类型的记录
     if (type) {
       conditions.push(eq(coinReadings.type, type));
     }
@@ -356,23 +365,24 @@ export async function getDeviceCoinReadings(deviceId: number, limit: number = 10
  */
 export async function recordQuestionTagClick(questionText: string, deviceFingerprint: string): Promise<void> {
   const db = await getDb();
+  const dateStr = getChinaTodayStr();
+  
   if (!db) {
     memoryStore.questionClicks.push({
       questionText,
       deviceFingerprint,
-      clickDate: new Date(),
+      clickDate: dateStr,
     });
     return;
   }
 
   try {
-    const { questionTagClicks } = await import("../drizzle/schema");
-    const today = new Date();
+    const { questionTagClicks } = await import("../drizzle/schema.js");
     
     await db.insert(questionTagClicks).values({
       questionText,
       deviceFingerprint,
-      clickDate: today,
+      clickDate: dateStr,
     });
   } catch (error) {
     console.error("[Database] Failed to record question tag click:", error);
@@ -381,12 +391,10 @@ export async function recordQuestionTagClick(questionText: string, deviceFingerp
 
 /**
  * 获取今天的热门标签
- * 返回昨天统计的热门标签（因为是凌晨4点统计的）
  */
 export async function getTodayHotQuestions(): Promise<string[]> {
   const db = await getDb();
   if (!db) {
-    // 简单按点击次数排序，取前5
     const counts = new Map<string, number>();
     memoryStore.questionClicks.forEach(c => {
       const key = c.questionText;
@@ -399,14 +407,13 @@ export async function getTodayHotQuestions(): Promise<string[]> {
   }
 
   try {
-    const { hotQuestions } = await import("../drizzle/schema");
-    const { sql } = await import("drizzle-orm");
+    const { hotQuestions } = await import("../drizzle/schema.js");
+    const { desc } = await import("drizzle-orm");
     
-    // 获取最新的统计日期
     const latestStats = await db
       .select()
       .from(hotQuestions)
-      .orderBy(sql`${hotQuestions.statsDate} DESC`)
+      .orderBy(desc(hotQuestions.statsDate))
       .limit(1);
     
     if (latestStats.length === 0) {
@@ -415,7 +422,6 @@ export async function getTodayHotQuestions(): Promise<string[]> {
     
     const latestDate = latestStats[0].statsDate;
     
-    // 获取该日期的所有热门标签
     const hotTags = await db
       .select()
       .from(hotQuestions)
@@ -435,27 +441,26 @@ export async function getTodayHotQuestions(): Promise<string[]> {
 export async function calculateHotQuestions(): Promise<void> {
   const db = await getDb();
   if (!db) {
-    // 内存模式下跳过定时统计
     return;
   }
 
   try {
-    const { questionTagClicks, hotQuestions } = await import("../drizzle/schema");
-    const { sql } = await import("drizzle-orm");
+    const { questionTagClicks, hotQuestions } = await import("../drizzle/schema.js");
+    const { sql, lt } = await import("drizzle-orm");
     
-    // 计算前一天的日期
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    yesterday.setHours(0, 0, 0, 0); // 设置为当天零点
+    // 使用中国时区计算昨天的日期
+    const now = new Date();
+    const chinaTime = new Date(now.getTime() + 8 * 60 * 60 * 1000);
+    chinaTime.setUTCDate(chinaTime.getUTCDate() - 1);
+    const yesterdayStr = chinaTime.toISOString().split('T')[0];
     
-    // 统计前一天的点击数据
     const clickStats = await db
       .select({
         questionText: questionTagClicks.questionText,
         clickCount: sql<number>`COUNT(*)`.as('clickCount'),
       })
       .from(questionTagClicks)
-      .where(eq(questionTagClicks.clickDate, yesterday))
+      .where(eq(questionTagClicks.clickDate, yesterdayStr))
       .groupBy(questionTagClicks.questionText)
       .orderBy(sql`COUNT(*) DESC`)
       .limit(5);
@@ -465,25 +470,25 @@ export async function calculateHotQuestions(): Promise<void> {
       return;
     }
     
-    // 删除旧的统计数据（只保留最近7天的）
-    const sevenDaysAgo = new Date();
-    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-    sevenDaysAgo.setHours(0, 0, 0, 0);
+    // 使用中国时区计算7天前的日期
+    const sevenDaysAgo = new Date(now.getTime() + 8 * 60 * 60 * 1000);
+    sevenDaysAgo.setUTCDate(sevenDaysAgo.getUTCDate() - 7);
+    const sevenDaysAgoStr = sevenDaysAgo.toISOString().split('T')[0];
+    
     await db
       .delete(hotQuestions)
-      .where(sql`${hotQuestions.statsDate} < ${sevenDaysAgo}`);
+      .where(lt(hotQuestions.statsDate, sevenDaysAgoStr));
     
-    // 插入新的热门标签数据
     for (let i = 0; i < clickStats.length; i++) {
       await db.insert(hotQuestions).values({
         questionText: clickStats[i].questionText,
         clickCount: clickStats[i].clickCount,
-        statsDate: yesterday,
+        statsDate: yesterdayStr,
         rank: i + 1,
       });
     }
     
-    console.log(`[Database] Calculated ${clickStats.length} hot questions for ${yesterday.toISOString().split('T')[0]}`);
+    console.log(`[Database] Calculated ${clickStats.length} hot questions for ${yesterdayStr}`);
   } catch (error) {
     console.error("[Database] Failed to calculate hot questions:", error);
   }
