@@ -286,18 +286,34 @@ export default function Home() {
   }, [loadField]);
 
   // 加载所有缺失的字段
-  // 注意：使用 forEach 确保所有请求并行发出，不等待前一个完成
-  // 哪个先返回就先显示哪个，不需要等待所有内容都生成完毕
-  const loadMissingFields = useCallback(() => {
+  // 分批加载：每批 2 个，批次间隔 1 秒，避免触发 LLM API 的 RPM 限制
+  const loadMissingFields = useCallback(async () => {
     if (!result || !deviceFingerprint) return;
     
-    // 并行发出所有缺失字段的请求
-    FIELD_NAMES.forEach(fieldName => {
-      // 只加载缺失的字段（已缓存的字段不会再次请求）
-      if (!result.analysis?.[fieldName] && !loadingFieldsRef.current.has(fieldName)) {
+    // 收集需要加载的字段
+    const fieldsToLoad = FIELD_NAMES.filter(fieldName => 
+      !result.analysis?.[fieldName] && !loadingFieldsRef.current.has(fieldName)
+    );
+    
+    if (fieldsToLoad.length === 0) return;
+    
+    // 分批加载，每批 2 个
+    const BATCH_SIZE = 2;
+    const BATCH_DELAY = 1000; // 1秒间隔
+    
+    for (let i = 0; i < fieldsToLoad.length; i += BATCH_SIZE) {
+      const batch = fieldsToLoad.slice(i, i + BATCH_SIZE);
+      
+      // 并行加载当前批次
+      batch.forEach(fieldName => {
         loadField(fieldName);
+      });
+      
+      // 如果还有下一批，等待一段时间
+      if (i + BATCH_SIZE < fieldsToLoad.length) {
+        await new Promise(resolve => setTimeout(resolve, BATCH_DELAY));
       }
-    });
+    }
   }, [result, deviceFingerprint, loadField]);
 
   // 初始化设备指纹和获取今日运势
