@@ -32,6 +32,17 @@ export default defineConfig({
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
     target: ["es2015"],
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // 将大型依赖分离到单独的 chunk
+          'vendor-react': ['react', 'react-dom'],
+          'vendor-trpc': ['@trpc/client', '@trpc/react-query', '@tanstack/react-query'],
+          'vendor-ui': ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-tooltip', '@radix-ui/react-popover'],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 600,
   },
   server: {
     host: true,

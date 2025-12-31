@@ -165,8 +165,16 @@
         will-change: transform;
       }
     </style>
-    <!-- Material Icons -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <!-- Material Icons - 本地化加载 -->
+    <style>
+      @font-face {
+        font-family: 'Material Icons';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(/fonts/material-icons.woff2) format('woff2');
+      }
+    </style>
   </head>
 
   <body>
