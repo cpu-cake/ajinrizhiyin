@@ -10,6 +10,29 @@ import {
   updateCoinReadingField,
 } from "./db.js";
 
+/**
+ * 获取中国时区（UTC+8）的今天日期
+ * 确保服务器和用户使用同一个日期标准
+ */
+function getChinaToday(): Date {
+  const now = new Date();
+  // 获取 UTC 时间戳，加上 8 小时得到中国时间
+  const chinaTime = new Date(now.getTime() + 8 * 60 * 60 * 1000);
+  // 返回中国时区的日期（零点）
+  return new Date(
+    Date.UTC(chinaTime.getUTCFullYear(), chinaTime.getUTCMonth(), chinaTime.getUTCDate())
+  );
+}
+
+/**
+ * 获取中国时区的当前小时
+ */
+function getChinaHour(): number {
+  const now = new Date();
+  const chinaTime = new Date(now.getTime() + 8 * 60 * 60 * 1000);
+  return chinaTime.getUTCHours();
+}
+
 // 字段配置：每个字段的提示词和描述
 const FIELD_CONFIGS = {
   greeting: {
@@ -68,8 +91,7 @@ const LIMIT_MESSAGES_NIGHT = [
 ];
 
 function getRandomLimitMessage(): string {
-  const now = new Date();
-  const hour = now.getHours();
+  const hour = getChinaHour();
   
   // 20:00-24:00使用夜间提示语
   if (hour >= 20) {
@@ -103,13 +125,8 @@ export const appRouter = router({
             throw new Error("Failed to get or create device");
           }
 
-          // 获取今天的日期（YYYY-MM-DD格式）
-          const today = new Date();
-          const todayDate = new Date(
-            today.getFullYear(),
-            today.getMonth(),
-            today.getDate()
-          );
+          // 获取今天的日期（中国时区）
+          const todayDate = getChinaToday();
 
           // 检查是否已有今天的投掷记录
           const existingReading = await getTodaysCoinReading(device.id, todayDate);
@@ -159,13 +176,8 @@ export const appRouter = router({
             throw new Error("Failed to get device");
           }
 
-          // 获取今天的日期
-          const today = new Date();
-          const todayDate = new Date(
-            today.getFullYear(),
-            today.getMonth(),
-            today.getDate()
-          );
+          // 获取今天的日期（中国时区）
+          const todayDate = getChinaToday();
 
           // 获取今天的投掷记录
           const reading = await getTodaysCoinReading(device.id, todayDate);
@@ -224,13 +236,8 @@ export const appRouter = router({
             throw new Error("Failed to get or create device");
           }
 
-          // 获取今天的日期
-          const today = new Date();
-          const todayDate = new Date(
-            today.getFullYear(),
-            today.getMonth(),
-            today.getDate()
-          );
+          // 获取今天的日期（中国时区）
+          const todayDate = getChinaToday();
 
           // 检查今天的使用次数（只统计question_answer类型）
           const usageCount = await getTodaysUsageCount(device.id, todayDate, "question_answer");
