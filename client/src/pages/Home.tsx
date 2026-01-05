@@ -562,9 +562,9 @@ export default function Home() {
             <Skeleton className="h-6 w-48" />
           </div>
 
-          {/* 解答小困惑区域骨架 */}
+          {/* 今日灵感问答区域骨架 */}
           <div className="mb-8 sm:mb-10">
-            <Skeleton className="h-12 w-full mb-4 rounded-lg" />
+            <Skeleton className="h-24 w-full mb-4 rounded-lg" />
             <Skeleton className="h-64 w-full rounded-lg" />
           </div>
 
@@ -663,16 +663,22 @@ export default function Home() {
             </p>
           </div>
 
-          {/* 解答小困惑功能 */}
+          {/* 今日灵感问答功能 */}
           <div id="question-section" className="mb-8 sm:mb-10">
             <div id="question-title-bar" style={{marginTop: '-21px', marginBottom: '15px', userSelect: 'none'}}>
               <div id="question-label">
-                <span className="material-icons">lightbulb</span>解答小困惑
+                <span className="material-icons" id="lightbulb-icon">lightbulb</span>今日灵感问答
               </div>
-              <div id="carousel-text-container">
-                <span id="carousel-text"></span>
+              <div id="question-second-row">
+                <span id="guess-label">猜你想问：</span>
+                <div id="carousel-text-container">
+                  <span id="carousel-text"></span>
+                </div>
               </div>
-              <span className="material-icons" id="dropdown-arrow">expand_more</span>
+              <div id="dropdown-button">
+                <span>悄悄看</span>
+                <span className="material-icons" id="dropdown-arrow">expand_more</span>
+              </div>
             </div>
             <div id="dropdown-content">
               <div id="question-tags-container"></div>
