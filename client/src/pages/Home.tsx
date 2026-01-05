@@ -646,7 +646,7 @@ export default function Home() {
           {/* 顶部导航按钮 */}
           <div id="top-navigation">
             <a href="https://sleep.health-sleep.com/" target="_blank" rel="noopener noreferrer" className="nav-button" id="sleep-button">
-              <span className="material-icons">bedtime</span>开始助眠
+              <span className="material-icons">bedtime</span>助眠动画
             </a>
             <a href="https://night.health-sleep.com" target="_blank" rel="noopener noreferrer" className="nav-button" id="goodnight-button">
               <span className="material-icons">dark_mode</span>说晚安
