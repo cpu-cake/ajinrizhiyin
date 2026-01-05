@@ -530,11 +530,11 @@
   visibility: visible;
 }
 
-/* 标签容器布局 - 按列排列，8列6行 */
+/* 标签容器布局 - 按列排列，8列7行 */
 #question-tags-container {
   display: grid;
   grid-template-columns: repeat(8, minmax(min-content, max-content));
-  grid-template-rows: repeat(6, minmax(min-content, max-content));
+  grid-template-rows: repeat(7, minmax(min-content, max-content));
   grid-auto-flow: column; /* 按列填充，而不是按行 */
   gap: 6px 12px;
   width: 100%;
