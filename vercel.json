@@ -4,6 +4,12 @@
       "includeFiles": "{server/**,drizzle/**,shared/**,package.json,yarn.lock,tsconfig.json}"
     }
   },
+  "crons": [
+    {
+      "path": "/api/cron/hot-questions",
+      "schedule": "0 20 * * *"
+    }
+  ],
   "rewrites": [
     {
       "source": "/api/(.*)",
